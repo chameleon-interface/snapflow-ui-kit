@@ -1,24 +1,45 @@
-# Usage:
+# Snapflow UI Kit
 
-- Clone template: (replace `my-lib` with your project name)
+Библиотека React UI компонентов на TypeScript с Storybook документацией.
 
-  ```bash
-  npx degit https://github.com/ershisan99/lib-with-storybook-starter my-lib
-  ```
+> **Проект находится на начальной стадии разработки.** API и документация могут изменяться.
 
-- Change directory: (replace `my-lib` with your project name)
+## Разработка
 
-  ```bash
-  cd my-lib
-  ```
+### Команды
 
-- Install dependencies:
+```bash
+pnpm dev              # Запуск Storybook (порт 6006)
+pnpm build            # Сборка библиотеки
+pnpm lint             # Проверка ESLint
+pnpm lint:fix         # Автоисправление ESLint
+pnpm lint:style       # Проверка Stylelint для CSS
+pnpm lint:style:fix   # Автоисправление Stylelint
+pnpm format           # Проверка Prettier
+pnpm format:fix       # Форматирование Prettier
+```
 
-  ```bash
-  pnpm i
-  ```
+### Структура компонентов
 
-- Run storybook:
-  ```bash
-  pnpm dev
-  ```
+```
+src/components/{ComponentName}/
+├── {ComponentName}.tsx         # Реализация компонента
+├── {ComponentName}.module.css  # CSS Module стили
+├── {ComponentName}.stories.tsx # Storybook истории
+└── index.ts                    # Экспорты
+```
+
+> **Важно:** После создания нового компонента добавьте его экспорт в `src/components/index.ts`.
+>
+> Это barrel-файл, через который все компоненты реэкспортируются наружу библиотеки.
+>
+> Без этого компонент не будет доступен пользователям.
+
+### Стек технологий
+
+- React 19
+- TypeScript
+- Vite
+- Storybook 10
+- CSS Modules
+- ESLint + Prettier + Stylelint

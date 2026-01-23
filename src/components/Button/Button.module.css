@@ -4,32 +4,110 @@
   cursor: pointer;
 
   box-sizing: border-box;
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
+  padding: 6px 24px;
+  border-radius: 2px;
+
+  font-weight: 600;
+  line-height: 150%;
+  text-align: center;
+
+  transition-duration: 0.2s;
 }
 
-.button:focus-visible {
-  outline: 2px solid lightcoral;
-  outline-offset: 2px;
-}
-
-.fullWidth {
-  width: 100%;
+.button:disabled {
+  cursor: not-allowed;
 }
 
 .primary {
-  color: #fff;
-  background-color: #00f;
+  color: var(--color-light-100);
+  background-color: var(--color-accent-500);
+}
+
+.primary:active {
+  color: var(--color-light-500);
+  background-color: var(--color-accent-700);
+}
+
+.primary:focus-visible {
+  border: 2px solid var(--color-accent-700);
+}
+
+.primary:disabled {
+  color: var(--color-light-900);
+  background-color: var(--color-accent-900);
+}
+
+.primary:hover:not(:active, :focus-visible) {
+  background-color: var(--color-accent-100);
 }
 
 .secondary {
-  color: #fff;
-  background-color: #f00;
+  color: var(--color-light-100);
+  background-color: var(--color-dark-300);
 }
 
-.tertiary {
-  color: #000;
-  background-color: #fff;
+.secondary:active {
+  color: var(--color-light-500);
+  background-color: #212121;
+}
+
+.secondary:focus-visible {
+  border: 1px solid var(--color-accent-300);
+}
+
+.secondary:disabled {
+  color: var(--color-light-900);
+  background-color: var(--color-dark-500);
+}
+
+.secondary:hover:not(:active, :focus-visible) {
+  background-color: var(--color-dark-100);
+}
+
+.outlined {
+  border: 1px solid var(--color-accent-500);
+  color: var(--color-accent-500);
+  background-color: transparent;
+}
+
+.outlined:active {
+  border-color: var(--color-accent-700);
+  color: var(--color-accent-700);
+}
+
+.outlined:focus-visible {
+  border: 2px solid var(--color-accent-700);
+  color: var(--color-accent-700);
+}
+
+.outlined:disabled {
+  border-color: var(--color-accent-900);
+  color: var(--color-accent-900);
+}
+
+.outlined:hover:not(:active, :focus-visible) {
+  border-color: var(--color-accent-100);
+  color: var(--color-accent-100);
+}
+
+.text {
+  color: var(--color-accent-500);
+}
+
+.text:active {
+  color: var(--color-accent-700);
+}
+
+.text:focus-visible {
+  border: 2px solid var(--color-accent-700);
+}
+
+.text:disabled {
+  color: var(--color-accent-900);
+}
+
+.text:hover:not(:active, :focus-visible) {
+  color: var(--color-accent-100);
 }
 
 .icon {

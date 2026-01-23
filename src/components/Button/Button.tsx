@@ -1,26 +1,36 @@
-import { ComponentPropsWithoutRef, ElementType } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 
 import { clsx } from 'clsx'
 
 import s from './Button.module.css'
 
-export const buttonVariant = ['icon', 'link', 'primary', 'secondary', 'tertiary'] as const
+export type ButtonVariant = 'primary' | 'secondary' | 'outlined' | 'text'
 
-export type ButtonVariant = (typeof buttonVariant)[number]
-
-export type ButtonProps<T extends ElementType = 'button'> = {
-  as?: T
-  fullWidth?: boolean
+type CommonProps = {
   variant?: ButtonVariant
-} & ComponentPropsWithoutRef<T>
+}
 
-export const Button = <T extends ElementType = 'button'>(props: ButtonProps<T>) => {
-  const { as: Component = 'button', className, fullWidth, variant = 'primary', ...rest } = props
+type AsButtonProps = {
+  asLink?: false
+} & CommonProps &
+  ComponentPropsWithoutRef<'button'>
 
-  return (
-    <Component
-      className={clsx(s.button, s[variant], fullWidth && s.fullWidth, className)}
-      {...rest}
-    />
-  )
+type AsLinkProps = {
+  asLink: true
+} & CommonProps &
+  ComponentPropsWithoutRef<'a'>
+
+export type ButtonProps = AsButtonProps | AsLinkProps
+
+export const Button = (props: ButtonProps) => {
+  const { className, variant = 'primary', asLink, ...rest } = props
+  const classes = clsx(s.button, s[variant], className)
+
+  if (asLink) {
+    const { ...linkProps } = rest as AsLinkProps
+    return <a className={classes} {...linkProps} />
+  }
+
+  const { ...buttonProps } = rest as AsButtonProps
+  return <button className={classes} {...buttonProps} />
 }
