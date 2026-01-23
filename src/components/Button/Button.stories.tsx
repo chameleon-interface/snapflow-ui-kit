@@ -3,11 +3,39 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Button } from './'
 
 const meta = {
+  parameters: {
+    layout: 'centered',
+    docs: {
+      description: {
+        component:
+          'A polymorphic button component that can render as a `<button>` or `<a>` element. Supports multiple visual variants for different use cases.',
+      },
+    },
+  },
   argTypes: {
-    onClick: { action: 'clicked' },
+    asLink: {
+      control: { type: 'boolean' },
+      description: 'Renders the button as an anchor element',
+      table: { defaultValue: { summary: 'false' }, type: {} },
+    },
     variant: {
       control: { type: 'radio' },
-      options: ['primary', 'secondary', 'tertiary', 'link'],
+      options: ['primary', 'secondary', 'outlined', 'text'],
+      description: 'Visual style variant of the button',
+      table: { defaultValue: { summary: 'primary' } },
+    },
+    disabled: {
+      control: { type: 'boolean' },
+      description: 'Disables the button (only for button element)',
+      table: { defaultValue: { summary: 'false' } },
+    },
+    children: {
+      description: 'Button content',
+    },
+    onClick: {
+      action: 'clicked',
+      description: 'Click event handler',
+      table: { type: {} },
     },
   },
   component: Button,
@@ -18,6 +46,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** Primary action button. Use for main call-to-action. */
 export const Primary: Story = {
   args: {
     children: 'Primary Button',
@@ -26,6 +55,7 @@ export const Primary: Story = {
   },
 }
 
+/** Secondary action button. Use for less prominent actions. */
 export const Secondary: Story = {
   args: {
     children: 'Secondary Button',
@@ -33,33 +63,29 @@ export const Secondary: Story = {
     variant: 'secondary',
   },
 }
-export const Tertiary: Story = {
+
+/** Outlined button with transparent background. Use for tertiary actions. */
+export const Outlined: Story = {
   args: {
-    children: 'Tertiary Button',
+    children: 'Outlined Button',
     disabled: false,
-    variant: 'tertiary',
-  },
-}
-export const Link: Story = {
-  args: {
-    children: 'Button that looks like a link',
-    disabled: false,
-    variant: 'link',
+    variant: 'outlined',
   },
 }
 
-export const FullWidth: Story = {
+/** Text-only button without background. Use for subtle actions. */
+export const Text: Story = {
   args: {
-    children: 'Full Width Button',
+    children: 'Text Button',
     disabled: false,
-    fullWidth: true,
-    variant: 'primary',
+    variant: 'text',
   },
 }
 
+/** Button rendered as an anchor element. Use for navigation that should look like a button. */
 export const AsLink: Story = {
   args: {
-    as: 'a',
+    asLink: true,
     children: 'Link that looks like a button',
     href: 'https://google.com',
     rel: 'noopener noreferrer',
