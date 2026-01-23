@@ -1,0 +1,1 @@
+export { PayPalLogo } from './PayPalLogo'

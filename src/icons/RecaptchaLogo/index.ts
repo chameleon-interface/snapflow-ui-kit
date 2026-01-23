@@ -1,0 +1,1 @@
+export { RecaptchaLogo } from './RecaptchaLogo'
