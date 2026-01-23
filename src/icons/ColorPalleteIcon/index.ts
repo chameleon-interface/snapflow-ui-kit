@@ -1,0 +1,1 @@
+﻿export { ColorPalleteIcon } from './ColorPalleteIcon'

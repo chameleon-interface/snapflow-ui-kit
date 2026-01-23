@@ -1,0 +1,1 @@
+export { MoreHozitontalIcon } from './MoreHozitontalIcon'

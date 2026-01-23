@@ -1,0 +1,1 @@
+export { PersonAddIcon } from './PersonAddIcon'

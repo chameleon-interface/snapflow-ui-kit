@@ -1,0 +1,1 @@
+export { PaidIcon } from './PaidIcon'

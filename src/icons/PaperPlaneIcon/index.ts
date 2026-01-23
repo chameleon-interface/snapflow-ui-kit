@@ -1,0 +1,1 @@
+export { PaperPlaneIcon } from './PaperPlaneIcon'
