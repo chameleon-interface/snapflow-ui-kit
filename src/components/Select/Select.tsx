@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { clsx } from 'clsx'
 
@@ -8,22 +8,7 @@ import 'simplebar-react/dist/simplebar.min.css'
 import { ArrowDownIcon } from '../../icons'
 
 import s from './Select.module.css'
-
-export type SelectOption = {
-  icon?: ReactNode
-  label: string
-  value: string
-}
-
-export type SelectProps = {
-  className?: string
-  disabled?: boolean
-  label?: string
-  onChange?: (value: string) => void
-  options: SelectOption[]
-  placeholder?: string
-  value?: string
-}
+import { SelectProps } from './Select.types'
 
 export const Select = (props: SelectProps) => {
   const { className, disabled = false, label, onChange, options, placeholder, value } = props

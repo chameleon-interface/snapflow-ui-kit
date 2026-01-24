@@ -1,27 +1,10 @@
-import { ComponentPropsWithoutRef, ReactNode } from 'react'
-
 import { clsx } from 'clsx'
 
 import s from './Button.module.css'
+import { ButtonProps } from './Button.types'
 
-export type ButtonVariant = 'primary' | 'secondary' | 'outlined' | 'text'
-
-type CommonProps = {
-  variant?: ButtonVariant
-  icon?: ReactNode
-}
-
-type AsButtonProps = {
-  asLink?: false
-} & CommonProps &
-  ComponentPropsWithoutRef<'button'>
-
-type AsLinkProps = {
-  asLink: true
-} & CommonProps &
-  ComponentPropsWithoutRef<'a'>
-
-export type ButtonProps = AsButtonProps | AsLinkProps
+type AsButtonProps = ButtonProps & { asLink?: false }
+type AsLinkProps = ButtonProps & { asLink: true }
 
 export const Button = (props: ButtonProps) => {
   const { className, variant = 'primary', asLink, icon, ...rest } = props
