@@ -2,6 +2,9 @@ import { ReactNode, useEffect, useRef, useState } from 'react'
 
 import { clsx } from 'clsx'
 
+import SimpleBar from 'simplebar-react'
+import 'simplebar-react/dist/simplebar.min.css'
+
 import { ArrowDownIcon } from '../../icons'
 
 import s from './Select.module.css'
@@ -80,7 +83,7 @@ export const Select = (props: SelectProps) => {
         </button>
 
         {isOpen && (
-          <div className={s.dropdown} role="listbox">
+          <SimpleBar className={s.dropdown} role="listbox" style={{ maxHeight: 191 }}>
             {options.map((option) => (
               <button
                 key={option.value}
@@ -94,7 +97,7 @@ export const Select = (props: SelectProps) => {
                 {option.label}
               </button>
             ))}
-          </div>
+          </SimpleBar>
         )}
       </div>
     </div>

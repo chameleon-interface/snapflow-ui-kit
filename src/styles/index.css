@@ -70,3 +70,30 @@ option {
   font-style: inherit;
   color: inherit;
 }
+
+/* SimpleBar custom styles */
+[data-simplebar] .simplebar-track.simplebar-vertical {
+  width: 14px;
+  background: transparent;
+}
+
+/* scrollbar thumb */
+[data-simplebar] .simplebar-scrollbar::before {
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 4px;
+  border-radius: 3px;
+
+  background: var(--color-dark-900);
+}
+
+/* hover */
+[data-simplebar] .simplebar-scrollbar:hover::before {
+  background: var(--color-light-900);
+}
+
+/* visible */
+[data-simplebar] .simplebar-scrollbar.simplebar-visible::before {
+  opacity: 1;
+}

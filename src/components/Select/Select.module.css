@@ -97,17 +97,19 @@
   top: calc(100%);
   left: 0;
 
-  overflow: clip auto;
-
   box-sizing: border-box;
   width: 100%;
-  max-height: 191px;
   border: 1px solid var(--color-light-100);
   border-top: none;
   border-radius: 0 0 2px 2px;
 
   background-color: var(--color-dark-300);
   box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
+}
+
+/* stylelint-disable selector-pseudo-class-no-unknown */
+.dropdown :global(.simplebar-scrollbar::before) {
+  background: var(--color-light-900);
 }
 
 .option {
