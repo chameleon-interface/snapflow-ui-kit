@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
+import { LogOutIcon, PlusSquareIcon, SearchIcon, TrashIcon } from '../../icons'
+
 import { Button } from './'
 
 const meta = {
@@ -28,6 +30,11 @@ const meta = {
       control: { type: 'boolean' },
       description: 'Disables the button (only for button element)',
       table: { defaultValue: { summary: 'false' } },
+    },
+    icon: {
+      control: false,
+      description: 'Icon element to display before the button text',
+      table: { type: {} },
     },
     children: {
       description: 'Button content',
@@ -90,6 +97,63 @@ export const AsLink: Story = {
     href: 'https://google.com',
     rel: 'noopener noreferrer',
     target: '_blank',
+    variant: 'primary',
+  },
+}
+
+/** Primary button with an icon. Use icons to enhance button meaning. */
+export const PrimaryWithIcon: Story = {
+  args: {
+    children: 'Add Item',
+    icon: <PlusSquareIcon />,
+    variant: 'primary',
+  },
+}
+
+/** Secondary button with an icon. */
+export const SecondaryWithIcon: Story = {
+  args: {
+    children: 'Search',
+    icon: <SearchIcon />,
+    variant: 'secondary',
+  },
+}
+
+/** Outlined button with an icon. */
+export const OutlinedWithIcon: Story = {
+  args: {
+    children: 'Log Out',
+    icon: <LogOutIcon />,
+    variant: 'outlined',
+  },
+}
+
+/** Text button with an icon. */
+export const TextWithIcon: Story = {
+  args: {
+    children: 'Delete',
+    icon: <TrashIcon />,
+    variant: 'text',
+  },
+}
+
+/** Button with icon and disabled state. */
+export const DisabledWithIcon: Story = {
+  args: {
+    children: 'Add Item',
+    disabled: true,
+    icon: <PlusSquareIcon />,
+    variant: 'primary',
+  },
+}
+
+/** Link button with an icon. */
+export const AsLinkWithIcon: Story = {
+  args: {
+    asLink: true,
+    children: 'Search Results',
+    href: '#',
+    icon: <SearchIcon />,
     variant: 'primary',
   },
 }

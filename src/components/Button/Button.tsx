@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, ReactNode } from 'react'
 
 import { clsx } from 'clsx'
 
@@ -8,6 +8,7 @@ export type ButtonVariant = 'primary' | 'secondary' | 'outlined' | 'text'
 
 type CommonProps = {
   variant?: ButtonVariant
+  icon?: ReactNode
 }
 
 type AsButtonProps = {
@@ -23,14 +24,24 @@ type AsLinkProps = {
 export type ButtonProps = AsButtonProps | AsLinkProps
 
 export const Button = (props: ButtonProps) => {
-  const { className, variant = 'primary', asLink, ...rest } = props
+  const { className, variant = 'primary', asLink, icon, ...rest } = props
   const classes = clsx(s.button, s[variant], className)
 
   if (asLink) {
-    const { ...linkProps } = rest as AsLinkProps
-    return <a className={classes} {...linkProps} />
+    const { children, ...linkProps } = rest as AsLinkProps
+    return (
+      <a className={classes} {...linkProps}>
+        {icon && <span className={s.icon}>{icon}</span>}
+        {children}
+      </a>
+    )
   }
 
-  const { ...buttonProps } = rest as AsButtonProps
-  return <button className={classes} {...buttonProps} />
+  const { children, ...buttonProps } = rest as AsButtonProps
+  return (
+    <button className={classes} {...buttonProps}>
+      {icon && <span className={s.icon}>{icon}</span>}
+      {children}
+    </button>
+  )
 }
