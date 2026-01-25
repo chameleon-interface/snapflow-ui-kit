@@ -1,0 +1,49 @@
+.tab {
+  all: unset;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: 6px 23px;
+  border-bottom: 2px solid var(--color-dark-100);
+  border-radius: 0;
+
+  color: var(--color-dark-100);
+  text-align: center;
+
+  outline: none;
+
+  transition-duration: 0.2s;
+  transition-property: background-color, color;
+}
+
+.tab:disabled {
+  cursor: not-allowed;
+  border-bottom: 2px solid var(--color-dark-300);
+  color: var(--color-dark-300);
+}
+
+.tab:focus-visible {
+  border: none;
+  border-radius: 2px;
+  outline: 2px solid var(--color-accent-700);
+}
+
+.tab:active:not(:disabled) {
+  background-color: var(--color-accent-100);
+}
+
+.tab:hover:not(:active, :focus-visible, :disabled) {
+  background-color: var(--color-accent-900);
+}
+
+.selected {
+  border-bottom: 2px solid var(--color-accent-500);
+  color: var(--color-accent-500);
+}
+
+.selected:disabled {
+  border-bottom: 2px solid var(--color-accent-900);
+  color: var(--color-accent-900);
+}
