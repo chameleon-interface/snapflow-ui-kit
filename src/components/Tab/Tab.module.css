@@ -4,14 +4,12 @@
   cursor: pointer;
 
   width: 100%;
-  padding: 6px 23px;
+  padding: 6px 23px 4px;
   border-bottom: 2px solid var(--color-dark-100);
   border-radius: 0;
 
   color: var(--color-dark-100);
   text-align: center;
-
-  outline: none;
 
   font-size: 16px;
   font-weight: 600;
@@ -48,9 +46,4 @@
 
 .tab:hover:not(:active, :focus-visible, :disabled) {
   background-color: color-mix(in srgb, var(--color-accent-900) 15%, transparent);
-}
-
-.selected:hover:not(:active, :focus-visible, :disabled) {
-  border-bottom-color: var(--color-accent-900);
-  color: var(--color-accent-900);
 }
