@@ -4,19 +4,14 @@
   position: relative;
 
   display: inline-flex;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
-}
 
-.radioContainer {
-  width: 122px;
-  height: 36px;
   padding: 6px;
 }
 
 /* скрытый input */
 .input {
-  pointer-events: none;
   position: absolute;
   opacity: 0;
 }
@@ -37,8 +32,8 @@
   align-items: center;
   justify-content: center;
 
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border: 2px solid var(--color-light-100);
   border-radius: 50%;
 }
@@ -50,8 +45,8 @@
   position: absolute;
   z-index: -1;
 
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
 
   background-color: transparent;
@@ -59,11 +54,11 @@
   transition: background-color 0.2s ease;
 }
 
-.radio:hover .control::before {
+.control:hover::before {
   background-color: var(--color-dark-300);
 }
 
-.radio:focus-within .control::before {
+.input:focus-visible + .control::before {
   background-color: var(--color-dark-500);
 }
 
@@ -74,12 +69,17 @@
 /*  внутренний checked круг */
 .control::after {
   content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
 
-  width: 14px;
-  height: 14px;
+  width: 10px;
+  height: 10px;
+
   border-radius: 50%;
-
   background-color: transparent;
+
+  transform: translate(-50%, -50%);
 }
 
 /* checked */
@@ -89,7 +89,6 @@
 
 .input:disabled + .control {
   border-color: var(--color-dark-100);
-  opacity: 0.5;
 }
 
 .input:disabled + .control::before {
