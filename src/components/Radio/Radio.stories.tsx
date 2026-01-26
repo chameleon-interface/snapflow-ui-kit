@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Checkbox } from './Checkbox'
+import { Radio } from './Radio'
 
-const meta: Meta<typeof Checkbox> = {
-  title: 'Components/Checkbox',
-  component: Checkbox,
+const meta: Meta<typeof Radio> = {
+  title: 'Components/Radio',
+  component: Radio,
   argTypes: {
     disabled: {
       control: 'boolean',
@@ -21,11 +21,11 @@ const meta: Meta<typeof Checkbox> = {
 
 export default meta
 
-type Story = StoryObj<typeof Checkbox>
+type Story = StoryObj<typeof Radio>
 
 export const Default: Story = {
   args: {
-    children: 'Checkbox',
+    children: 'Option',
   },
 }
 
@@ -39,6 +39,6 @@ export const Disabled: Story = {
 export const Checked: Story = {
   args: {
     checked: true,
-    children: 'Checked checkbox',
+    children: 'Checked option',
   },
 }

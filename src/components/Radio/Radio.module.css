@@ -1,16 +1,20 @@
-.checkbox {
+.radio {
   cursor: pointer;
+
   position: relative;
+
   display: inline-flex;
   gap: 10px;
   align-items: center;
 }
 
+/* скрытый input */
 .input {
   position: absolute;
   opacity: 0;
 }
 
+/* текст */
 .labelSpan {
   font-size: 14px;
   font-weight: 400;
@@ -18,6 +22,7 @@
   color: var(--color-light-100);
 }
 
+/* внешний круг */
 .control {
   position: relative;
 
@@ -27,11 +32,11 @@
 
   width: 20px;
   height: 20px;
-
   border: 2px solid var(--color-light-100);
-  border-radius: 4px;
+  border-radius: 50%;
 }
 
+/* БОЛЬШОЙ КРУГ (hover / focus / active) */
 .control::before {
   content: '';
 
@@ -43,7 +48,8 @@
   border-radius: 50%;
 
   background-color: transparent;
-  transition: background-color 0.15s ease;
+
+  transition: background-color 0.2s ease;
 }
 
 .control:hover::before {
@@ -54,24 +60,29 @@
   background-color: var(--color-dark-500);
 }
 
-.checkbox:active .control::before {
+.radio:active .control::before {
   background-color: var(--color-dark-100);
 }
 
+/*  внутренний checked круг */
 .control::after {
   content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
 
-  width: 12px;
-  height: 7px;
+  width: 10px;
+  height: 10px;
 
-  border-left: 2px solid transparent;
-  border-bottom: 2px solid transparent;
+  border-radius: 50%;
+  background-color: transparent;
 
-  transform: rotate(-45deg) translateY(-1px);
+  transform: translate(-50%, -50%);
 }
 
+/* checked */
 .input:checked + .control::after {
-  border-color: var(--color-light-100);
+  background-color: var(--color-light-100);
 }
 
 .input:disabled + .control {
@@ -83,7 +94,7 @@
 }
 
 .input:disabled:checked + .control::after {
-  border-color: var(--color-light-900);
+  background-color: var(--color-dark-100);
 }
 
 .input:disabled ~ .labelSpan {
@@ -91,10 +102,11 @@
 }
 
 .input:disabled ~ .labelSpan,
-.input:disabled + .control {
+.input:disabled + .control,
+.input:disabled ~ .control {
   cursor: not-allowed;
 }
 
-.checkbox:has(.input:disabled) {
+.radio:has(.input:disabled) {
   cursor: not-allowed;
 }

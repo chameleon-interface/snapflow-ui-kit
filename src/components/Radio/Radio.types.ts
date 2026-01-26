@@ -1,7 +1,6 @@
 import { ComponentPropsWithoutRef, ReactNode } from 'react'
-
-export type CheckboxProps = {
+export type RadioProps = {
   children?: ReactNode
   checked?: boolean
   onChange?: ComponentPropsWithoutRef<'input'>['onChange']
-} & Omit<ComponentPropsWithoutRef<'input'>, 'type' | 'checked' | 'onChange' | 'children'>
+} & Omit<ComponentPropsWithoutRef<'input'>, 'checked' | 'onChange' | 'children'>

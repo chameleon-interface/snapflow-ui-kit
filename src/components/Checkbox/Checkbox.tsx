@@ -1,38 +1,14 @@
 import { clsx } from 'clsx'
-import { CheckmarkIcon } from '../../icons/CheckmarkIcon'
-import { CheckboxProps } from './Checkbox.types'
 import s from './Checkbox.module.css'
+import { CheckboxProps } from './Checkbox.types'
 
-export const Checkbox = ({
-  children,
-  checked,
-  defaultChecked,
-  onChange,
-  disabled,
-  id,
-  className,
-}: CheckboxProps) => {
-  const isControlled = checked !== undefined
-
+export const Checkbox = ({ children, className, checked, onChange, ...rest }: CheckboxProps) => {
   return (
-    <label className={clsx(s.root, className)}>
-      <span className={s.control}>
-        <input
-          id={id}
-          type="checkbox"
-          className={s.input}
-          disabled={disabled}
-          checked={isControlled ? checked : undefined}
-          defaultChecked={!isControlled ? defaultChecked : undefined}
-          onChange={(e) => onChange?.(e.target.checked)}
-        />
+    <label className={clsx(s.checkbox, className)}>
+      <input type="checkbox" className={s.input} checked={checked} onChange={onChange} {...rest} />
 
-        <span className={s.box}>
-          <CheckmarkIcon className={s.checkmark} />
-        </span>
-      </span>
-
-      {children && <span className={s.label}>{children}</span>}
+      <span className={s.control} />
+      {children && <span className={s.labelSpan}>{children}</span>}
     </label>
   )
 }
