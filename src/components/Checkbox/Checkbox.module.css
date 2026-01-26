@@ -1,0 +1,88 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.input:focus-visible {
+  outline: none;
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+
+.control:hover:not(:has(.input:disabled)) {
+  background-color: var(--color-dark-100);
+  border-radius: 50%;
+}
+
+.control:has(.input:focus-visible):not(:has(.input:disabled)) {
+  background-color: var(--color-dark-500);
+  border-radius: 50%;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  border: 2px solid var(--color-light-500);
+  border-radius: 2px;
+  color: var(--color-dark-500);
+}
+
+.input:checked + .box {
+  background-color: var(--color-light-100);
+  border-color: var(--color-light-100);
+}
+
+.input:disabled + .box {
+  border-color: var(--color-light-900);
+}
+
+.input:disabled:checked + .box {
+  background-color: var(--color-dark-100);
+  border-color: var(--color-light-900);
+  color: var(--color-light-900);
+}
+
+.checkmark {
+  width: 18px;
+  height: 18px;
+  opacity: 0;
+}
+
+.input:checked + .box .checkmark {
+  opacity: 1;
+}
+
+.label {
+  font-size: 14px;
+  line-height: 24px;
+  color: var(--color-light-100);
+}
+
+.input:disabled ~ .label {
+  color: var(--color-light-900);
+  cursor: not-allowed;
+}
