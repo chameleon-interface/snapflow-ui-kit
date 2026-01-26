@@ -3,7 +3,6 @@
 
   cursor: pointer;
 
-  box-sizing: border-box;
   width: 100%;
   padding: 6px 23px;
   border-bottom: 2px solid var(--color-dark-100);
@@ -14,36 +13,44 @@
 
   outline: none;
 
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 150%;
+
   transition-duration: 0.2s;
-  transition-property: background-color, color;
+  transition-property: background-color, color, border-color;
+}
+
+.selected {
+  border-bottom-color: var(--color-accent-500);
+  color: var(--color-accent-500);
 }
 
 .tab:disabled {
   cursor: not-allowed;
-  border-bottom: 2px solid var(--color-dark-300);
+  border-bottom-color: var(--color-dark-300);
   color: var(--color-dark-300);
 }
 
+.selected:disabled {
+  border-bottom-color: var(--color-accent-900);
+  color: var(--color-accent-900);
+}
+
 .tab:focus-visible {
-  border: none;
   border-radius: 2px;
   outline: 2px solid var(--color-accent-700);
 }
 
 .tab:active:not(:disabled) {
-  background-color: var(--color-accent-100);
+  background-color: color-mix(in srgb, var(--color-accent-100) 15%, transparent);
 }
 
 .tab:hover:not(:active, :focus-visible, :disabled) {
-  background-color: var(--color-accent-900);
+  background-color: color-mix(in srgb, var(--color-accent-900) 15%, transparent);
 }
 
-.selected {
-  border-bottom: 2px solid var(--color-accent-500);
-  color: var(--color-accent-500);
-}
-
-.selected:disabled {
-  border-bottom: 2px solid var(--color-accent-900);
+.selected:hover:not(:active, :focus-visible, :disabled) {
+  border-bottom-color: var(--color-accent-900);
   color: var(--color-accent-900);
 }

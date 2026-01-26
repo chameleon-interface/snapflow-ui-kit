@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import React, { useState } from 'react'
 
 import { Tab } from '.'
 
@@ -40,17 +41,43 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** Tab group with 4 tabs: General Information, Devices, Account Management, My payments. */
+export const TabGroup: Story = {
+  render: () => {
+    const [selectedTab, setSelectedTab] = useState('General Information')
+
+    const tabs = ['General Information', 'Devices', 'Account Management', 'My payments']
+
+    return (
+      <div
+        style={{
+          display: 'flex',
+          gap: 0,
+          width: '972px',
+          backgroundColor: 'var(--color-dark-700)',
+        }}
+      >
+        {tabs.map((tab) => (
+          <Tab key={tab} selected={selectedTab === tab} onClick={() => setSelectedTab(tab)}>
+            {tab}
+          </Tab>
+        ))}
+      </div>
+    )
+  },
+}
+
 /** Default tab in unselected state. Use for inactive tabs in a tab list. */
 export const Default: Story = {
   args: {
-    children: 'Tab-1', // заменить на Typography когда будет готов
+    children: 'Tab-1',
   },
 }
 
 /** Disabled tab in unselected state. Use when the tab is not available for interaction. */
 export const DefaultDisabled: Story = {
   args: {
-    children: 'Tab-2', // заменить на Typography когда будет готов
+    children: 'Tab-2',
     disabled: true,
   },
 }
@@ -58,7 +85,7 @@ export const DefaultDisabled: Story = {
 /** Selected tab in active state. Use for the currently active tab in a tab list. */
 export const Selected: Story = {
   args: {
-    children: 'Tab-3', // заменить на Typography когда будет готов
+    children: 'Tab-3',
     selected: true,
   },
 }
@@ -66,7 +93,7 @@ export const Selected: Story = {
 /** Selected and disabled tab. Use when the active tab should be visually selected but not interactive. */
 export const SelectedDisabled: Story = {
   args: {
-    children: 'Tab-4', // заменить на Typography когда будет готов
+    children: 'Tab-4',
     selected: true,
     disabled: true,
   },
