@@ -15,7 +15,7 @@ const meta = {
     checked: {
       control: { type: 'boolean' },
       description: 'Whether the icon is checked',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
   },
   component: RadioButtonIcon,
