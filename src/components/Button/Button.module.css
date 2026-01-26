@@ -13,7 +13,9 @@
   font-weight: 600;
   line-height: 150%;
 
-  transition-duration: 0.2s;
+  transition:
+    color 0.2s,
+    background-color 0.2s;
 }
 
 .button:disabled {
@@ -31,7 +33,7 @@
 }
 
 .primary:focus-visible {
-  border: 2px solid var(--color-accent-700);
+  outline: 2px solid var(--color-accent-700);
 }
 
 .primary:disabled {
@@ -50,11 +52,11 @@
 
 .secondary:active {
   color: var(--color-light-500);
-  background-color: #212121;
+  background-color: var(--color-dark-400);
 }
 
 .secondary:focus-visible {
-  border: 1px solid var(--color-accent-300);
+  outline: 2px solid var(--color-accent-300);
 }
 
 .secondary:disabled {
@@ -101,7 +103,7 @@
 }
 
 .text:focus-visible {
-  border: 2px solid var(--color-accent-700);
+  outline: 2px solid var(--color-accent-700);
 }
 
 .text:disabled {
@@ -116,9 +118,4 @@
   display: inline-flex;
   align-items: center;
   margin-right: 10px;
-}
-
-.link {
-  color: #00f;
-  background-color: transparent;
 }
