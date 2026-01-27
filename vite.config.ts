@@ -5,6 +5,11 @@ import { defineConfig } from 'vite'
 import { dependencies, peerDependencies } from './package.json'
 // https://vitejs.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+    },
+  },
   build: {
     lib: {
       // Could also be a dictionary or array of multiple entry points

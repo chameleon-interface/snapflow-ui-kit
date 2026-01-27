@@ -1,6 +1,6 @@
 import type { Meta } from '@storybook/react-vite'
 
-import { CheckmarkIcon, HomeIcon, PersonIcon, SearchIcon } from '../../icons'
+import { CheckmarkIcon, HomeIcon, PersonIcon, SearchIcon } from '@/icons'
 
 import { Typography } from './'
 

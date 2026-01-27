@@ -10,7 +10,7 @@ import {
   PersonIcon,
   SearchIcon,
   SettingsIcon,
-} from '../../icons'
+} from '@/icons'
 
 import { Select } from './'
 

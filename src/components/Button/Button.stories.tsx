@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { LogOutIcon, PlusSquareIcon, SearchIcon, TrashIcon } from '../../icons'
+import { LogOutIcon, PlusSquareIcon, SearchIcon, TrashIcon } from '@/icons'
 
 import { Button } from './'
 

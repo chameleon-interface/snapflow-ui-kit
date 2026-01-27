@@ -5,10 +5,10 @@ import { clsx } from 'clsx'
 import SimpleBar from 'simplebar-react'
 import 'simplebar-react/dist/simplebar.min.css'
 
-import { ArrowDownIcon } from '../../icons'
+import { ArrowDownIcon } from '@/icons'
 
 import s from './Select.module.css'
-import { SelectProps } from './Select.types'
+import { SelectProps } from './'
 
 export const Select = (props: SelectProps) => {
   const { className, disabled = false, label, onChange, options, placeholder, value } = props
