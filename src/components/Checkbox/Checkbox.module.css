@@ -28,8 +28,12 @@
   width: 20px;
   height: 20px;
 
-  border: 2px solid var(--color-light-100);
+  border: 2px solid var(--color-light-500);
   border-radius: 4px;
+}
+
+.input:checked + .control {
+  background-color: var(--color-light-100);
 }
 
 .control::before {
@@ -47,11 +51,11 @@
 }
 
 .control:hover::before {
-  background-color: var(--color-dark-300);
+  background-color: var(--color-dark-100);
 }
 
 .input:focus-visible + .control::before {
-  background-color: var(--color-dark-500);
+  background-color: var(--color-dark-100);
 }
 
 .checkbox:active .control::before {
@@ -61,17 +65,22 @@
 .control::after {
   content: '';
 
-  width: 12px;
-  height: 7px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 10px;
+  height: 6px;
 
   border-left: 2px solid transparent;
   border-bottom: 2px solid transparent;
 
-  transform: rotate(-45deg) translateY(-1px);
+  transform-origin: left bottom;
+  transform: translate(calc(-50% + 4px), -40%) rotate(-45deg);
 }
 
 .input:checked + .control::after {
-  border-color: var(--color-light-100);
+  border-color: var(--color-dark-900);
 }
 
 .input:disabled + .control {
@@ -82,17 +91,21 @@
   background-color: transparent;
 }
 
+.input:disabled ~ .labelSpan,
+.input:disabled + .control {
+  cursor: not-allowed;
+}
+
+.input:disabled:checked + .control {
+  background-color: var(--color-dark-100);
+}
+
 .input:disabled:checked + .control::after {
-  border-color: var(--color-light-900);
+  border-color: var(--color-dark-900);
 }
 
 .input:disabled ~ .labelSpan {
   color: var(--color-light-900);
-}
-
-.input:disabled ~ .labelSpan,
-.input:disabled + .control {
-  cursor: not-allowed;
 }
 
 .checkbox:has(.input:disabled) {

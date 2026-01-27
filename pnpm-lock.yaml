@@ -8,7 +8,7 @@ importers:
   .:
     dependencies:
       clsx:
-        specifier: ^2.1.1
+        specifier: 2.1.1
         version: 2.1.1
       simplebar:
         specifier: 6.3.3
@@ -18,7 +18,7 @@ importers:
         version: 3.3.2(react@19.2.3)
     devDependencies:
       '@eslint/js':
-        specifier: ^9.39.2
+        specifier: 9.39.2
         version: 9.39.2
       '@storybook/addon-docs':
         specifier: 10.2.0
@@ -27,13 +27,13 @@ importers:
         specifier: 10.2.0
         version: 10.2.0(esbuild@0.27.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(rollup@4.56.0)(storybook@10.2.0(@testing-library/dom@10.4.0)(prettier@3.8.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3)(vite@7.3.1(@types/node@25.0.10)(sass-embedded@1.97.3)(sass@1.97.3)(yaml@2.8.2))
       '@types/node':
-        specifier: ^25.0.10
+        specifier: 25.0.10
         version: 25.0.10
       '@types/react':
-        specifier: ^19.2.9
+        specifier: 19.2.9
         version: 19.2.9
       '@types/react-dom':
-        specifier: ^19.2.3
+        specifier: 19.2.3
         version: 19.2.3(@types/react@19.2.9)
       '@typescript-eslint/eslint-plugin':
         specifier: 8.53.1
@@ -57,19 +57,19 @@ importers:
         specifier: 10.2.0
         version: 10.2.0(eslint@9.39.2)(storybook@10.2.0(@testing-library/dom@10.4.0)(prettier@3.8.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3)
       husky:
-        specifier: ^9.1.7
+        specifier: 9.1.7
         version: 9.1.7
       lint-staged:
-        specifier: ^16.2.7
+        specifier: 16.2.7
         version: 16.2.7
       prettier:
         specifier: 3.8.1
         version: 3.8.1
       react:
-        specifier: ^19.2.3
+        specifier: 19.2.3
         version: 19.2.3
       react-dom:
-        specifier: ^19.2.3
+        specifier: 19.2.3
         version: 19.2.3(react@19.2.3)
       storybook:
         specifier: 10.2.0
@@ -78,25 +78,25 @@ importers:
         specifier: 10.2.0
         version: 10.2.0(storybook@10.2.0(@testing-library/dom@10.4.0)(prettier@3.8.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
       stylelint:
-        specifier: ^17.0.0
+        specifier: 17.0.0
         version: 17.0.0(typescript@5.9.3)
       stylelint-config-clean-order:
         specifier: 8.0.0
         version: 8.0.0(stylelint-order@7.0.1(stylelint@17.0.0(typescript@5.9.3)))(stylelint@17.0.0(typescript@5.9.3))
       stylelint-config-standard:
-        specifier: ^40.0.0
+        specifier: 40.0.0
         version: 40.0.0(stylelint@17.0.0(typescript@5.9.3))
       stylelint-order:
-        specifier: ^7.0.1
+        specifier: 7.0.1
         version: 7.0.1(stylelint@17.0.0(typescript@5.9.3))
       typescript:
-        specifier: ^5.9.3
+        specifier: 5.9.3
         version: 5.9.3
       typescript-eslint:
-        specifier: ^8.53.1
+        specifier: 8.53.1
         version: 8.53.1(eslint@9.39.2)(typescript@5.9.3)
       vite:
-        specifier: ^7.3.1
+        specifier: 7.3.1
         version: 7.3.1(@types/node@25.0.10)(sass-embedded@1.97.3)(sass@1.97.3)(yaml@2.8.2)
 
 packages:
