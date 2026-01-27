@@ -1,6 +1,8 @@
 .checkbox {
   cursor: pointer;
+
   position: relative;
+
   display: inline-flex;
   gap: 10px;
   align-items: center;
@@ -27,7 +29,6 @@
 
   width: 20px;
   height: 20px;
-
   border: 2px solid var(--color-light-500);
   border-radius: 4px;
 }
@@ -47,6 +48,7 @@
   border-radius: 50%;
 
   background-color: transparent;
+
   transition: background-color 0.15s ease;
 }
 
@@ -68,15 +70,13 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  transform-origin: left bottom;
+  transform: translate(calc(-50% + 4px), -40%) rotate(-45deg);
 
   width: 10px;
   height: 6px;
-
-  border-left: 2px solid transparent;
   border-bottom: 2px solid transparent;
-
-  transform-origin: left bottom;
-  transform: translate(calc(-50% + 4px), -40%) rotate(-45deg);
+  border-left: 2px solid transparent;
 }
 
 .input:checked + .control::after {
@@ -101,7 +101,7 @@
 }
 
 .input:disabled:checked + .control::after {
-  border-color: var(--color-dark-900);
+  border-color: var(--color-light-700);
 }
 
 .input:disabled ~ .labelSpan {
