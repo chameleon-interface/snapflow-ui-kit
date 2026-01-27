@@ -12,10 +12,13 @@ export default defineConfig({
   },
   build: {
     lib: {
-      // Could also be a dictionary or array of multiple entry points
-      entry: resolve(__dirname, 'src/index.ts'),
+      // Multiple entry points to enable separate icon bundle
+      entry: {
+        index: resolve(__dirname, 'src/index.ts'),
+        icons: resolve(__dirname, 'src/icons/index.ts'),
+      },
       // the proper extensions will be added
-      fileName: 'index',
+      fileName: (_, entryName) => `${entryName}.js`,
       formats: ['es'],
       name: 'snapflow-ui-kit',
     },
@@ -25,6 +28,10 @@ export default defineConfig({
         ...Object.keys(dependencies),
         ...Object.keys(peerDependencies ?? {}),
       ],
+      output: {
+        assetFileNames: (assetInfo) =>
+          assetInfo.name?.endsWith('.css') ? 'index.css' : 'assets/[name]-[hash][extname]',
+      },
     },
     sourcemap: true,
     target: 'esnext',
