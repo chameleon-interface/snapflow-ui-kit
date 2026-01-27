@@ -3,15 +3,19 @@
 
   cursor: pointer;
 
-  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   padding: 6px 24px;
   border-radius: 2px;
 
   font-weight: 600;
   line-height: 150%;
-  text-align: center;
 
-  transition-duration: 0.2s;
+  transition:
+    color 120ms ease-out,
+    background-color 180ms cubic-bezier(0.2, 0, 0, 1);
 }
 
 .button:disabled {
@@ -29,7 +33,7 @@
 }
 
 .primary:focus-visible {
-  border: 2px solid var(--color-accent-700);
+  outline: 2px solid var(--color-accent-700);
 }
 
 .primary:disabled {
@@ -37,7 +41,7 @@
   background-color: var(--color-accent-900);
 }
 
-.primary:hover:not(:active, :focus-visible) {
+.primary:hover:not(:active, :focus-visible, :disabled) {
   background-color: var(--color-accent-100);
 }
 
@@ -48,11 +52,11 @@
 
 .secondary:active {
   color: var(--color-light-500);
-  background-color: #212121;
+  background-color: var(--color-dark-400);
 }
 
 .secondary:focus-visible {
-  border: 1px solid var(--color-accent-300);
+  outline: 2px solid var(--color-accent-300);
 }
 
 .secondary:disabled {
@@ -60,7 +64,7 @@
   background-color: var(--color-dark-500);
 }
 
-.secondary:hover:not(:active, :focus-visible) {
+.secondary:hover:not(:active, :focus-visible, :disabled) {
   background-color: var(--color-dark-100);
 }
 
@@ -85,7 +89,7 @@
   color: var(--color-accent-900);
 }
 
-.outlined:hover:not(:active, :focus-visible) {
+.outlined:hover:not(:active, :focus-visible, :disabled) {
   border-color: var(--color-accent-100);
   color: var(--color-accent-100);
 }
@@ -99,23 +103,19 @@
 }
 
 .text:focus-visible {
-  border: 2px solid var(--color-accent-700);
+  outline: 2px solid var(--color-accent-700);
 }
 
 .text:disabled {
   color: var(--color-accent-900);
 }
 
-.text:hover:not(:active, :focus-visible) {
+.text:hover:not(:active, :focus-visible, :disabled) {
   color: var(--color-accent-100);
 }
 
 .icon {
-  color: #000;
-  background-color: transparent;
-}
-
-.link {
-  color: #00f;
-  background-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 10px;
 }
