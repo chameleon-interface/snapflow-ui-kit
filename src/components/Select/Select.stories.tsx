@@ -66,7 +66,6 @@ const sampleOptions = [
   { label: 'Cherry', value: 'cherry' },
   { label: 'Date', value: 'date' },
   { label: 'Elderberry', value: 'elderberry' },
-  { label: 'ElderberryElderberryElderberryElderberry', value: 'eld2erberry' },
 ]
 
 const DefaultExample = () => {
