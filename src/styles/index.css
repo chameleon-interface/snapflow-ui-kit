@@ -32,6 +32,7 @@
   /* Dark */
   --color-dark-100: #4c4c4c;
   --color-dark-300: #333;
+  --color-dark-400: #212121;
   --color-dark-500: #171717;
   --color-dark-700: #0d0d0d;
   --color-dark-900: #000;
@@ -56,9 +57,8 @@ html {
 }
 
 body {
-  margin: 0;
-  padding: 0;
   font-family: Inter, sans-serif;
+  font-size: 16px;
 }
 
 input,
@@ -67,9 +67,34 @@ select,
 textarea,
 optgroup,
 option {
-  font-family: inherit;
-  font-size: inherit;
   font-weight: inherit;
   font-style: inherit;
   color: inherit;
+}
+
+/* SimpleBar custom styles */
+[data-simplebar] .simplebar-track.simplebar-vertical {
+  width: 14px;
+  background: transparent;
+}
+
+/* scrollbar thumb */
+[data-simplebar] .simplebar-scrollbar::before {
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 4px;
+  border-radius: 3px;
+
+  background: var(--color-dark-900);
+}
+
+/* hover */
+[data-simplebar] .simplebar-scrollbar:hover::before {
+  background: var(--color-light-900);
+}
+
+/* visible */
+[data-simplebar] .simplebar-scrollbar.simplebar-visible::before {
+  opacity: 1;
 }
