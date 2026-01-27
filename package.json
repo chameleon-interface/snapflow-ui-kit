@@ -19,7 +19,7 @@
     },
     "./icons": {
       "import": "./dist/icons.js",
-      "types": "./dist/icons.d.ts"
+      "types": "./dist/icons/index.d.ts"
     },
     "./styles.css": "./dist/index.css"
   },
