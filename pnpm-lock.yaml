@@ -11,10 +11,10 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       simplebar:
-        specifier: ^6.3.3
+        specifier: 6.3.3
         version: 6.3.3
       simplebar-react:
-        specifier: ^3.3.2
+        specifier: 3.3.2
         version: 3.3.2(react@19.2.3)
     devDependencies:
       '@eslint/js':
@@ -74,6 +74,9 @@ importers:
       storybook:
         specifier: 10.2.0
         version: 10.2.0(@testing-library/dom@10.4.0)(prettier@3.8.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      storybook-addon-pseudo-states:
+        specifier: 10.2.0
+        version: 10.2.0(storybook@10.2.0(@testing-library/dom@10.4.0)(prettier@3.8.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
       stylelint:
         specifier: ^17.0.0
         version: 17.0.0(typescript@5.9.3)
@@ -3979,6 +3982,14 @@ packages:
       }
     engines: { node: '>= 0.4' }
 
+  storybook-addon-pseudo-states@10.2.0:
+    resolution:
+      {
+        integrity: sha512-b/crclkOaNTUtKGTdVXvY5PjAAqObuWcQSKfzqPFM3waCPCzBkzT/4ltXZm/h9NfwnTO+tNixeKxdIGq8PvdCw==,
+      }
+    peerDependencies:
+      storybook: ^10.2.0
+
   storybook@10.2.0:
     resolution:
       {
@@ -6968,6 +6979,10 @@ snapshots:
     dependencies:
       es-errors: 1.3.0
       internal-slot: 1.1.0
+
+  storybook-addon-pseudo-states@10.2.0(storybook@10.2.0(@testing-library/dom@10.4.0)(prettier@3.8.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)):
+    dependencies:
+      storybook: 10.2.0(@testing-library/dom@10.4.0)(prettier@3.8.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
 
   storybook@10.2.0(@testing-library/dom@10.4.0)(prettier@3.8.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
     dependencies:
