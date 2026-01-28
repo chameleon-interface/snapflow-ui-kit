@@ -62,7 +62,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { DatePicker } from './DatePicker';
 
 type FormData = {
-    birthDate: Date;
+    birthDate: Date | undefined;
 };
 
 const MyForm = () => {
@@ -105,7 +105,7 @@ import { DateRange } from 'react-day-picker';
 import { DatePicker } from './DatePicker';
 
 type FormData = {
-    period: DateRange;
+    period: DateRange | undefined;
 };
 
 const MyForm = () => {
@@ -155,9 +155,9 @@ import { DateRange } from 'react-day-picker';
 import { DatePicker } from './DatePicker';
 
 type FormData = {
-    startDate: Date;
-    endDate: Date;
-    vacationPeriod: DateRange;
+    startDate: Date | undefined;
+    endDate: Date | undefined;
+    vacationPeriod: DateRange | undefined;
 };
 
 const MyForm = () => {
@@ -350,6 +350,25 @@ export const RangePicker: Story = {
  * With error state
  */
 export const WithError: Story = {
+  render: (args) => {
+    const [date, setDate] = useState<Date | undefined>()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { onSelectRange, ...singleArgs } = args
+
+    return (
+      <div style={{ width: '300px' }}>
+        <DatePicker
+          {...singleArgs}
+          mode="single"
+          date={date}
+          onSelectDate={(selectedDate) => {
+            setDate(selectedDate)
+            args.onSelectDate?.(selectedDate)
+          }}
+        />
+      </div>
+    )
+  },
   args: {
     mode: 'single',
     label: 'Select date',
@@ -497,6 +516,10 @@ export const RangeIntermediateState: Story = {
  */
 export const AllVariants = {
   render: () => {
+    const [singleDate, setSingleDate] = useState<Date | undefined>()
+    const [rangeDate, setRangeDate] = useState<DateRange | undefined>()
+    const [errorDate, setErrorDate] = useState<Date | undefined>()
+
     return (
       <div
         style={{
@@ -516,7 +539,13 @@ export const AllVariants = {
           >
             Single date
           </h4>
-          <DatePicker mode="single" label="Select date" placeholder="Select date" />
+          <DatePicker
+            mode="single"
+            label="Select date"
+            placeholder="Select date"
+            date={singleDate}
+            onSelectDate={setSingleDate}
+          />
         </div>
 
         <div>
@@ -529,7 +558,13 @@ export const AllVariants = {
           >
             Date range
           </h4>
-          <DatePicker mode="range" label="Select period" placeholder="Select range" />
+          <DatePicker
+            mode="range"
+            label="Select period"
+            placeholder="Select range"
+            date={rangeDate}
+            onSelectRange={setRangeDate}
+          />
         </div>
 
         <div>
@@ -547,6 +582,8 @@ export const AllVariants = {
             label="Select date"
             placeholder="Select date"
             error="This field is required"
+            date={errorDate}
+            onSelectDate={setErrorDate}
           />
         </div>
 
