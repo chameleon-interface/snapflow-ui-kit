@@ -17,7 +17,7 @@ Component for selecting a date or date range.
 - **Validation**: error display support
 - **Accessibility**: ARIA attributes, keyboard navigation (Escape to close)
 - **Auto-close**: calendar automatically closes after selecting a date in single mode
-- **Intermediate state**: shows selected start date while selecting range end date
+- **Intermediate state**: shows selected start date while selecting range end date. If start and end dates are equal, displays single date instead of range format
 - **Customization**: configurable styles and behavior
 
 ## Usage
@@ -46,7 +46,7 @@ Component for selecting a date or date range.
 />
 \`\`\`
 
-**Note:** In range mode, the component shows intermediate state - when only the start date is selected, it displays that date until the end date is chosen.
+**Note:** In range mode, the component shows intermediate state - when only the start date is selected, it displays that date until the end date is chosen. If start and end dates are the same, only one date is displayed instead of "date - date".
 
 ### Keyboard shortcuts
 - **Escape**: Close the calendar popup
@@ -275,11 +275,13 @@ type Story = StoryObj<typeof DatePicker>
 export const SingleDate: Story = {
   render: (args) => {
     const [date, setDate] = useState<Date | undefined>()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { onSelectRange, ...singleArgs } = args
 
     return (
       <div style={{ width: '300px' }}>
         <DatePicker
-          {...args}
+          {...singleArgs}
           mode="single"
           date={date}
           onSelectDate={(selectedDate) => {
@@ -305,15 +307,18 @@ export const SingleDate: Story = {
 /**
  * Date range selection.
  * Shows intermediate state when only start date is selected.
+ * If start and end dates are the same, displays single date instead of "date - date".
  */
 export const RangePicker: Story = {
   render: (args) => {
     const [range, setRange] = useState<DateRange | undefined>()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { onSelectDate, ...rangeArgs } = args
 
     return (
       <div style={{ width: '300px' }}>
         <DatePicker
-          {...args}
+          {...rangeArgs}
           mode="range"
           date={range}
           onSelectRange={(selectedRange) => {
@@ -372,11 +377,13 @@ export const WithInitialDate: Story = {
   render: (args) => {
     const initialDate = new Date(2024, 0, 15)
     const [date, setDate] = useState<Date | undefined>(initialDate)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { onSelectRange, ...singleArgs } = args
 
     return (
       <div style={{ width: '300px' }}>
         <DatePicker
-          {...args}
+          {...singleArgs}
           mode="single"
           date={date}
           onSelectDate={(selectedDate) => {
@@ -409,11 +416,13 @@ export const WithInitialRange: Story = {
       to: new Date(2024, 0, 20),
     }
     const [range, setRange] = useState<DateRange | undefined>(initialRange)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { onSelectDate, ...rangeArgs } = args
 
     return (
       <div style={{ width: '300px' }}>
         <DatePicker
-          {...args}
+          {...rangeArgs}
           mode="range"
           date={range}
           onSelectRange={(selectedRange) => {
@@ -439,15 +448,18 @@ export const WithInitialRange: Story = {
 /**
  * Demonstrates intermediate state in range mode.
  * When only start date is selected, it's displayed in the input field.
+ * If start and end dates are equal, only one date is shown.
  */
 export const RangeIntermediateState: Story = {
   render: (args) => {
     const [range, setRange] = useState<DateRange | undefined>()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { onSelectDate, ...rangeArgs } = args
 
     return (
       <div style={{ width: '300px' }}>
         <DatePicker
-          {...args}
+          {...rangeArgs}
           mode="range"
           date={range}
           onSelectRange={(selectedRange) => {
