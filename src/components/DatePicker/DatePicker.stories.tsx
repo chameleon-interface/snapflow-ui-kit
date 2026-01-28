@@ -272,7 +272,7 @@ export const SingleDate: Story = {
   args: {
     mode: 'single',
     label: 'Select date',
-    placeholder: 'DD.MM.YYYY',
+    placeholder: 'Select date',
   },
 }
 
@@ -310,7 +310,7 @@ export const RangePicker: Story = {
   args: {
     mode: 'range',
     label: 'Select period',
-    placeholder: 'DD.MM.YYYY - DD.MM.YYYY',
+    placeholder: 'Select range',
   },
 }
 
@@ -321,7 +321,7 @@ export const WithError: Story = {
   args: {
     mode: 'single',
     label: 'Select date',
-    placeholder: 'DD.MM.YYYY',
+    placeholder: 'Select date',
     error: 'Please select a date',
   },
 }
@@ -334,7 +334,7 @@ export const Disabled: Story = {
     mode: 'single',
     label: 'Select date',
     disabled: true,
-    placeholder: 'DD.MM.YYYY',
+    placeholder: 'Select date',
   },
 }
 
@@ -368,7 +368,7 @@ export const WithInitialDate: Story = {
   args: {
     mode: 'single',
     label: 'Select date',
-    placeholder: 'DD.MM.YYYY',
+    placeholder: 'Select date',
   },
 }
 
@@ -405,7 +405,7 @@ export const WithInitialRange: Story = {
   args: {
     mode: 'range',
     label: 'Select period',
-    placeholder: 'DD.MM.YYYY - DD.MM.YYYY',
+    placeholder: 'Select range',
   },
 }
 
@@ -433,7 +433,7 @@ export const AllVariants = {
           >
             Single date
           </h4>
-          <DatePicker mode="single" label="Select date" placeholder="DD.MM.YYYY" />
+          <DatePicker mode="single" label="Select date" placeholder="Select date" />
         </div>
 
         <div>
@@ -446,7 +446,7 @@ export const AllVariants = {
           >
             Date range
           </h4>
-          <DatePicker mode="range" label="Select period" placeholder="DD.MM.YYYY - DD.MM.YYYY" />
+          <DatePicker mode="range" label="Select period" placeholder="Select range" />
         </div>
 
         <div>
@@ -462,7 +462,7 @@ export const AllVariants = {
           <DatePicker
             mode="single"
             label="Select date"
-            placeholder="DD.MM.YYYY"
+            placeholder="Select date"
             error="This field is required"
           />
         </div>
@@ -477,7 +477,7 @@ export const AllVariants = {
           >
             Disabled state
           </h4>
-          <DatePicker mode="single" label="Select date" disabled placeholder="DD.MM.YYYY" />
+          <DatePicker mode="single" label="Select date" disabled placeholder="Select date" />
         </div>
       </div>
     )

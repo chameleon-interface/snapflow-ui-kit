@@ -6,7 +6,7 @@ import s from './InputContainer.module.css'
 import { InputContainerProps } from './InputContainer.types'
 
 export const InputContainer = (props: InputContainerProps) => {
-  const { id, label, onClick, value, disabled, error, placeholder, onClear, ...rest } = props
+  const { label, onClick, value, disabled, error, placeholder, onClear, ...rest } = props
   const [isHovered, setIsHovered] = useState(false)
 
   const handleClick = () => {
@@ -25,9 +25,9 @@ export const InputContainer = (props: InputContainerProps) => {
   return (
     <div className={s.inputContainer}>
       {label && (
-        <label htmlFor={id} className={disabled ? s.disabledLabel : s.label}>
+        <span className={disabled ? s.disabledLabel : s.label}>
           <Typography variant="text-14">{label}</Typography>
-        </label>
+        </span>
       )}
       <div
         className={s.inputWrapper}

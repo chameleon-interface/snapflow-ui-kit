@@ -1,7 +1,15 @@
 .inputContainer {
   display: flex;
   flex-direction: column;
-  min-width: 280px;
+  min-width: 255px;
+}
+
+.inputContainer.single {
+  min-width: 255px;
+}
+
+.inputContainer.range {
+  min-width: 300px;
 }
 
 .label span {
