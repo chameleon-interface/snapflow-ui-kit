@@ -1,0 +1,107 @@
+.wrapper {
+  display: inline-flex;
+  gap: 4px;
+  align-items: baseline;
+
+  font-size: 14px;
+  color: var(--color-light-100);
+}
+
+/* Show / on page */
+.label {
+  font-weight: 400;
+  white-space: nowrap;
+  opacity: 0.7;
+}
+
+/* wrapper for trigger + list */
+.select {
+  position: relative;
+  display: inline-flex;
+}
+
+/* === TRIGGER === */
+.trigger {
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-around;
+
+  width: 52px;
+  height: 24px;
+  padding: 0 2px 0 6px;
+  border: 1px solid var(--color-dark-300);
+  border-radius: 2px;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-light-100);
+
+  background: var(--color-dark-500);
+}
+
+/* hover не меняет стиль */
+.trigger:hover {
+  border-color: var(--color-dark-300);
+  background: var(--color-dark-500);
+}
+
+.trigger:focus-visible {
+  border: 2px solid var(--color-accent-500);
+  outline: none;
+}
+
+/* value */
+.value {
+  line-height: 1;
+}
+
+/* arrow */
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-light-900);
+}
+
+/* === DROPDOWN LIST === */
+.list {
+  position: absolute;
+  z-index: 100;
+  top: 100%;
+  left: 0;
+
+  width: 52px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--color-dark-300);
+  border-top: none;
+  border-radius: 0 0 2px 2px;
+
+  list-style: none;
+
+  background: var(--color-dark-500);
+}
+
+/* dropdown item */
+.item {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+
+  height: 24px;
+  padding: 0 6px;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-light-100);
+}
+
+.item:hover {
+  color: var(--color-light-100);
+  background: var(--color-dark-300);
+}
