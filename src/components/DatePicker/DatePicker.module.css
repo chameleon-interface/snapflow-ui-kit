@@ -1,0 +1,162 @@
+.wrapper {
+  position: relative;
+}
+
+.calendar {
+  pointer-events: none;
+
+  position: absolute;
+  z-index: 1000;
+  top: calc(100% + 8px);
+  left: 0;
+  transform: translateY(-8px);
+
+  padding: 16px 24px;
+  border: 1px solid var(--color-dark-100);
+  border-radius: 2px;
+
+  opacity: 0;
+  background: var(--color-dark-500);
+
+  transition: all 0.2s ease;
+}
+
+.calendar.open {
+  pointer-events: auto;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.captionLabel {
+  padding: 8px 6px;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 150%;
+  color: var(--color-light-100);
+}
+
+.nav {
+  position: absolute;
+  top: 10px;
+  right: 24px;
+  display: flex;
+}
+
+.navButtonPrevious,
+.navButtonNext {
+  all: unset;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px;
+  border-radius: 50%;
+
+  background-color: var(--color-dark-100);
+}
+
+.navIcon {
+  width: 20px;
+  height: 20px;
+  fill: var(--color-light-100);
+}
+
+.monthGrid {
+  table-layout: fixed;
+  border-spacing: 0 10px;
+  width: 100%;
+}
+
+.weekday {
+  width: 36px;
+  padding: 6px;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+  color: var(--color-light-900);
+  text-align: center;
+}
+
+.day {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  text-align: center;
+}
+
+.dayButton {
+  all: unset;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+  text-align: center;
+}
+
+.dayButton:hover {
+  border-radius: 50%;
+  background-color: var(--color-accent-700);
+}
+
+.day .dayButton {
+  color: var(--color-light-100);
+}
+
+.dayOutside .dayButton {
+  color: var(--color-light-900);
+}
+
+.dayToday .dayButton {
+  font-weight: 700;
+  color: var(--color-accent-500);
+}
+
+.daySelected .dayButton:hover,
+.dayRangeStart .dayButton:hover,
+.dayRangeEnd .dayButton:hover,
+.dayRangeMiddle .dayButton:hover {
+  border-radius: inherit;
+  background-color: inherit;
+}
+
+.monthGrid tr .day:nth-child(6) .dayButton,
+.monthGrid tr .day:nth-child(7) .dayButton {
+  color: var(--color-danger-300);
+}
+
+.dayRangeStart {
+  border-radius: 50% 0 0 50%;
+}
+
+.dayRangeStart.dayRangeEnd {
+  border-radius: 50%;
+}
+
+.dayRangeEnd {
+  border-radius: 0 50% 50% 0;
+}
+
+.dayRangeStart,
+.dayRangeEnd,
+.dayRangeMiddle,
+.daySelected {
+  background-color: var(--color-accent-900);
+}
+
+.daySelected:not(.dayRangeStart, .dayRangeEnd, .dayRangeMiddle) {
+  border-radius: 50%;
+}
