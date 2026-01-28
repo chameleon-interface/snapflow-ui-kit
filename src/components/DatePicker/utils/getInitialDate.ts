@@ -1,13 +1,11 @@
 import { DateRange } from 'react-day-picker'
-
-type DateType = Date | DateRange
+import { isDate, isDateRange } from './isDate'
+import { DateType } from '../DatePicker.types'
 
 export const getInitialSingle = (date: DateType | undefined): Date | undefined => {
-  if (!date) return undefined
-  return date instanceof Date ? date : undefined
+  return isDate(date) ? date : undefined
 }
 
 export const getInitialRange = (date: DateType | undefined): DateRange | undefined => {
-  if (!date) return undefined
-  return !(date instanceof Date) ? (date as DateRange) : undefined
+  return isDateRange(date) ? date : undefined
 }

@@ -52,7 +52,6 @@ export const InputContainer = (props: InputContainerProps) => {
             className={s.clearButton}
             onClick={handleClearClick}
             aria-label="Clear date"
-            tabIndex={0}
           >
             <CloseIcon className={s.clearIcon} />
           </button>

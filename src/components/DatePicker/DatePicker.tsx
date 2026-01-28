@@ -62,28 +62,13 @@ export const DatePicker = ({
     }
   }
 
-  const stableSetSelectedSingle = useCallback((date: Date | undefined) => {
-    setSelectedSingle(date)
-  }, [])
-
-  const stableSetSelectedRange = useCallback((range: DateRange | undefined) => {
-    setSelectedRange(range)
-  }, [])
-
-  useSyncDateFromProps(
-    mode,
-    date,
-    stableSetSelectedSingle,
-    stableSetSelectedRange,
-    setSelectedSingle,
-    setSelectedRange,
-  )
+  useSyncDateFromProps(mode, date, setSelectedSingle, setSelectedRange)
   useClickOutside(wrapperRef, isOpen, closeCalendar)
 
   const displayValue =
     mode === 'range' ? formatDateRange(selectedRange) : formatSingleDate(selectedSingle)
 
-  const commonDayPickerProps = getDayPickerProps(isOpen, disabled)
+  const commonDayPickerProps = getDayPickerProps(isOpen)
 
   return (
     <div ref={wrapperRef} className={styles.wrapper}>

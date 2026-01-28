@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import styles from '../DatePicker.module.css'
 
-export const getDayPickerProps = (isOpen: boolean, disabled?: boolean) => {
+export const getDayPickerProps = (isOpen: boolean) => {
   return {
     classNames: {
       root: clsx(styles.calendar, isOpen && styles.open),
@@ -23,6 +23,5 @@ export const getDayPickerProps = (isOpen: boolean, disabled?: boolean) => {
     },
     weekStartsOn: 1 as const,
     showOutsideDays: true,
-    disabled: disabled,
   }
 }

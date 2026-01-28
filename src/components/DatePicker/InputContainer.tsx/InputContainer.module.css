@@ -124,7 +124,7 @@
   color: var(--color-danger-500);
 }
 
-.inputWrapper:has(.trigger:hover:not(:disabled)) .icon,
-.inputWrapper:has(.trigger:hover:not(:disabled)) {
+.inputWrapper:has(.trigger:hover:not(:disabled, .error)) .icon,
+.inputWrapper:has(.trigger:hover:not(:disabled, .error)) {
   color: var(--color-light-100);
 }

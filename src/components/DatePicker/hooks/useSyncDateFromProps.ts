@@ -1,16 +1,13 @@
 import { useEffect, useRef } from 'react'
 import { DateRange } from 'react-day-picker'
 import { getSingleDateFromProps, getRangeDateFromProps } from '../utils/getDateFromProps'
-
-type DateType = Date | DateRange
+import { DateType } from '../DatePicker.types'
 
 export const useSyncDateFromProps = (
   mode: 'single' | 'range',
   date: DateType | undefined,
   setSelectedSingle: (date: Date | undefined) => void,
   setSelectedRange: (range: DateRange | undefined) => void,
-  resetSingle: (date: Date | undefined) => void,
-  resetRange: (range: DateRange | undefined) => void,
 ) => {
   const prevModeRef = useRef(mode)
 
@@ -19,9 +16,9 @@ export const useSyncDateFromProps = (
 
     if (modeChanged) {
       if (mode === 'single') {
-        resetRange(undefined)
+        setSelectedRange(undefined)
       } else {
-        resetSingle(undefined)
+        setSelectedSingle(undefined)
       }
       prevModeRef.current = mode
     }
@@ -31,5 +28,5 @@ export const useSyncDateFromProps = (
     } else {
       setSelectedRange(getRangeDateFromProps(date))
     }
-  }, [date, mode, setSelectedSingle, setSelectedRange, resetSingle, resetRange])
+  }, [date, mode, setSelectedSingle, setSelectedRange])
 }
