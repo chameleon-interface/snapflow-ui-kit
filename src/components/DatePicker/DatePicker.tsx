@@ -60,7 +60,6 @@ export const DatePicker = ({
     } else {
       handleRangeSelect(undefined)
     }
-    setIsOpen(false)
   }
 
   const stableSetSelectedSingle = useCallback((date: Date | undefined) => {
