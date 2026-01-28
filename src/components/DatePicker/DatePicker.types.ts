@@ -1,12 +1,25 @@
+import { ComponentPropsWithoutRef } from 'react'
 import { DateRange } from 'react-day-picker'
-import { InputProps } from './InputContainer.tsx/InputContainer.types'
 
-type DatePickerMode = 'single' | 'range'
-export type DateType = Date | DateRange
+export type InputProps = {
+  label?: string
+  error?: string
+  placeholder?: string
+  disabled?: boolean
+} & Omit<ComponentPropsWithoutRef<'input'>, 'value' | 'readOnly'>
 
-export type DatePickerProps = {
-  mode: DatePickerMode
+type SingleModeProps = {
+  mode: 'single'
+  date?: Date
   onSelectDate?: (date: Date | undefined) => void
+  onSelectRange?: never
+}
+
+type RangeModeProps = {
+  mode: 'range'
+  date?: DateRange
   onSelectRange?: (range: DateRange | undefined) => void
-  date?: DateType
-} & Omit<InputProps, 'onClick'>
+  onSelectDate?: never
+}
+
+export type DatePickerProps = (SingleModeProps | RangeModeProps) & Omit<InputProps, 'onClick'>

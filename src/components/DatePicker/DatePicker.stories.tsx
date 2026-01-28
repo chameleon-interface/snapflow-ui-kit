@@ -15,7 +15,9 @@ Component for selecting a date or date range.
 ## Features
 - **Two modes**: single date or date range selection
 - **Validation**: error display support
-- **Accessibility**: full keyboard navigation support
+- **Accessibility**: ARIA attributes, keyboard navigation (Escape to close)
+- **Auto-close**: calendar automatically closes after selecting a date in single mode
+- **Intermediate state**: shows selected start date while selecting range end date
 - **Customization**: configurable styles and behavior
 
 ## Usage
@@ -25,18 +27,30 @@ Component for selecting a date or date range.
 <DatePicker
     mode="single"
     label="Select date"
-    onSelectDate={(date) => console.log(date)}
+    date={selectedDate}
+    onSelectDate={(date) => setSelectedDate(date)}
+    placeholder="Select date"
 />
 \`\`\`
+
+**Note:** Calendar automatically closes after selecting a date in single mode.
 
 ### Date range selection
 \`\`\`tsx
 <DatePicker
     mode="range"
     label="Select period"
-    onSelectRange={(range) => console.log(range)}
+    date={selectedRange}
+    onSelectRange={(range) => setSelectedRange(range)}
+    placeholder="Select range"
 />
 \`\`\`
+
+**Note:** In range mode, the component shows intermediate state - when only the start date is selected, it displays that date until the end date is chosen.
+
+### Keyboard shortcuts
+- **Escape**: Close the calendar popup
+- **Click outside**: Close the calendar popup
 
 ### Integration with React Hook Form
 
@@ -211,27 +225,38 @@ const MyForm = () => {
   argTypes: {
     mode: {
       control: { type: 'select' },
-      description: 'Selection mode: single date or range',
+      description: 'Selection mode: single date or range. Determines which props are available.',
       options: ['single', 'range'],
+    },
+    date: {
+      control: false,
+      description:
+        'Selected date (for single mode) or date range (for range mode). Controlled value.',
     },
     label: {
       control: { type: 'text' },
       description: 'Label text above the input field',
     },
+    placeholder: {
+      control: { type: 'text' },
+      description: 'Placeholder text shown when no date is selected',
+    },
     error: {
       control: { type: 'text' },
-      description: 'Error text to display',
+      description: 'Error message to display below the input',
     },
     disabled: {
       control: { type: 'boolean' },
-      description: 'Disable the component',
+      description: 'Disable the component and prevent interaction',
     },
     onSelectDate: {
-      description: 'Callback when a single date is selected',
+      description:
+        'Callback when a single date is selected (only available in single mode). Calendar closes automatically after selection.',
       action: 'date selected',
     },
     onSelectRange: {
-      description: 'Callback when a date range is selected',
+      description:
+        'Callback when a date range is selected (only available in range mode). Called when start date is selected, and again when end date is selected.',
       action: 'range selected',
     },
   },
@@ -244,7 +269,8 @@ export default meta
 type Story = StoryObj<typeof DatePicker>
 
 /**
- * Basic example of single date selection
+ * Basic example of single date selection.
+ * Calendar automatically closes after selecting a date.
  */
 export const SingleDate: Story = {
   render: (args) => {
@@ -277,7 +303,8 @@ export const SingleDate: Story = {
 }
 
 /**
- * Date range selection
+ * Date range selection.
+ * Shows intermediate state when only start date is selected.
  */
 export const RangePicker: Story = {
   render: (args) => {
@@ -399,6 +426,50 @@ export const WithInitialRange: Story = {
             Period: {range.from.toLocaleDateString()} - {range.to.toLocaleDateString()}
           </p>
         )}
+      </div>
+    )
+  },
+  args: {
+    mode: 'range',
+    label: 'Select period',
+    placeholder: 'Select range',
+  },
+}
+
+/**
+ * Demonstrates intermediate state in range mode.
+ * When only start date is selected, it's displayed in the input field.
+ */
+export const RangeIntermediateState: Story = {
+  render: (args) => {
+    const [range, setRange] = useState<DateRange | undefined>()
+
+    return (
+      <div style={{ width: '300px' }}>
+        <DatePicker
+          {...args}
+          mode="range"
+          date={range}
+          onSelectRange={(selectedRange) => {
+            setRange(selectedRange)
+            args.onSelectRange?.(selectedRange)
+          }}
+        />
+        <div style={{ marginTop: '16px', fontSize: '14px', color: '#666' }}>
+          {range?.from && !range?.to && (
+            <p>
+              Start date selected: {range.from.toLocaleDateString()}
+              <br />
+              <small>Now select the end date</small>
+            </p>
+          )}
+          {range?.from && range?.to && (
+            <p>
+              Complete range: {range.from.toLocaleDateString()} - {range.to.toLocaleDateString()}
+            </p>
+          )}
+          {!range?.from && <p>Select start date to see intermediate state</p>}
+        </div>
       </div>
     )
   },

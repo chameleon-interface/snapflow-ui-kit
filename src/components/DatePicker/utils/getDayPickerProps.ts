@@ -21,7 +21,7 @@ export const getDayPickerProps = (isOpen: boolean) => {
       range_end: styles.dayRangeEnd,
       today: styles.dayToday,
     },
-    weekStartsOn: 1 as const,
+    weekStartsOn: 1 as 0 | 1 | 2 | 3 | 4 | 5 | 6,
     showOutsideDays: true,
   }
 }

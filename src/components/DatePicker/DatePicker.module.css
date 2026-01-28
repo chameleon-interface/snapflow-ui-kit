@@ -2,6 +2,150 @@
   position: relative;
 }
 
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 255px;
+}
+
+.inputContainer.single {
+  min-width: 255px;
+}
+
+.inputContainer.range {
+  min-width: 300px;
+}
+
+.label span {
+  color: var(--color-light-900);
+}
+
+.inputWrapper {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.trigger {
+  all: unset;
+
+  width: 100%;
+  padding: 6px 12px;
+  border: 1px solid var(--color-dark-100);
+  border-radius: 2px;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+  color: var(--color-light-100);
+
+  background: var(--color-dark-500);
+}
+
+.icon {
+  pointer-events: none;
+  position: absolute;
+  right: 12px;
+  color: var(--color-light-100);
+}
+
+.icon.placeholder {
+  color: var(--color-light-900);
+}
+
+.clearButton {
+  all: unset;
+
+  cursor: pointer;
+
+  position: absolute;
+  right: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 4px;
+  border-radius: 2px;
+
+  pointer-events: none;
+  opacity: 0;
+
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.clearButton:hover {
+  background-color: var(--color-dark-300);
+}
+
+.clearButton:focus-visible {
+  outline: 2px solid var(--color-accent-700);
+  outline-offset: 2px;
+
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.inputWrapper:hover .clearButton {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.clearIcon {
+  pointer-events: none;
+  width: 16px;
+  height: 16px;
+  color: var(--color-light-100);
+}
+
+.trigger:disabled {
+  border-color: var(--color-dark-100);
+  color: var(--color-dark-100);
+}
+
+.disabledLabel span {
+  color: var(--color-dark-100);
+}
+
+.trigger:focus-visible:not(:disabled) {
+  outline: 2px solid var(--color-accent-700);
+}
+
+.inputWrapper:has(.trigger:disabled) .icon,
+.inputWrapper:has(.trigger:disabled) .trigger::placeholder {
+  color: var(--color-dark-100);
+}
+
+.inputWrapper:has(.trigger:disabled) .icon,
+.inputWrapper:has(.trigger:disabled) .trigger {
+  cursor: not-allowed;
+}
+
+.inputWrapper:has(.trigger:focus-visible) .icon {
+  color: var(--color-light-100);
+}
+
+.error {
+  color: var(--color-danger-500);
+}
+
+.trigger.error {
+  border-color: var(--color-danger-500);
+}
+
+.inputWrapper:has(.trigger.error) .icon,
+.inputWrapper:has(.trigger.error) .trigger::placeholder {
+  color: var(--color-danger-500);
+}
+
+.inputWrapper:has(.trigger:hover:not(:disabled, .error)) .icon,
+.inputWrapper:has(.trigger:hover:not(:disabled, .error)) {
+  color: var(--color-light-100);
+}
+
 .calendar {
   pointer-events: none;
 
