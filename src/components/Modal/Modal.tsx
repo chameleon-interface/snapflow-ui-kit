@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { clsx } from 'clsx'
@@ -9,10 +11,7 @@ import { CloseIcon } from '@/icons/CloseIcon'
 
 export const Modal = ({ open, onClose, title, children, className }: ModalProps) => {
   const titleId = useId()
-  const previouslyFocusedElementRef = useRef<HTMLElement | null>(null)
   const onCloseRef = useRef(onClose)
-
-  const modalRoot = document.getElementById('modal-root') ?? document.body
 
   useEffect(() => {
     onCloseRef.current = onClose
@@ -21,12 +20,10 @@ export const Modal = ({ open, onClose, title, children, className }: ModalProps)
   useEffect(() => {
     if (!open) return
 
-    previouslyFocusedElementRef.current = document.activeElement as HTMLElement
     document.body.style.overflow = 'hidden'
 
     return () => {
       document.body.style.overflow = ''
-      previouslyFocusedElementRef.current?.focus()
     }
   }, [open])
 
@@ -46,6 +43,8 @@ export const Modal = ({ open, onClose, title, children, className }: ModalProps)
   }, [open])
 
   if (!open) return null
+  if (typeof document === 'undefined') return null
+  const modalRoot = document.getElementById('modal-root') ?? document.body
 
   return createPortal(
     <FocusTrap
