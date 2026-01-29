@@ -1,3 +1,7 @@
 export * from './Button'
+export * from './Checkbox'
 export * from './Radio'
+export * from './Select'
+export * from './Tab'
+export * from './Typography'
 export * from './Pagination'
