@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import React from 'react'
 import { Label } from './Label'
 
 const meta = {
@@ -21,7 +20,7 @@ const meta = {
       description: 'Label text content',
       table: { defaultValue: { summary: 'Label' } },
     },
-    fieldId: {
+    htmlFor: {
       control: { type: 'text' },
       description: 'ID of the related form field (preferred over htmlFor)',
       table: { defaultValue: { summary: '' } },
@@ -86,8 +85,15 @@ export const Required: Story = {
 export const RequiredWithInput: Story = {
   render: (args) => (
     <div style={{ display: 'flex', flexDirection: 'column', width: 240 }}>
-      <Label {...args} fieldId="email-input" />
-      <input id="email-input" type="text" placeholder="Enter email" aria-required={true} required style={{ padding: 8, borderRadius: 4, border: '1px solid #ccc' }} />
+      <Label {...args} htmlFor="email-input" />
+      <input
+        id="email-input"
+        type="text"
+        placeholder="Enter email"
+        aria-required={true}
+        required
+        style={{ padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
+      />
     </div>
   ),
   args: {
@@ -99,7 +105,7 @@ export const RequiredWithInput: Story = {
 }
 
 /** Several labels showcasing different colors. */
-export const ColorVariants: Story = {
+export const ColorVariants = {
   render: () => (
     <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
       <Label text="Default" textVariant="h1" color="var(--color-light-900)" />
