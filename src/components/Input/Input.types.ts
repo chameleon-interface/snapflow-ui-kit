@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, ReactNode } from 'react'
+import { ChangeEvent, InputHTMLAttributes, ReactNode } from 'react'
 
 export type InputProps = {
   label?: string
@@ -9,6 +9,7 @@ export type InputProps = {
   onEndIconClick?: () => void
 
   allowPasswordToggle?: boolean
-
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  value: string
   className?: string
 } & InputHTMLAttributes<HTMLInputElement>
