@@ -2,9 +2,8 @@ import { Typography } from '@/components/Typography'
 import { CalendarIcon, CloseIcon } from '@/icons'
 import clsx from 'clsx'
 import { useEffect, useRef, useState } from 'react'
-import { DateRange, DayPicker, type DropdownProps } from 'react-day-picker'
+import { DateRange, DayPicker } from 'react-day-picker'
 
-import { Select } from '../Select'
 import styles from './DatePicker.module.css'
 import { DatePickerProps } from './DatePicker.types'
 import { useClickOutside } from './hooks/useClickOutside'
@@ -47,12 +46,17 @@ export const DatePicker = ({
 
   const handleSelect = (value: Date | DateRange | undefined) => {
     if (mode === 'single') {
-      onSelectDate?.(value as Date | undefined)
-      if (value) {
+      const date = value as Date | undefined
+      onSelectDate?.(date)
+      if (date) {
         setIsOpen(false)
       }
     } else {
-      onSelectRange?.(value as DateRange | undefined)
+      const range = value as DateRange | undefined
+      onSelectRange?.(range)
+      if (range?.from && range?.to && range.from !== range.to) {
+        setIsOpen(false)
+      }
     }
   }
 
@@ -74,19 +78,7 @@ export const DatePicker = ({
 
   const hasValue = Boolean(displayValue)
 
-  const commonDayPickerProps = getDayPickerProps(isOpen)
-
-  const handleDropdownChange = (props: DropdownProps) => (value: string) => {
-    if (props.onChange) {
-      const syntheticEvent = {
-        target: {
-          value,
-        },
-      } as React.ChangeEvent<HTMLSelectElement>
-
-      props.onChange(syntheticEvent)
-    }
-  }
+  const commonDayPickerProps = getDayPickerProps(isOpen, disabled)
 
   return (
     <div ref={wrapperRef} className={styles.wrapper}>
@@ -133,24 +125,6 @@ export const DatePicker = ({
       {mode === 'single' ? (
         <DayPicker
           {...commonDayPickerProps}
-          components={{
-            Dropdown: (props: DropdownProps) => {
-              const selectOptions =
-                props.options?.map((option) => ({
-                  value: option.value.toString(),
-                  label: option.label,
-                })) || []
-              return (
-                <Select
-                  className={props.className}
-                  disabled={disabled}
-                  options={selectOptions}
-                  value={props.value?.toString()}
-                  onChange={handleDropdownChange(props)}
-                />
-              )
-            },
-          }}
           captionLayout="dropdown"
           mode="single"
           selected={date as Date | undefined}
