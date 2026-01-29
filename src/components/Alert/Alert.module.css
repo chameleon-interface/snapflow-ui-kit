@@ -1,16 +1,16 @@
 .alert {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 
-  width: 287px;
-  height: 48px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 387px;
   padding: 12px 24px;
   border-radius: 2px;
 
-  font-size: 13px;
   font-weight: 400;
-  line-height: 150%;
-  color: white;
+  color: var(--color-light-100);
 }
 
 /* Ошибка */
@@ -26,7 +26,20 @@
 }
 
 .closeButton {
-  padding-left: 40px;
+  cursor: pointer;
+  padding-left: 24px;
   border: none;
   background: transparent;
+}
+
+.message {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 150%;
 }

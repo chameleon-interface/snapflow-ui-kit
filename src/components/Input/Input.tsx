@@ -1,66 +1,91 @@
-import { ComponentPropsWithoutRef, forwardRef } from 'react'
+import { forwardRef, useId, useState } from 'react'
 import { clsx } from 'clsx'
 
 import s from './Input.module.css'
-import { EyeIcon, SearchIcon } from '../../icons'
+import { InputProps } from './Input.types'
+import { EyeIcon } from '@/icons'
 
-export type InputProps = {
-  error?: boolean
-  errorMessage?: string
-  className?: string
-} & ComponentPropsWithoutRef<'input'>
-
-export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { error = false, errorMessage, className, disabled, type = 'text', id, ...rest } = props
-
-  const isSearch = type === 'search'
-  const isPassword = type === 'password'
-
-  const errorId = error && errorMessage ? `${id || 'input'}-error` : undefined
-
-  const inputClasses = clsx(
-    s.input,
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  (
     {
-      [s.errorState]: error,
-      [s.disabled]: disabled,
-      [s.withStartIcon]: isSearch,
-      [s.withEndIcon]: isPassword,
+      label,
+      errorMessage,
+      startIcon,
+      endIcon,
+      onEndIconClick,
+      allowPasswordToggle,
+      disabled,
+      type = 'text',
+      className,
+      id,
+      ...rest
     },
-    className,
-  )
+    ref,
+  ) => {
+    const generatedId = useId()
+    const inputId = id ?? generatedId
+    const errorId = `${inputId}-error`
 
-  return (
-    <div className={s.inputWrapper}>
-      {isSearch && (
-        <div className={s.searchIcon}>
-          <SearchIcon />
+    const isError = Boolean(errorMessage)
+    const isPassword = type === 'password' && allowPasswordToggle
+
+    const [showPassword, setShowPassword] = useState(false)
+
+    return (
+      <div className={clsx(s.wrapper, className)}>
+        {label && (
+          <label htmlFor={inputId} className={s.label}>
+            {label}
+          </label>
+        )}
+
+        <div
+          className={clsx(s.inputContainer, {
+            [s.error]: isError,
+            [s.disabled]: disabled,
+            [s.withStartIcon]: Boolean(startIcon),
+            [s.withEndIcon]: Boolean(endIcon) || isPassword,
+          })}
+        >
+          {startIcon && <span className={s.startIcon}>{startIcon}</span>}
+
+          <input
+            ref={ref}
+            id={inputId}
+            className={s.input}
+            type={isPassword && showPassword ? 'text' : type}
+            disabled={disabled}
+            aria-invalid={isError}
+            aria-describedby={isError ? errorId : undefined}
+            {...rest}
+          />
+
+          {isPassword && (
+            <button
+              type="button"
+              className={s.endIcon}
+              onClick={() => setShowPassword((v) => !v)}
+              aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+            >
+              <EyeIcon />
+            </button>
+          )}
+
+          {endIcon && !isPassword && (
+            <button type="button" className={s.endIcon} onClick={onEndIconClick}>
+              {endIcon}
+            </button>
+          )}
         </div>
-      )}
 
-      <input
-        ref={ref}
-        id={id}
-        type={type}
-        disabled={disabled}
-        className={inputClasses}
-        aria-invalid={error}
-        aria-describedby={errorId}
-        {...rest}
-      />
-
-      {isPassword && (
-        <div className={s.eyeIcon}>
-          <EyeIcon />
-        </div>
-      )}
-
-      {error && errorMessage && (
-        <span id={errorId} className={s.errorMessage} role="alert">
-          {errorMessage}
-        </span>
-      )}
-    </div>
-  )
-})
+        {isError && (
+          <span id={errorId} className={s.errorMessage} role="alert">
+            {errorMessage}
+          </span>
+        )}
+      </div>
+    )
+  },
+)
 
 Input.displayName = 'Input'

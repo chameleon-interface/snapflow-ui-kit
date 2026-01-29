@@ -47,7 +47,6 @@ import {
   PlayCircleIcon,
   PlusCirceIcon,
   PlusSquareIcon,
-  RadioButtonIcon,
   RecaptchaLogo,
   SearchIcon,
   SettingsIcon,
@@ -107,7 +106,6 @@ const icons: IconEntry[] = [
   { name: 'SearchIcon', Component: SearchIcon, hasVariants: false },
   { name: 'SettingsIcon', Component: SettingsIcon, hasVariants: true },
   { name: 'TrashIcon', Component: TrashIcon, hasVariants: true },
-  { name: 'RadioButtonIcon', Component: RadioButtonIcon, hasVariants: false },
   { name: 'FacebookLogo', Component: FacebookLogo, hasVariants: false },
   { name: 'FlagRussia', Component: FlagRussia, hasVariants: false },
   { name: 'FlagUK', Component: FlagUK, hasVariants: false },
@@ -176,62 +174,20 @@ const IconGallery = ({ type }: IconGalleryProps) => (
           gap: '24px',
         }}
       >
-        {iconsWithoutVariants.map(({ name, Component }) => {
-          if (name === 'RadioButtonIcon') {
-            return (
-              <div
-                key={name}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '8px',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      gap: '4px',
-                    }}
-                  >
-                    <Component checked={false} style={{ width: 32, height: 32 }} />
-                    <span style={{ fontSize: '11px', color: '#888' }}>unchecked</span>
-                  </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      gap: '4px',
-                    }}
-                  >
-                    <Component checked style={{ width: 32, height: 32 }} />
-                    <span style={{ fontSize: '11px', color: '#888' }}>checked</span>
-                  </div>
-                </div>
-                <span style={{ fontSize: '12px', color: '#666' }}>{name}</span>
-              </div>
-            )
-          }
-
-          return (
-            <div
-              key={name}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '8px',
-              }}
-            >
-              <Component style={{ width: 32, height: 32 }} />
-              <span style={{ fontSize: '12px', color: '#666' }}>{name}</span>
-            </div>
-          )
-        })}
+        {iconsWithoutVariants.map(({ name, Component }) => (
+          <div
+            key={name}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+          >
+            <Component style={{ width: 32, height: 32 }} />
+            <span style={{ fontSize: '12px', color: '#666' }}>{name}</span>
+          </div>
+        ))}
       </div>
     </div>
     <div>

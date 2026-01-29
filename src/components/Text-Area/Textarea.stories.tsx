@@ -7,11 +7,8 @@ const meta = {
   tags: ['autodocs'],
   parameters: { layout: 'centered' },
   argTypes: {
-    disabled: { control: 'boolean' },
-    error: { control: 'boolean' },
-    errorMessage: { control: 'text' },
+    label: { control: 'text' },
     placeholder: { control: 'text' },
-    value: { control: 'text' },
   },
 } satisfies Meta<typeof Textarea>
 
@@ -21,6 +18,7 @@ type Story = StoryObj<typeof meta>
 /** Default состояние */
 export const Default: Story = {
   args: {
+    label: 'Text-area',
     placeholder: 'Text-area',
   },
 }
@@ -28,17 +26,18 @@ export const Default: Story = {
 /** Error состояние */
 export const Error: Story = {
   args: {
+    label: 'Text-area',
     placeholder: 'Text-area',
-    error: true,
-    errorMessage: 'Ошибка ввода',
+    errorMessage: 'Text-area',
   },
 }
 
 /** Focus состояние */
 export const Focus: Story = {
   args: {
+    label: 'Text-area',
     placeholder: 'Text-area',
-    value: 'Текст',
+    value: 'Text-area',
   },
   play: async ({ canvasElement }) => {
     const textarea = canvasElement.querySelector('textarea') as HTMLTextAreaElement
@@ -49,8 +48,9 @@ export const Focus: Story = {
 /** Disabled состояние */
 export const Disabled: Story = {
   args: {
+    label: 'Text-area',
     placeholder: 'Text-area',
+    value: 'Text-area',
     disabled: true,
-    value: 'Нельзя редактировать',
   },
 }
