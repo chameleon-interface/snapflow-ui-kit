@@ -171,36 +171,31 @@
   opacity: 1;
 }
 
-.captionLabel {
-  padding: 8px 6px;
-
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 150%;
-  color: var(--color-light-100);
-}
-
-.nav {
-  position: absolute;
-  top: 10px;
-  right: 24px;
+.monthsCaption {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .navButtonPrevious,
 .navButtonNext {
   all: unset;
-
   cursor: pointer;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   padding: 8px;
   border-radius: 50%;
-
+  position: absolute;
   background-color: var(--color-dark-100);
+}
+
+.navButtonPrevious {
+  left: 24px;
+}
+
+.navButtonNext {
+  right: 24px;
 }
 
 .navIcon {
@@ -213,6 +208,10 @@
   table-layout: fixed;
   border-spacing: 0 10px;
   width: 100%;
+}
+
+.dropdowns {
+  width: 150px;
 }
 
 .weekday {

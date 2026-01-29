@@ -5,11 +5,20 @@ export const getDayPickerProps = (isOpen: boolean) => {
   return {
     classNames: {
       root: clsx(styles.calendar, isOpen && styles.open),
-      nav: styles.nav,
+      month_caption: styles.monthsCaption,
       button_previous: styles.navButtonPrevious,
       button_next: styles.navButtonNext,
       chevron: styles.navIcon,
       caption_label: styles.captionLabel,
+
+      dropdowns: styles.dropdowns,
+      dropdown_root: styles.dropdown_root,
+      dropdown: styles.dropdown,
+      dropdown_select_option: styles.option,
+
+      months_dropdown: styles.monthsDropdown,
+      years_dropdown: styles.yearsDropdown,
+
       month_grid: styles.monthGrid,
       weekday: styles.weekday,
       day_button: styles.dayButton,

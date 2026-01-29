@@ -1,15 +1,16 @@
-import { useRef, useState, useEffect } from 'react'
-import { DateRange, DayPicker } from 'react-day-picker'
 import { Typography } from '@/components/Typography'
 import { CalendarIcon, CloseIcon } from '@/icons'
 import clsx from 'clsx'
+import { useEffect, useRef, useState } from 'react'
+import { DateRange, DayPicker, type DropdownProps } from 'react-day-picker'
 
+import { Select } from '../Select'
 import styles from './DatePicker.module.css'
 import { DatePickerProps } from './DatePicker.types'
+import { useClickOutside } from './hooks/useClickOutside'
 import { formatDateRange } from './utils/formatDateRange'
 import { formatSingleDate } from './utils/formatSingleDate'
 import { getDayPickerProps } from './utils/getDayPickerProps'
-import { useClickOutside } from './hooks/useClickOutside'
 
 export const DatePicker = ({
   mode,
@@ -75,6 +76,18 @@ export const DatePicker = ({
 
   const commonDayPickerProps = getDayPickerProps(isOpen)
 
+  const handleDropdownChange = (props: DropdownProps) => (value: string) => {
+    if (props.onChange) {
+      const syntheticEvent = {
+        target: {
+          value,
+        },
+      } as React.ChangeEvent<HTMLSelectElement>
+
+      props.onChange(syntheticEvent)
+    }
+  }
+
   return (
     <div ref={wrapperRef} className={styles.wrapper}>
       <div className={styles.inputContainer}>
@@ -120,6 +133,25 @@ export const DatePicker = ({
       {mode === 'single' ? (
         <DayPicker
           {...commonDayPickerProps}
+          components={{
+            Dropdown: (props: DropdownProps) => {
+              const selectOptions =
+                props.options?.map((option) => ({
+                  value: option.value.toString(),
+                  label: option.label,
+                })) || []
+              return (
+                <Select
+                  className={props.className}
+                  disabled={disabled}
+                  options={selectOptions}
+                  value={props.value?.toString()}
+                  onChange={handleDropdownChange(props)}
+                />
+              )
+            },
+          }}
+          captionLayout="dropdown"
           mode="single"
           selected={date as Date | undefined}
           onSelect={handleSelect as (date: Date | undefined) => void}
@@ -127,6 +159,7 @@ export const DatePicker = ({
       ) : (
         <DayPicker
           {...commonDayPickerProps}
+          captionLayout="dropdown"
           mode="range"
           selected={date as DateRange | undefined}
           onSelect={handleSelect as (range: DateRange | undefined) => void}
