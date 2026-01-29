@@ -4,7 +4,7 @@ import { DropdownProps } from 'react-day-picker'
 import { Select } from '../../Select'
 import styles from '../DatePicker.module.css'
 
-const createDropdownComponent = (disabled?: boolean) => {
+const createDropdownComponent = () => {
   const DropdownComponent = (props: DropdownProps) => {
     const handleDropdownChange = (value: string) => {
       if (props.onChange) {
@@ -27,7 +27,6 @@ const createDropdownComponent = (disabled?: boolean) => {
     return (
       <Select
         className={props.className}
-        disabled={disabled}
         options={selectOptions}
         value={props.value?.toString()}
         onChange={handleDropdownChange}
@@ -40,7 +39,7 @@ const createDropdownComponent = (disabled?: boolean) => {
   return DropdownComponent
 }
 
-export const getDayPickerProps = (isOpen: boolean, disabled?: boolean) => {
+export const getDayPickerProps = (isOpen: boolean) => {
   return {
     classNames: {
       root: clsx(styles.calendar, isOpen && styles.open),
@@ -70,9 +69,10 @@ export const getDayPickerProps = (isOpen: boolean, disabled?: boolean) => {
       today: styles.dayToday,
     },
     components: {
-      Dropdown: createDropdownComponent(disabled),
+      Dropdown: createDropdownComponent(),
     },
     weekStartsOn: 1 as 0 | 1 | 2 | 3 | 4 | 5 | 6,
     showOutsideDays: true,
+    reverseYears: true,
   }
 }

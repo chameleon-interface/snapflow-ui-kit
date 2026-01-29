@@ -78,7 +78,7 @@ export const DatePicker = ({
 
   const hasValue = Boolean(displayValue)
 
-  const commonDayPickerProps = getDayPickerProps(isOpen, disabled)
+  const commonDayPickerProps = getDayPickerProps(isOpen)
 
   return (
     <div ref={wrapperRef} className={styles.wrapper}>
