@@ -8,14 +8,6 @@
   min-width: 255px;
 }
 
-.inputContainer.single {
-  min-width: 255px;
-}
-
-.inputContainer.range {
-  min-width: 300px;
-}
-
 .label span {
   color: var(--color-light-900);
 }

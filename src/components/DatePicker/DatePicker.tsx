@@ -1,7 +1,7 @@
 import { Typography } from '@/components/Typography'
 import { CalendarIcon, CloseIcon } from '@/icons'
 import clsx from 'clsx'
-import { useEffect, useRef, useState } from 'react'
+import { type MouseEvent, useCallback, useMemo, useRef, useState } from 'react'
 import { DateRange, DayPicker } from 'react-day-picker'
 
 import styles from './DatePicker.module.css'
@@ -25,60 +25,59 @@ export const DatePicker = ({
   const [isOpen, setIsOpen] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
 
-  const closeCalendar = () => {
+  const closeCalendar = useCallback(() => {
     setIsOpen(false)
-  }
+  }, [])
 
   useClickOutside(wrapperRef, isOpen, closeCalendar)
 
-  useEffect(() => {
-    if (!isOpen) return
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIsOpen(false)
+  const handleSelect = useCallback(
+    (value: Date | DateRange | undefined) => {
+      if (mode === 'single') {
+        if (value instanceof Date || value === undefined) {
+          onSelectDate?.(value)
+          if (value) {
+            setIsOpen(false)
+          }
+        }
+      } else {
+        if (
+          value === undefined ||
+          (typeof value === 'object' && 'from' in value && 'to' in value)
+        ) {
+          onSelectRange?.(value)
+          if (value && 'from' in value && value.from && value.to && value.from !== value.to) {
+            setIsOpen(false)
+          }
+        }
       }
-    }
-    document.addEventListener('keydown', handleEscape)
-    return () => {
-      document.removeEventListener('keydown', handleEscape)
-    }
-  }, [isOpen])
+    },
+    [mode, onSelectDate, onSelectRange],
+  )
 
-  const handleSelect = (value: Date | DateRange | undefined) => {
-    if (mode === 'single') {
-      const date = value as Date | undefined
-      onSelectDate?.(date)
-      if (date) {
-        setIsOpen(false)
-      }
-    } else {
-      const range = value as DateRange | undefined
-      onSelectRange?.(range)
-      if (range?.from && range?.to && range.from !== range.to) {
-        setIsOpen(false)
-      }
-    }
-  }
+  const handleClear = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation()
+      handleSelect(undefined)
+    },
+    [handleSelect],
+  )
 
-  const handleClear = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    if (disabled) return
-    handleSelect(undefined)
-  }
-
-  const openHandler = () => {
+  const handleToggle = useCallback(() => {
     if (disabled) return
     setIsOpen((prev) => !prev)
-  }
+  }, [disabled])
 
-  const displayValue =
-    mode === 'single'
-      ? formatSingleDate(date as Date | undefined)
-      : formatDateRange(date as DateRange | undefined)
+  const displayValue = useMemo(() => {
+    if (mode === 'single') {
+      return formatSingleDate(date instanceof Date ? date : undefined)
+    }
+    return formatDateRange(date && typeof date === 'object' && 'from' in date ? date : undefined)
+  }, [mode, date])
 
   const hasValue = Boolean(displayValue)
 
-  const commonDayPickerProps = getDayPickerProps(isOpen)
+  const commonDayPickerProps = useMemo(() => getDayPickerProps(isOpen), [isOpen])
 
   return (
     <div ref={wrapperRef} className={styles.wrapper}>
@@ -93,7 +92,7 @@ export const DatePicker = ({
             type="text"
             readOnly
             className={clsx(styles.trigger, error && styles.error)}
-            onClick={openHandler}
+            onClick={handleToggle}
             value={displayValue}
             placeholder={placeholder}
             disabled={disabled}
@@ -127,16 +126,16 @@ export const DatePicker = ({
           {...commonDayPickerProps}
           captionLayout="dropdown"
           mode="single"
-          selected={date as Date | undefined}
-          onSelect={handleSelect as (date: Date | undefined) => void}
+          selected={date instanceof Date ? date : undefined}
+          onSelect={(selectedDate) => handleSelect(selectedDate)}
         />
       ) : (
         <DayPicker
           {...commonDayPickerProps}
           captionLayout="dropdown"
           mode="range"
-          selected={date as DateRange | undefined}
-          onSelect={handleSelect as (range: DateRange | undefined) => void}
+          selected={date && typeof date === 'object' && 'from' in date ? date : undefined}
+          onSelect={(selectedRange) => handleSelect(selectedRange)}
         />
       )}
     </div>
