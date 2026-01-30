@@ -45,7 +45,7 @@
 }
 
 .inputContainer:has(:focus-visible) {
-  border-color: var(--color-accent-500);
+  border-color: var(--color-light-100);
 }
 
 .inputContainer.error {
@@ -66,7 +66,7 @@
 }
 
 .inputContainer.withEndIcon .input {
-  padding-right: 45px;
+  padding-right: 40px;
 }
 
 .startIcon,
@@ -78,27 +78,27 @@
 }
 
 .startIcon {
-  left: 12px;
+  left: 11px;
   color: var(--color-light-900);
 }
 
-.startIcon:disabled {
+.inputContainer:focus-within .startIcon {
   color: var(--color-light-100);
 }
 
-.inputContainer:active .startIcon {
-  color: var(--color-light-100);
+.inputContainer.disabled .startIcon {
+  color: var(--color-dark-100);
 }
 
 .endIcon {
   cursor: pointer;
 
-  right: 12px;
+  right: 11px;
 
   padding: 0;
   border: none;
 
-  color: var(--color-light-900);
+  color: var(--color-light-100);
 
   background: none;
 }
@@ -113,7 +113,12 @@
 }
 
 .errorMessage {
-  margin-top: 4px;
-  font-size: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 171%;
+  color: var(--color-danger-500);
+}
+
+.required {
   color: var(--color-danger-500);
 }

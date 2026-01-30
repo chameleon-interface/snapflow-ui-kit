@@ -17,6 +17,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled,
       type = 'text',
       className,
+      required,
       id,
       ...rest
     },
@@ -36,6 +37,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label htmlFor={inputId} className={clsx(s.label, { [s.disabled]: disabled })}>
             {label}
+            {required && <sup className={s.required}> *</sup>}
           </label>
         )}
 
@@ -54,6 +56,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             id={inputId}
             className={s.input}
             type={isPassword && showPassword ? 'text' : type}
+            autoComplete={type === 'password' ? 'current-password' : 'off'}
+            required={required}
             disabled={disabled}
             aria-invalid={isError}
             aria-describedby={errorId}
@@ -65,8 +69,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               type="button"
               className={s.endIcon}
               onClick={() => setShowPassword((v) => !v)}
-              aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
               disabled={disabled}
+              tabIndex={-1}
             >
               {showPassword ? <EyeOffIcon /> : <EyeIcon />}
             </button>
@@ -77,7 +82,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               type="button"
               className={s.endIcon}
               onClick={onEndIconClick}
-              aria-label="Действие"
+              aria-label="Action"
               disabled={disabled}
             >
               {endIcon}

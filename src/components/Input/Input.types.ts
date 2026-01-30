@@ -11,6 +11,6 @@ export type InputProps = {
   allowPasswordToggle?: boolean
   className?: string
 
-  value: string
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  value?: string
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>

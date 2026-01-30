@@ -28,13 +28,13 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** Template для всех stories с управляемым value */
+/** Template for all stories with controlled value */
 
 /** Default */
 export const Default: Story = {
   args: {
     label: 'Email',
-    placeholder: 'Введите email',
+    placeholder: 'Enter email',
   },
 }
 
@@ -42,37 +42,35 @@ export const Default: Story = {
 export const Error: Story = {
   args: {
     label: 'Email',
-    placeholder: 'Введите email',
-    errorMessage: 'Неверный формат',
+    placeholder: 'Enter email',
+    errorMessage: 'Invalid format',
   },
 }
 
 /** Disabled */
 export const Disabled: Story = {
   args: {
-    type: 'password',
-    label: 'password',
-    placeholder: 'Введите password',
-    value: 'Нельзя редактировать',
+    label: 'Password',
+    value: 'Cannot be edited',
+    onChange: () => {},
     disabled: true,
-    allowPasswordToggle: true,
   },
 }
 
 /** Start icon */
 export const WithStartIcon: Story = {
   args: {
-    label: 'Поиск',
-    placeholder: 'Введите запрос',
+    label: 'Search',
+    placeholder: 'Enter query',
     startIcon: 'Search',
   },
 }
 
-/** Password input с toggle eye */
+/** Password input with toggle eye */
 export const Password: Story = {
   args: {
-    label: 'Пароль',
-    placeholder: 'Введите пароль',
+    label: 'Password',
+    placeholder: 'Enter password',
     type: 'password',
     allowPasswordToggle: true,
   },
