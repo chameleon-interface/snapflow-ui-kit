@@ -13,7 +13,7 @@ export const Alert: FC<AlertProps> = ({
   onClose,
 }) => {
   return (
-    <div className={clsx(s.alert, s[variant], className)}>
+    <div className={clsx(s.alert, s[variant], className)} role="alert">
       <div className={s.content}>
         {title && <div className={s.title}>{title}</div>}
         <div className={s.message}>{message}</div>

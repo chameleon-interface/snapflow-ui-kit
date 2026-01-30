@@ -1,5 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react-vite'
+import { Toaster } from 'react-hot-toast'
+
 import { Alert } from './Alert'
+import { toastError, toastSuccess } from './toast'
 
 const meta: Meta<typeof Alert> = {
   title: 'Components/Alert',
@@ -9,12 +12,12 @@ const meta: Meta<typeof Alert> = {
     variant: {
       control: { type: 'radio' },
       options: ['error', 'success'],
-      description: 'Тип алерта',
+      description: 'Alert type',
       table: { defaultValue: { summary: 'error' } },
     },
     message: {
       control: { type: 'text' },
-      description: 'Текст алерта',
+      description: 'Alert text',
       table: { defaultValue: { summary: '' } },
     },
   },
@@ -35,4 +38,18 @@ export const Success: Story = {
     variant: 'success',
     message: 'Your settings are saved',
   },
+}
+
+export const WithToast: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 12 }}>
+      <button type="button" onClick={() => toastSuccess('Data saved successfully')}>
+        Show success toast
+      </button>
+      <button type="button" onClick={() => toastError('Please try again later')}>
+        Show error toast
+      </button>
+      <Toaster position={'top-right'} />
+    </div>
+  ),
 }
