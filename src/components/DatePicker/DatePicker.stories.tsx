@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import React, { useState } from 'react'
-import { DateRange } from 'react-day-picker'
 
 import { DatePicker } from './DatePicker'
 
@@ -10,13 +9,16 @@ const meta = {
     docs: {
       description: {
         component: `
-Component for selecting a date or date range.
+Component for selecting a date or date range with controlled input value.
 
 ## Features
 - **Two modes**: single date or date range selection
+- **Controlled component**: uses \`value\` and \`onChange\` props for string values in DD.MM.YYYY format
+- **Manual input**: type dates directly in DD.MM.YYYY format
+- **Automatic parsing**: component automatically parses and validates input
 - **Validation**: error display support
 - **Accessibility**: ARIA attributes, keyboard navigation (Escape to close)
-- **Auto-close**: calendar automatically closes after selecting a date in single mode
+- **Auto-close**: calendar automatically closes after selecting a complete date/range
 - **Intermediate state**: shows selected start date while selecting range end date. If start and end dates are equal, displays single date instead of range format
 - **Customization**: configurable styles and behavior
 
@@ -24,29 +26,41 @@ Component for selecting a date or date range.
 
 ### Single date selection
 \`\`\`tsx
+const [value, setValue] = useState('')
+
 <DatePicker
     mode="single"
+    value={value}
+    onChange={setValue}
     label="Select date"
-    date={selectedDate}
-    onSelectDate={(date) => setSelectedDate(date)}
     placeholder="Select date"
 />
 \`\`\`
 
-**Note:** Calendar automatically closes after selecting a date in single mode.
+**Note:** 
+- Calendar automatically closes after selecting a date in single mode
+- You can type dates manually in DD.MM.YYYY format
+- Component automatically parses and validates the input
+- Value is stored as string in DD.MM.YYYY format (e.g., "15.01.2024")
 
 ### Date range selection
 \`\`\`tsx
+const [value, setValue] = useState('')
+
 <DatePicker
     mode="range"
+    value={value}
+    onChange={setValue}
     label="Select period"
-    date={selectedRange}
-    onSelectRange={(range) => setSelectedRange(range)}
     placeholder="Select range"
 />
 \`\`\`
 
-**Note:** In range mode, the component shows intermediate state - when only the start date is selected, it displays that date until the end date is chosen. If start and end dates are the same, only one date is displayed instead of "date - date".
+**Note:** 
+- In range mode, the component shows intermediate state - when only the start date is selected, it displays that date until the end date is chosen
+- If start and end dates are the same, only one date is displayed instead of "date - date"
+- Value format: "DD.MM.YYYY - DD.MM.YYYY" for complete range, or "DD.MM.YYYY" for partial range
+- Calendar automatically closes when both dates are selected
 
 ### Keyboard shortcuts
 - **Escape**: Close the calendar popup
@@ -62,13 +76,13 @@ import { useForm, Controller } from 'react-hook-form';
 import { DatePicker } from './DatePicker';
 
 type FormData = {
-    birthDate: Date | undefined;
+    birthDate: string;
 };
 
 const MyForm = () => {
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
         defaultValues: {
-            birthDate: undefined,
+            birthDate: '',
         },
     });
 
@@ -86,9 +100,10 @@ const MyForm = () => {
                     <DatePicker
                         mode="single"
                         label="Birth date"
-                        date={field.value}
-                        onSelectDate={(date) => field.onChange(date)}
+                        value={field.value}
+                        onChange={field.onChange}
                         error={errors.birthDate?.message}
+                        placeholder="Select date"
                     />
                 )}
             />
@@ -101,17 +116,16 @@ const MyForm = () => {
 #### Date range with React Hook Form
 \`\`\`tsx
 import { useForm, Controller } from 'react-hook-form';
-import { DateRange } from 'react-day-picker';
 import { DatePicker } from './DatePicker';
 
 type FormData = {
-    period: DateRange | undefined;
+    period: string;
 };
 
 const MyForm = () => {
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
         defaultValues: {
-            period: undefined,
+            period: '',
         },
     });
 
@@ -126,8 +140,8 @@ const MyForm = () => {
                 control={control}
                 rules={{
                     validate: (value) => {
-                        if (!value?.from || !value?.to) {
-                            return 'Please select a date range';
+                        if (!value || !value.includes(' - ')) {
+                            return 'Please select a complete date range';
                         }
                         return true;
                     },
@@ -136,9 +150,10 @@ const MyForm = () => {
                     <DatePicker
                         mode="range"
                         label="Select period"
-                        date={field.value}
-                        onSelectRange={(range) => field.onChange(range)}
+                        value={field.value}
+                        onChange={field.onChange}
                         error={errors.period?.message}
+                        placeholder="Select range"
                     />
                 )}
             />
@@ -151,13 +166,12 @@ const MyForm = () => {
 #### Multiple date fields with React Hook Form
 \`\`\`tsx
 import { useForm, Controller } from 'react-hook-form';
-import { DateRange } from 'react-day-picker';
 import { DatePicker } from './DatePicker';
 
 type FormData = {
-    startDate: Date | undefined;
-    endDate: Date | undefined;
-    vacationPeriod: DateRange | undefined;
+    startDate: string;
+    endDate: string;
+    vacationPeriod: string;
 };
 
 const MyForm = () => {
@@ -177,9 +191,10 @@ const MyForm = () => {
                     <DatePicker
                         mode="single"
                         label="Start date"
-                        date={field.value}
-                        onSelectDate={(date) => field.onChange(date)}
+                        value={field.value}
+                        onChange={field.onChange}
                         error={errors.startDate?.message}
+                        placeholder="Select date"
                     />
                 )}
             />
@@ -192,9 +207,10 @@ const MyForm = () => {
                     <DatePicker
                         mode="single"
                         label="End date"
-                        date={field.value}
-                        onSelectDate={(date) => field.onChange(date)}
+                        value={field.value}
+                        onChange={field.onChange}
                         error={errors.endDate?.message}
+                        placeholder="Select date"
                     />
                 )}
             />
@@ -206,9 +222,10 @@ const MyForm = () => {
                     <DatePicker
                         mode="range"
                         label="Vacation period"
-                        date={field.value}
-                        onSelectRange={(range) => field.onChange(range)}
+                        value={field.value}
+                        onChange={field.onChange}
                         error={errors.vacationPeriod?.message}
+                        placeholder="Select range"
                     />
                 )}
             />
@@ -228,10 +245,15 @@ const MyForm = () => {
       description: 'Selection mode: single date or range. Determines which props are available.',
       options: ['single', 'range'],
     },
-    date: {
-      control: false,
+    value: {
+      control: { type: 'text' },
       description:
-        'Selected date (for single mode) or date range (for range mode). Controlled value.',
+        'Controlled value for the input field. Used for manual date input in DD.MM.YYYY format.',
+    },
+    onChange: {
+      description:
+        'Callback when the input value changes. Used to sync input state with parent component.',
+      action: 'input changed',
     },
     label: {
       control: { type: 'text' },
@@ -249,16 +271,6 @@ const MyForm = () => {
       control: { type: 'boolean' },
       description: 'Disable the component and prevent interaction',
     },
-    onSelectDate: {
-      description:
-        'Callback when a single date is selected (only available in single mode). Calendar closes automatically after selection.',
-      action: 'date selected',
-    },
-    onSelectRange: {
-      description:
-        'Callback when a date range is selected (only available in range mode). Called when start date is selected, and again when end date is selected.',
-      action: 'range selected',
-    },
   },
   component: DatePicker,
   tags: ['autodocs'],
@@ -271,27 +283,18 @@ type Story = StoryObj<typeof DatePicker>
 /**
  * Basic example of single date selection.
  * Calendar automatically closes after selecting a date.
+ * You can also type dates manually in DD.MM.YYYY format.
  */
 export const SingleDate: Story = {
   render: (args) => {
-    const [date, setDate] = useState<Date | undefined>()
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { onSelectRange, ...singleArgs } = args
+    const [value, setValue] = useState('')
 
     return (
       <div style={{ width: '300px' }}>
-        <DatePicker
-          {...singleArgs}
-          mode="single"
-          date={date}
-          onSelectDate={(selectedDate) => {
-            setDate(selectedDate)
-            args.onSelectDate?.(selectedDate)
-          }}
-        />
-        {date && (
+        <DatePicker {...args} mode="single" value={value} onChange={setValue} />
+        {value && (
           <p style={{ marginTop: '16px', fontSize: '14px', color: '#666' }}>
-            Selected date: {date.toLocaleDateString()}
+            Selected date: {value}
           </p>
         )}
       </div>
@@ -299,7 +302,7 @@ export const SingleDate: Story = {
   },
   args: {
     mode: 'single',
-    label: 'Select date',
+    label: 'Birth date',
     placeholder: 'Select date',
   },
 }
@@ -308,32 +311,18 @@ export const SingleDate: Story = {
  * Date range selection.
  * Shows intermediate state when only start date is selected.
  * If start and end dates are the same, displays single date instead of "date - date".
+ * Calendar automatically closes when both dates are selected.
  */
 export const RangePicker: Story = {
   render: (args) => {
-    const [range, setRange] = useState<DateRange | undefined>()
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { onSelectDate, ...rangeArgs } = args
+    const [value, setValue] = useState('')
 
     return (
       <div style={{ width: '300px' }}>
-        <DatePicker
-          {...rangeArgs}
-          mode="range"
-          date={range}
-          onSelectRange={(selectedRange) => {
-            setRange(selectedRange)
-            args.onSelectRange?.(selectedRange)
-          }}
-        />
-        {range?.from && range?.to && (
+        <DatePicker {...args} mode="range" value={value} onChange={setValue} />
+        {value && (
           <p style={{ marginTop: '16px', fontSize: '14px', color: '#666' }}>
-            Period: {range.from.toLocaleDateString()} - {range.to.toLocaleDateString()}
-          </p>
-        )}
-        {range?.from && !range?.to && (
-          <p style={{ marginTop: '16px', fontSize: '14px', color: '#666' }}>
-            Start date: {range.from.toLocaleDateString()} (select end date)
+            Selected range: {value}
           </p>
         )}
       </div>
@@ -341,7 +330,7 @@ export const RangePicker: Story = {
   },
   args: {
     mode: 'range',
-    label: 'Select period',
+    label: 'Vacation period',
     placeholder: 'Select range',
   },
 }
@@ -351,21 +340,11 @@ export const RangePicker: Story = {
  */
 export const WithError: Story = {
   render: (args) => {
-    const [date, setDate] = useState<Date | undefined>()
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { onSelectRange, ...singleArgs } = args
+    const [value, setValue] = useState('')
 
     return (
       <div style={{ width: '300px' }}>
-        <DatePicker
-          {...singleArgs}
-          mode="single"
-          date={date}
-          onSelectDate={(selectedDate) => {
-            setDate(selectedDate)
-            args.onSelectDate?.(selectedDate)
-          }}
-        />
+        <DatePicker {...args} mode="single" value={value} onChange={setValue} />
       </div>
     )
   },
@@ -381,6 +360,15 @@ export const WithError: Story = {
  * Disabled state
  */
 export const Disabled: Story = {
+  render: (args) => {
+    const [value, setValue] = useState('15.01.2024')
+
+    return (
+      <div style={{ width: '300px' }}>
+        <DatePicker {...args} mode="single" value={value} onChange={setValue} />
+      </div>
+    )
+  },
   args: {
     mode: 'single',
     label: 'Select date',
@@ -394,25 +382,14 @@ export const Disabled: Story = {
  */
 export const WithInitialDate: Story = {
   render: (args) => {
-    const initialDate = new Date(2024, 0, 15)
-    const [date, setDate] = useState<Date | undefined>(initialDate)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { onSelectRange, ...singleArgs } = args
+    const [value, setValue] = useState('15.01.2024')
 
     return (
       <div style={{ width: '300px' }}>
-        <DatePicker
-          {...singleArgs}
-          mode="single"
-          date={date}
-          onSelectDate={(selectedDate) => {
-            setDate(selectedDate)
-            args.onSelectDate?.(selectedDate)
-          }}
-        />
-        {date && (
+        <DatePicker {...args} mode="single" value={value} onChange={setValue} />
+        {value && (
           <p style={{ marginTop: '16px', fontSize: '14px', color: '#666' }}>
-            Selected date: {date.toLocaleDateString()}
+            Selected date: {value}
           </p>
         )}
       </div>
@@ -430,28 +407,14 @@ export const WithInitialDate: Story = {
  */
 export const WithInitialRange: Story = {
   render: (args) => {
-    const initialRange: DateRange = {
-      from: new Date(2024, 0, 10),
-      to: new Date(2024, 0, 20),
-    }
-    const [range, setRange] = useState<DateRange | undefined>(initialRange)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { onSelectDate, ...rangeArgs } = args
+    const [value, setValue] = useState('10.01.2024 - 20.01.2024')
 
     return (
       <div style={{ width: '300px' }}>
-        <DatePicker
-          {...rangeArgs}
-          mode="range"
-          date={range}
-          onSelectRange={(selectedRange) => {
-            setRange(selectedRange)
-            args.onSelectRange?.(selectedRange)
-          }}
-        />
-        {range?.from && range?.to && (
+        <DatePicker {...args} mode="range" value={value} onChange={setValue} />
+        {value && (
           <p style={{ marginTop: '16px', fontSize: '14px', color: '#666' }}>
-            Period: {range.from.toLocaleDateString()} - {range.to.toLocaleDateString()}
+            Selected period: {value}
           </p>
         )}
       </div>
@@ -471,35 +434,21 @@ export const WithInitialRange: Story = {
  */
 export const RangeIntermediateState: Story = {
   render: (args) => {
-    const [range, setRange] = useState<DateRange | undefined>()
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { onSelectDate, ...rangeArgs } = args
+    const [value, setValue] = useState('')
 
     return (
       <div style={{ width: '300px' }}>
-        <DatePicker
-          {...rangeArgs}
-          mode="range"
-          date={range}
-          onSelectRange={(selectedRange) => {
-            setRange(selectedRange)
-            args.onSelectRange?.(selectedRange)
-          }}
-        />
+        <DatePicker {...args} mode="range" value={value} onChange={setValue} />
         <div style={{ marginTop: '16px', fontSize: '14px', color: '#666' }}>
-          {range?.from && !range?.to && (
+          {value && !value.includes(' - ') && (
             <p>
-              Start date selected: {range.from.toLocaleDateString()}
+              Start date selected: {value}
               <br />
               <small>Now select the end date</small>
             </p>
           )}
-          {range?.from && range?.to && (
-            <p>
-              Complete range: {range.from.toLocaleDateString()} - {range.to.toLocaleDateString()}
-            </p>
-          )}
-          {!range?.from && <p>Select start date to see intermediate state</p>}
+          {value && value.includes(' - ') && <p>Complete range: {value}</p>}
+          {!value && <p>Select start date to see intermediate state</p>}
         </div>
       </div>
     )
@@ -516,9 +465,10 @@ export const RangeIntermediateState: Story = {
  */
 export const AllVariants = {
   render: () => {
-    const [singleDate, setSingleDate] = useState<Date | undefined>()
-    const [rangeDate, setRangeDate] = useState<DateRange | undefined>()
-    const [errorDate, setErrorDate] = useState<Date | undefined>()
+    const [singleValue, setSingleValue] = useState('')
+    const [rangeValue, setRangeValue] = useState('')
+    const [errorValue, setErrorValue] = useState('')
+    const [disabledValue, setDisabledValue] = useState('15.01.2024')
 
     return (
       <div
@@ -543,8 +493,8 @@ export const AllVariants = {
             mode="single"
             label="Select date"
             placeholder="Select date"
-            date={singleDate}
-            onSelectDate={setSingleDate}
+            value={singleValue}
+            onChange={setSingleValue}
           />
         </div>
 
@@ -562,8 +512,8 @@ export const AllVariants = {
             mode="range"
             label="Select period"
             placeholder="Select range"
-            date={rangeDate}
-            onSelectRange={setRangeDate}
+            value={rangeValue}
+            onChange={setRangeValue}
           />
         </div>
 
@@ -582,8 +532,8 @@ export const AllVariants = {
             label="Select date"
             placeholder="Select date"
             error="This field is required"
-            date={errorDate}
-            onSelectDate={setErrorDate}
+            value={errorValue}
+            onChange={setErrorValue}
           />
         </div>
 
@@ -597,7 +547,14 @@ export const AllVariants = {
           >
             Disabled state
           </h4>
-          <DatePicker mode="single" label="Select date" disabled placeholder="Select date" />
+          <DatePicker
+            mode="single"
+            label="Select date"
+            disabled
+            placeholder="Select date"
+            value={disabledValue}
+            onChange={setDisabledValue}
+          />
         </div>
       </div>
     )

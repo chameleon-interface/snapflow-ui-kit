@@ -1,21 +1,23 @@
 import { Typography } from '@/components/Typography'
 import { CalendarIcon, CloseIcon } from '@/icons'
 import clsx from 'clsx'
-import { type MouseEvent, useCallback, useMemo, useRef, useState } from 'react'
-import { DateRange, DayPicker } from 'react-day-picker'
+import { ChangeEvent, type MouseEvent, useMemo, useRef, useState } from 'react'
+import { DateRange, DayPicker, type DayPickerProps } from 'react-day-picker'
 
 import styles from './DatePicker.module.css'
 import { DatePickerProps } from './DatePicker.types'
 import { useClickOutside } from './hooks/useClickOutside'
-import { formatDateRange } from './utils/formatDateRange'
-import { formatSingleDate } from './utils/formatSingleDate'
+import { useDatePickerState } from './hooks/useDatePickerState'
 import { getDayPickerProps } from './utils/getDayPickerProps'
+import { getSelectedDate } from './utils/getSelectedDate'
+import { handleDateSelect } from './utils/handleDateSelect'
+import { parseDateValue } from './utils/parseDateValue'
+import { updateMonthFromDate } from './utils/updateMonthFromDate'
 
 export const DatePicker = ({
   mode,
-  date,
-  onSelectDate,
-  onSelectRange,
+  value,
+  onChange,
   disabled,
   label,
   error,
@@ -24,58 +26,49 @@ export const DatePicker = ({
 }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
+  const { selectedDate, setSelectedDate, month, setMonth } = useDatePickerState(value, mode)
 
-  const closeCalendar = useCallback(() => {
+  const closeCalendar = () => {
     setIsOpen(false)
-  }, [])
+  }
 
   useClickOutside(wrapperRef, isOpen, closeCalendar)
 
-  const handleSelect = useCallback(
-    (value: Date | DateRange | undefined) => {
-      if (mode === 'single') {
-        if (value instanceof Date || value === undefined) {
-          onSelectDate?.(value)
-          if (value) {
-            setIsOpen(false)
-          }
-        }
-      } else {
-        if (
-          value === undefined ||
-          (typeof value === 'object' && 'from' in value && 'to' in value)
-        ) {
-          onSelectRange?.(value)
-          if (value && 'from' in value && value.from && value.to && value.from !== value.to) {
-            setIsOpen(false)
-          }
-        }
-      }
-    },
-    [mode, onSelectDate, onSelectRange],
-  )
+  const handleClear = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    handleSelect(undefined)
+  }
 
-  const handleClear = useCallback(
-    (e: MouseEvent<HTMLButtonElement>) => {
-      e.stopPropagation()
-      handleSelect(undefined)
-    },
-    [handleSelect],
-  )
-
-  const handleToggle = useCallback(() => {
+  const handleToggle = () => {
     if (disabled) return
     setIsOpen((prev) => !prev)
-  }, [disabled])
+  }
 
-  const displayValue = useMemo(() => {
-    if (mode === 'single') {
-      return formatSingleDate(date instanceof Date ? date : undefined)
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.currentTarget.value
+
+    onChange(inputValue)
+
+    const parsed = parseDateValue(inputValue, mode)
+
+    if (parsed) {
+      setSelectedDate(parsed)
+      updateMonthFromDate(parsed, mode, setMonth)
+    } else if (!inputValue) {
+      setSelectedDate(undefined)
     }
-    return formatDateRange(date && typeof date === 'object' && 'from' in date ? date : undefined)
-  }, [mode, date])
+  }
 
-  const hasValue = Boolean(displayValue)
+  const handleSelect = (selectedValue: Date | DateRange | undefined) => {
+    handleDateSelect({
+      value: selectedValue,
+      mode,
+      onChange,
+      setSelectedDate,
+      setMonth,
+      setIsOpen,
+    })
+  }
 
   const commonDayPickerProps = useMemo(() => getDayPickerProps(isOpen), [isOpen])
 
@@ -90,10 +83,10 @@ export const DatePicker = ({
         <div className={styles.inputWrapper}>
           <input
             type="text"
-            readOnly
             className={clsx(styles.trigger, error && styles.error)}
             onClick={handleToggle}
-            value={displayValue}
+            value={value}
+            onChange={handleInputChange}
             placeholder={placeholder}
             disabled={disabled}
             aria-label={label || 'Select date'}
@@ -102,7 +95,7 @@ export const DatePicker = ({
             aria-invalid={error ? 'true' : 'false'}
             {...rest}
           />
-          {hasValue && !disabled && (
+          {value && !disabled && (
             <button
               type="button"
               className={styles.clearButton}
@@ -112,7 +105,7 @@ export const DatePicker = ({
               <CloseIcon className={styles.clearIcon} />
             </button>
           )}
-          <CalendarIcon className={clsx(styles.icon, !displayValue && styles.placeholder)} />
+          <CalendarIcon className={clsx(styles.icon, !value && styles.placeholder)} />
         </div>
         {error && (
           <Typography variant="small" className={styles.error}>
@@ -123,19 +116,21 @@ export const DatePicker = ({
 
       {mode === 'single' ? (
         <DayPicker
-          {...commonDayPickerProps}
-          captionLayout="dropdown"
+          {...(commonDayPickerProps as DayPickerProps)}
+          month={month}
+          onMonthChange={setMonth}
           mode="single"
-          selected={date instanceof Date ? date : undefined}
-          onSelect={(selectedDate) => handleSelect(selectedDate)}
+          selected={getSelectedDate(selectedDate, mode) as Date | undefined}
+          onSelect={handleSelect}
         />
       ) : (
         <DayPicker
-          {...commonDayPickerProps}
-          captionLayout="dropdown"
+          {...(commonDayPickerProps as DayPickerProps)}
+          month={month}
+          onMonthChange={setMonth}
           mode="range"
-          selected={date && typeof date === 'object' && 'from' in date ? date : undefined}
-          onSelect={(selectedRange) => handleSelect(selectedRange)}
+          selected={getSelectedDate(selectedDate, mode) as DateRange | undefined}
+          onSelect={handleSelect}
         />
       )}
     </div>
