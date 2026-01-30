@@ -1,7 +1,8 @@
 import { ComponentPropsWithoutRef } from 'react'
+import type { DayPickerProps } from 'react-day-picker'
 
-export type CaptionLayout = 'dropdown' | 'dropdown-months' | 'dropdown-years' | 'label'
-export type WeekStartsOn = 0 | 1 | 2 | 3 | 4 | 5 | 6
+export type CaptionLayout = NonNullable<DayPickerProps['captionLayout']>
+export type WeekStartsOn = NonNullable<DayPickerProps['weekStartsOn']>
 
 export type InputProps = {
   label?: string

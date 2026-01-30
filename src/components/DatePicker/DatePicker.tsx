@@ -1,15 +1,14 @@
 import { Typography } from '@/components/Typography'
 import { CalendarIcon, CloseIcon } from '@/icons'
 import clsx from 'clsx'
-import { ChangeEvent, type MouseEvent, useMemo, useRef, useState } from 'react'
+import { ChangeEvent, type MouseEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { DateRange, DayPicker, type DayPickerProps } from 'react-day-picker'
 
 import styles from './DatePicker.module.css'
 import { DatePickerProps } from './DatePicker.types'
-import { useClickOutside } from './hooks/useClickOutside'
+import { useDismiss } from './hooks/useDismiss'
 import { useDatePickerState } from './hooks/useDatePickerState'
 import { getDayPickerProps } from './utils/getDayPickerProps'
-import { getSelectedDate } from './utils/getSelectedDate'
 import { handleDateSelect } from './utils/handleDateSelect'
 import { parseDateValue } from './utils/parseDateValue'
 import { updateMonthFromDate } from './utils/updateMonthFromDate'
@@ -26,13 +25,19 @@ export const DatePicker = ({
 }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
-  const { selectedDate, setSelectedDate, month, setMonth } = useDatePickerState(value, mode)
+  const { month, setMonth } = useDatePickerState(value, mode)
+
+  const parsedDate = useMemo(() => parseDateValue(value, mode), [value, mode])
+
+  useEffect(() => {
+    updateMonthFromDate(parsedDate, mode, setMonth)
+  }, [parsedDate, mode, setMonth])
 
   const closeCalendar = () => {
     setIsOpen(false)
   }
 
-  useClickOutside(wrapperRef, isOpen, closeCalendar)
+  useDismiss({ ref: wrapperRef, isOpen, onDismiss: closeCalendar })
 
   const handleClear = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
@@ -46,17 +51,7 @@ export const DatePicker = ({
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.currentTarget.value
-
     onChange(inputValue)
-
-    const parsed = parseDateValue(inputValue, mode)
-
-    if (parsed) {
-      setSelectedDate(parsed)
-      updateMonthFromDate(parsed, mode, setMonth)
-    } else if (!inputValue) {
-      setSelectedDate(undefined)
-    }
   }
 
   const handleSelect = (selectedValue: Date | DateRange | undefined) => {
@@ -64,7 +59,6 @@ export const DatePicker = ({
       value: selectedValue,
       mode,
       onChange,
-      setSelectedDate,
       setMonth,
       setIsOpen,
     })
@@ -120,7 +114,7 @@ export const DatePicker = ({
           month={month}
           onMonthChange={setMonth}
           mode="single"
-          selected={getSelectedDate(selectedDate, mode) as Date | undefined}
+          selected={parsedDate instanceof Date ? parsedDate : undefined}
           onSelect={handleSelect}
         />
       ) : (
@@ -129,7 +123,11 @@ export const DatePicker = ({
           month={month}
           onMonthChange={setMonth}
           mode="range"
-          selected={getSelectedDate(selectedDate, mode) as DateRange | undefined}
+          selected={
+            parsedDate && typeof parsedDate === 'object' && 'from' in parsedDate
+              ? (parsedDate as DateRange)
+              : undefined
+          }
           onSelect={handleSelect}
         />
       )}

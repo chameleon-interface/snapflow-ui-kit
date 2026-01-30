@@ -74,13 +74,17 @@ const staticProps = {
   captionLayout: 'dropdown' as CaptionLayout,
 } as const
 
+const baseDayPickerProps = {
+  components: staticComponents,
+  ...staticProps,
+} as const
+
 export const getDayPickerProps = (isOpen: boolean) => {
   return {
+    ...baseDayPickerProps,
     classNames: {
       root: clsx(styles.calendar, isOpen && styles.open),
       ...staticClassNames,
     },
-    components: staticComponents,
-    ...staticProps,
   }
 }

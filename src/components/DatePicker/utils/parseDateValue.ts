@@ -1,5 +1,5 @@
-import { DateRange } from 'react-day-picker'
 import { isValid, parse } from 'date-fns'
+import { DateRange } from 'react-day-picker'
 
 const DATE_FORMAT = 'dd.MM.yyyy'
 
@@ -13,23 +13,27 @@ export const parseSingleDate = (value: string): Date | undefined => {
 export const parseRangeDate = (value: string): DateRange | undefined => {
   if (!value) return undefined
 
-  const parts = value
-    .split(/\s*-\s*/)
-    .map((part) => part.trim())
-    .filter((part) => part)
+  const separator = ' - '
+  const separatorIndex = value.indexOf(separator)
 
-  if (parts.length === 2) {
-    const fromDate = parse(parts[0], DATE_FORMAT, new Date())
-    const toDate = parse(parts[1], DATE_FORMAT, new Date())
-
-    if (isValid(fromDate) && isValid(toDate)) {
-      return { from: fromDate, to: toDate }
-    }
-  } else if (parts.length === 1 && parts[0]) {
-    const parsedDate = parse(parts[0], DATE_FORMAT, new Date())
+  if (separatorIndex === -1) {
+    const parsedDate = parse(value.trim(), DATE_FORMAT, new Date())
     if (isValid(parsedDate)) {
       return { from: parsedDate, to: undefined }
     }
+    return undefined
+  }
+
+  const fromPart = value.substring(0, separatorIndex).trim()
+  const toPart = value.substring(separatorIndex + separator.length).trim()
+
+  if (!fromPart || !toPart) return undefined
+
+  const fromDate = parse(fromPart, DATE_FORMAT, new Date())
+  const toDate = parse(toPart, DATE_FORMAT, new Date())
+
+  if (isValid(fromDate) && isValid(toDate)) {
+    return { from: fromDate, to: toDate }
   }
 
   return undefined

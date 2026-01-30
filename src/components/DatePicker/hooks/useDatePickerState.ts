@@ -5,17 +5,17 @@ import { parseDateValue } from '../utils/parseDateValue'
 export const useDatePickerState = (value: string, mode: 'single' | 'range') => {
   const [localMonth, setLocalMonth] = useState(new Date())
 
-  const selectedDate = useMemo(() => parseDateValue(value, mode), [value, mode])
-
   const month = useMemo(() => {
-    if (!selectedDate) return localMonth
+    const parsedDate = parseDateValue(value, mode)
 
-    if (mode === 'single' && selectedDate instanceof Date) {
-      return selectedDate
+    if (!parsedDate) return localMonth
+
+    if (mode === 'single' && parsedDate instanceof Date) {
+      return parsedDate
     }
 
-    if (mode === 'range' && typeof selectedDate === 'object' && 'from' in selectedDate) {
-      const range = selectedDate as DateRange
+    if (mode === 'range' && typeof parsedDate === 'object' && 'from' in parsedDate) {
+      const range = parsedDate as DateRange
       if (range.from) {
         return range.from
       }
@@ -25,18 +25,13 @@ export const useDatePickerState = (value: string, mode: 'single' | 'range') => {
     }
 
     return localMonth
-  }, [selectedDate, mode, localMonth])
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const setSelectedDate = (_date: Date | DateRange | undefined) => {}
+  }, [value, mode, localMonth])
 
   const setMonth = (date: Date) => {
     setLocalMonth(date)
   }
 
   return {
-    selectedDate,
-    setSelectedDate,
     month,
     setMonth,
   }

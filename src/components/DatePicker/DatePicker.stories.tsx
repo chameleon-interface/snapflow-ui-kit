@@ -14,12 +14,14 @@ Component for selecting a date or date range with controlled input value.
 ## Features
 - **Two modes**: single date or date range selection
 - **Controlled component**: uses \`value\` and \`onChange\` props for string values in DD.MM.YYYY format
-- **Manual input**: type dates directly in DD.MM.YYYY format
-- **Automatic parsing**: component automatically parses and validates input
+- **Manual input**: type dates directly in DD.MM.YYYY format (for single) or "DD.MM.YYYY - DD.MM.YYYY" (for range)
+- **Automatic parsing**: component automatically parses and validates input using date-fns
+- **Automatic month sync**: calendar month automatically updates when date value changes
 - **Validation**: error display support
-- **Accessibility**: ARIA attributes, keyboard navigation (Escape to close)
+- **Accessibility**: ARIA attributes, keyboard navigation (Escape to close), click outside to dismiss
 - **Auto-close**: calendar automatically closes after selecting a date in single mode, or after selecting a complete range with different start and end dates in range mode
-- **Intermediate state**: shows selected start date while selecting range end date. If start and end dates are equal, displays single date instead of range format
+- **Intermediate state**: in range mode, shows selected start date while selecting range end date. If start and end dates are equal, displays single date instead of "date - date" format
+- **Clear button**: shows clear button when value is present and component is not disabled
 - **Customization**: configurable styles and behavior
 
 ## Usage
@@ -38,10 +40,12 @@ const [value, setValue] = useState('')
 \`\`\`
 
 **Note:** 
-- Calendar automatically closes after selecting a date in single mode
+- Calendar automatically closes immediately after selecting a date in single mode
 - You can type dates manually in DD.MM.YYYY format
-- Component automatically parses and validates the input
+- Component automatically parses and validates the input using date-fns
+- Calendar month automatically syncs with the selected date
 - Value is stored as string in DD.MM.YYYY format (e.g., "15.01.2024")
+- Clear button (X) appears when value is present and component is not disabled
 
 ### Date range selection
 \`\`\`tsx
@@ -58,13 +62,19 @@ const [value, setValue] = useState('')
 
 **Note:** 
 - In range mode, the component shows intermediate state - when only the start date is selected, it displays that date until the end date is chosen
-- If start and end dates are the same, only one date is displayed instead of "date - date"
-- Value format: "DD.MM.YYYY - DD.MM.YYYY" for complete range with different dates, or "DD.MM.YYYY" for partial range or when dates are equal
-- Calendar automatically closes when both dates are selected and they are different
+- If start and end dates are the same, only one date is displayed instead of "date - date" format
+- Value format: 
+  - "DD.MM.YYYY - DD.MM.YYYY" for complete range with different start and end dates
+  - "DD.MM.YYYY" for partial range (only start date selected) or when start and end dates are equal
+- Calendar automatically closes only when both dates are selected AND they are different
+- Calendar month automatically syncs with the selected start date (or end date if start is not selected)
+- You can type ranges manually in "DD.MM.YYYY - DD.MM.YYYY" format
+- Clear button (X) appears when value is present and component is not disabled
 
-### Keyboard shortcuts
+### Keyboard shortcuts and interactions
 - **Escape**: Close the calendar popup
-- **Click outside**: Close the calendar popup
+- **Click outside**: Close the calendar popup (handled by useDismiss hook)
+- **Clear button**: Click X button to clear the selected date(s)
 
 ### Integration with React Hook Form
 
@@ -248,11 +258,11 @@ const MyForm = () => {
     value: {
       control: { type: 'text' },
       description:
-        'Controlled value for the input field. Used for manual date input in DD.MM.YYYY format.',
+        'Controlled value for the input field. Format: "DD.MM.YYYY" for single mode, "DD.MM.YYYY - DD.MM.YYYY" for range mode (or "DD.MM.YYYY" for partial range). Used for manual date input.',
     },
     onChange: {
       description:
-        'Callback when the input value changes. Used to sync input state with parent component.',
+        'Callback when the input value changes. Receives string value in DD.MM.YYYY format. Used to sync input state with parent component.',
       action: 'input changed',
     },
     label: {
@@ -282,8 +292,10 @@ type Story = StoryObj<typeof DatePicker>
 
 /**
  * Basic example of single date selection.
- * Calendar automatically closes after selecting a date.
+ * Calendar automatically closes immediately after selecting a date.
  * You can also type dates manually in DD.MM.YYYY format.
+ * Calendar month automatically syncs with the selected date.
+ * Clear button (X) appears when a date is selected.
  */
 export const SingleDate: Story = {
   render: (args) => {
@@ -309,9 +321,11 @@ export const SingleDate: Story = {
 
 /**
  * Date range selection.
- * Shows intermediate state when only start date is selected.
- * If start and end dates are the same, displays single date instead of "date - date".
- * Calendar automatically closes when both dates are selected and they are different.
+ * Shows intermediate state when only start date is selected (displays only start date).
+ * If start and end dates are the same, displays single date instead of "date - date" format.
+ * Calendar automatically closes only when both dates are selected AND they are different.
+ * Calendar month automatically syncs with the selected start date.
+ * Clear button (X) appears when a date range is selected.
  */
 export const RangePicker: Story = {
   render: (args) => {
@@ -429,8 +443,10 @@ export const WithInitialRange: Story = {
 
 /**
  * Demonstrates intermediate state in range mode.
- * When only start date is selected, it's displayed in the input field.
- * If start and end dates are equal, only one date is shown.
+ * When only start date is selected, it's displayed in the input field (no " - " separator).
+ * If start and end dates are equal, only one date is shown instead of "date - date" format.
+ * Calendar remains open until both dates are selected and they are different.
+ * Calendar month automatically syncs with the selected start date.
  */
 export const RangeIntermediateState: Story = {
   render: (args) => {
