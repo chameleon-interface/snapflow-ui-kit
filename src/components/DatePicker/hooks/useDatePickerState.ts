@@ -7,7 +7,6 @@ export const useDatePickerState = (value: string, mode: 'single' | 'range') => {
 
   const selectedDate = useMemo(() => parseDateValue(value, mode), [value, mode])
 
-  // Compute month from selectedDate if available, otherwise use localMonth
   const month = useMemo(() => {
     if (!selectedDate) return localMonth
 
@@ -29,10 +28,7 @@ export const useDatePickerState = (value: string, mode: 'single' | 'range') => {
   }, [selectedDate, mode, localMonth])
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const setSelectedDate = (_date: Date | DateRange | undefined) => {
-    // This is a no-op since selectedDate is derived from value
-    // The actual update should happen through onChange callback
-  }
+  const setSelectedDate = (_date: Date | DateRange | undefined) => {}
 
   const setMonth = (date: Date) => {
     setLocalMonth(date)

@@ -47,7 +47,7 @@ export const handleDateSelect = ({
     const formattedValue = formatDateValue(range, 'range')
     onChange(formattedValue)
 
-    if (range.from && range.to) {
+    if (range.from && range.to && range.from !== range.to) {
       setIsOpen(false)
     }
   }

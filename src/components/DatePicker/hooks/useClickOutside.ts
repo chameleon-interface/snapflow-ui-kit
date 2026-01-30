@@ -17,7 +17,9 @@ export const useClickOutside = (
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
       const target = event.target as Node | null
 
-      if (ref.current && target && !ref.current.contains(target)) {
+      if (!ref.current || !target) return
+
+      if (!ref.current.contains(target)) {
         onCloseRef.current()
       }
     }
@@ -28,13 +30,11 @@ export const useClickOutside = (
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside)
-    document.addEventListener('touchstart', handleClickOutside)
+    document.addEventListener('click', handleClickOutside, true)
     document.addEventListener('keydown', handleEscape)
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-      document.removeEventListener('touchstart', handleClickOutside)
+      document.removeEventListener('click', handleClickOutside, true)
       document.removeEventListener('keydown', handleEscape)
     }
   }, [isOpen, ref])

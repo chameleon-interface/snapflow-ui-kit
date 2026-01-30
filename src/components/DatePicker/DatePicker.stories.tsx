@@ -18,7 +18,7 @@ Component for selecting a date or date range with controlled input value.
 - **Automatic parsing**: component automatically parses and validates input
 - **Validation**: error display support
 - **Accessibility**: ARIA attributes, keyboard navigation (Escape to close)
-- **Auto-close**: calendar automatically closes after selecting a complete date/range
+- **Auto-close**: calendar automatically closes after selecting a date in single mode, or after selecting a complete range with different start and end dates in range mode
 - **Intermediate state**: shows selected start date while selecting range end date. If start and end dates are equal, displays single date instead of range format
 - **Customization**: configurable styles and behavior
 
@@ -59,8 +59,8 @@ const [value, setValue] = useState('')
 **Note:** 
 - In range mode, the component shows intermediate state - when only the start date is selected, it displays that date until the end date is chosen
 - If start and end dates are the same, only one date is displayed instead of "date - date"
-- Value format: "DD.MM.YYYY - DD.MM.YYYY" for complete range, or "DD.MM.YYYY" for partial range
-- Calendar automatically closes when both dates are selected
+- Value format: "DD.MM.YYYY - DD.MM.YYYY" for complete range with different dates, or "DD.MM.YYYY" for partial range or when dates are equal
+- Calendar automatically closes when both dates are selected and they are different
 
 ### Keyboard shortcuts
 - **Escape**: Close the calendar popup
@@ -141,7 +141,7 @@ const MyForm = () => {
                 rules={{
                     validate: (value) => {
                         if (!value || !value.includes(' - ')) {
-                            return 'Please select a complete date range';
+                            return 'Please select a complete date range with different start and end dates';
                         }
                         return true;
                     },
@@ -311,7 +311,7 @@ export const SingleDate: Story = {
  * Date range selection.
  * Shows intermediate state when only start date is selected.
  * If start and end dates are the same, displays single date instead of "date - date".
- * Calendar automatically closes when both dates are selected.
+ * Calendar automatically closes when both dates are selected and they are different.
  */
 export const RangePicker: Story = {
   render: (args) => {
