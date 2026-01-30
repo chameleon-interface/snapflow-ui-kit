@@ -31,7 +31,7 @@ export const Error: Story = {
     placeholder: 'Textarea',
     value: '',
     onChange: () => {},
-    errorMessage: 'Ошибка ввода',
+    errorMessage: 'Input error',
   },
 }
 
@@ -39,8 +39,6 @@ export const Disabled: Story = {
   args: {
     label: 'Textarea',
     placeholder: 'Textarea',
-    value: 'Textarea',
-    onChange: () => {},
     disabled: true,
   },
 }
