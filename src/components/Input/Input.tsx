@@ -3,7 +3,7 @@ import { clsx } from 'clsx'
 
 import s from './Input.module.css'
 import { InputProps } from './Input.types'
-import { EyeIcon } from '@/icons'
+import { EyeIcon, EyeOffIcon } from '@/icons'
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
@@ -24,7 +24,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const generatedId = useId()
     const inputId = id ?? generatedId
-    const errorId = `${inputId}-error`
+    const errorId = errorMessage ? `${inputId}-error` : undefined
 
     const isError = Boolean(errorMessage)
     const isPassword = type === 'password' && allowPasswordToggle
@@ -34,7 +34,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className={clsx(s.wrapper, className)}>
         {label && (
-          <label htmlFor={inputId} className={s.label}>
+          <label htmlFor={inputId} className={clsx(s.label, { [s.disabled]: disabled })}>
             {label}
           </label>
         )}
@@ -56,7 +56,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             type={isPassword && showPassword ? 'text' : type}
             disabled={disabled}
             aria-invalid={isError}
-            aria-describedby={isError ? errorId : undefined}
+            aria-describedby={errorId}
             {...rest}
           />
 
@@ -66,13 +66,20 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               className={s.endIcon}
               onClick={() => setShowPassword((v) => !v)}
               aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+              disabled={disabled}
             >
-              <EyeIcon />
+              {showPassword ? <EyeOffIcon /> : <EyeIcon />}
             </button>
           )}
 
           {endIcon && !isPassword && (
-            <button type="button" className={s.endIcon} onClick={onEndIconClick}>
+            <button
+              type="button"
+              className={s.endIcon}
+              onClick={onEndIconClick}
+              aria-label="Действие"
+              disabled={disabled}
+            >
               {endIcon}
             </button>
           )}

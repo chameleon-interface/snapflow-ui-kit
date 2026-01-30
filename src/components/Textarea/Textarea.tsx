@@ -5,7 +5,7 @@ import s from './Textarea.module.css'
 import type { TextareaProps } from './Textarea.types'
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ label, errorMessage, id, className, minHeight = 84, ...rest }, ref) => {
+  ({ label, errorMessage, id, className, disabled, minHeight = 84, ...rest }, ref) => {
     const generatedId = useId()
     const textareaId = id ?? generatedId
     const errorId = errorMessage ? `${textareaId}-error` : undefined
@@ -13,7 +13,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className={clsx(s.textareaWrapper, className)}>
         {label && (
-          <label htmlFor={textareaId} className={s.label}>
+          <label htmlFor={textareaId} className={clsx(s.label, { [s.disabled]: disabled })}>
             {label}
           </label>
         )}
@@ -24,6 +24,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           className={clsx(s.textarea, { [s.errorState]: !!errorMessage })}
           aria-invalid={!!errorMessage}
           aria-describedby={errorId}
+          disabled={disabled}
           style={{ minHeight }}
           {...rest}
         />
