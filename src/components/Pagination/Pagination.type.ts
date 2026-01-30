@@ -1,25 +1,25 @@
-export type PaginationProps = {
-  /** Общее количество элементов (items) */
+export interface PaginationProps {
+  /** Total number of items */
   totalItems: number
 
-  /** Текущая страница (controlled) */
+  /** Current page (controlled) */
   page: number
 
-  /** Количество элементов на странице (controlled) */
+  /** Number of items per page (controlled) */
   pageSize: number
 
-  /** Коллбек смены страницы */
+  /** Callback for page change */
   onPageChange: (page: number) => void
 
-  /** Коллбек смены pageSize */
+  /** Callback for pageSize change */
   onPageSizeChange: (size: number) => void
 
-  /** Сколько страниц показывать слева и справа от текущей */
+  /** Number of pages to show on each side of the current page */
   siblings?: number
 
-  /** Показывать ли селект pageSize */
+  /** Whether to show the pageSize selector */
   showPageSizeSelect?: boolean
 
-  /** Доступные значения pageSize */
+  /** Available pageSize options */
   pageSizeOptions?: number[]
 }
