@@ -9,8 +9,13 @@
   padding: 12px 24px;
   border-radius: 2px;
 
-  font-weight: 400;
   color: var(--color-light-100);
+}
+
+.content {
+  display: flex;
+  gap: 5px;
+  align-items: center;
 }
 
 /* Ошибка */
@@ -27,19 +32,13 @@
 
 .closeButton {
   cursor: pointer;
-  padding-left: 24px;
   border: none;
   background: transparent;
 }
 
-.message {
+.message,
+title {
   font-size: 16px;
   font-weight: 400;
-  line-height: 150%;
-}
-
-.title {
-  font-size: 16px;
-  font-weight: 600;
   line-height: 150%;
 }

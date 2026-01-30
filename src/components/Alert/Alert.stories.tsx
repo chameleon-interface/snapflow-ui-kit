@@ -23,7 +23,6 @@ const meta: Meta<typeof Alert> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** Ошибка */
 export const Error: Story = {
   args: {
     variant: 'error',
@@ -31,7 +30,6 @@ export const Error: Story = {
   },
 }
 
-/** Успех */
 export const Success: Story = {
   args: {
     variant: 'success',

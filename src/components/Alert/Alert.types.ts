@@ -6,5 +6,4 @@ export type AlertProps = {
   message: string
   className?: string
   onClose?: () => void
-  autoCloseMs?: number
 }
