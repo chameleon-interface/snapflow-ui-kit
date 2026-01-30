@@ -1,5 +1,110 @@
+/* stylelint-disable selector-pseudo-class-no-unknown */
+
 .wrapper {
   display: flex;
-  align-items: center;
   gap: 16px;
+  align-items: center;
+}
+
+/* блок "Show [Select] on page" */
+.pageSizeWrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 171%;
+  color: var(--color-light-100);
+}
+
+/* обёртка для inline-позиционирования Select */
+.pageSizeControl {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ширина селекта под цифры + стрелку */
+.pageSizeSelect {
+  min-width: 85px;
+}
+
+/* =========================
+   TRIGGER (кнопка селекта)
+========================= */
+.pageSizeSelect :global(button) {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  height: 24px;
+  padding: 0 6px;
+  border: 1px solid var(--color-dark-300);
+  border-radius: 2px;
+
+  font-size: 12px;
+  line-height: 1;
+  color: var(--color-light-100);
+
+  background-color: var(--color-dark-500);
+}
+
+/* стрелка не раздвигает кнопку */
+.pageSizeSelect :global(.arrow) {
+  flex-shrink: 0;
+  margin-left: 0;
+}
+
+/* =========================
+   OPEN STATE (без белой рамки)
+========================= */
+.pageSizeSelect :global(button.triggerOpen),
+.pageSizeSelect :global(button.trigger.triggerOpen) {
+  border-color: var(--color-dark-300) !important;
+  background-color: var(--color-dark-500);
+}
+
+/* =========================
+   FIX SELECTED VALUE IN TRIGGER
+========================= */
+.pageSizeSelect :global(.selectedContent) {
+  color: var(--color-light-100) !important;
+}
+
+.pageSizeSelect :global(button.triggerOpen .selectedContent) {
+  color: var(--color-light-100) !important;
+}
+
+/* =========================
+   DROPDOWN (выпадающий список) — убираем бордер
+========================= */
+.pageSizeSelect :global(div[role='listbox']) {
+  border: none !important; /* убрали бордер */
+  background-color: var(--color-dark-500);
+}
+
+/* =========================
+   OPTIONS — БЕЗ СИНЕГО
+========================= */
+.pageSizeSelect :global([role='option']:hover),
+.pageSizeSelect :global([role='option'].pseudo-hover) {
+  color: var(--color-light-100) !important;
+  background-color: var(--color-dark-100) !important;
+}
+
+.pageSizeSelect :global([role='option'][aria-selected='true']) {
+  color: var(--color-light-100) !important;
+  background-color: var(--color-dark-100) !important;
+}
+
+/* keyboard focus */
+.pageSizeSelect :global([role='option']:focus-visible) {
+  color: var(--color-light-100) !important;
+  background-color: var(--color-dark-100) !important;
+  outline: none;
 }

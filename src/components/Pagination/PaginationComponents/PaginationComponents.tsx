@@ -1,4 +1,6 @@
-import { ArrowLeftIcon, ArrowRightIcon } from '../../../icons'
+import { useMemo } from 'react'
+
+import { ArrowLeftIcon, ArrowRightIcon } from '@/icons'
 import s from './PaginationComponents.module.css'
 import { PaginationComponentsProps } from './PaginationComponents.types'
 
@@ -23,50 +25,62 @@ export const PaginationComponents = ({
     }
   }
 
-  const createPages = () => {
-    const pages: (number | string)[] = []
+  const pages = useMemo(() => {
+    const result: (number | 'dots-start' | 'dots-end')[] = []
 
     const startPage = Math.max(2, page - siblings)
     const endPage = Math.min(totalPages - 1, page + siblings)
 
-    pages.push(1)
+    result.push(1)
 
-    if (startPage > 2) pages.push('...')
-
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(i)
+    if (startPage > 2) {
+      result.push('dots-start')
     }
 
-    if (endPage < totalPages - 1) pages.push('...')
+    for (let i = startPage; i <= endPage; i++) {
+      result.push(i)
+    }
 
-    if (totalPages > 1) pages.push(totalPages)
+    if (endPage < totalPages - 1) {
+      result.push('dots-end')
+    }
 
-    return pages
-  }
+    if (totalPages > 1) {
+      result.push(totalPages)
+    }
+
+    return result
+  }, [page, totalPages, siblings])
 
   return (
-    <nav className={s.pagination}>
-      <button className={s.arrow} onClick={prevPage} disabled={isFirstPage}>
+    <nav className={s.pagination} aria-label="Pagination">
+      <button
+        className={s.arrow}
+        onClick={prevPage}
+        disabled={isFirstPage}
+        aria-label="Previous page"
+      >
         <ArrowLeftIcon width={16} height={16} />
       </button>
 
-      {createPages().map((item, index) =>
-        typeof item === 'string' ? (
-          <span key={`dots-${index}`} className={s.dots}>
-            ...
-          </span>
-        ) : (
+      {pages.map((item) =>
+        typeof item === 'number' ? (
           <button
             key={item}
             className={`${s.page} ${item === page ? s.active : ''}`}
             onClick={() => onPageChange(item)}
+            aria-current={item === page ? 'page' : undefined}
           >
             {item}
           </button>
+        ) : (
+          <span key={item} className={s.dots}>
+            …
+          </span>
         ),
       )}
 
-      <button className={s.arrow} onClick={nextPage} disabled={isLastPage}>
+      <button className={s.arrow} onClick={nextPage} disabled={isLastPage} aria-label="Next page">
         <ArrowRightIcon width={16} height={16} />
       </button>
     </nav>

@@ -1,5 +1,6 @@
 import { FC } from 'react'
 
+import { Select } from '../Select'
 import s from './Pagination.module.css'
 import { PaginationComponents } from './PaginationComponents/PaginationComponents'
 import { PaginationProps } from './Pagination.type'
@@ -18,7 +19,7 @@ export const Pagination: FC<PaginationProps> = ({
 }) => {
   const totalPages = Math.ceil(totalItems / pageSize)
 
-  // ❗ Граничный случай
+  // ❗ граничный случай — нечего рендерить
   if (totalPages <= 0) {
     return null
   }
@@ -33,6 +34,11 @@ export const Pagination: FC<PaginationProps> = ({
     }
   }
 
+  const pageSizeSelectOptions = pageSizeOptions.map((size) => ({
+    label: String(size),
+    value: String(size),
+  }))
+
   return (
     <div className={s.wrapper}>
       <PaginationComponents
@@ -46,14 +52,14 @@ export const Pagination: FC<PaginationProps> = ({
         <div className={s.pageSizeWrapper}>
           <span className={s.label}>Show</span>
 
-          {/* ⚠️ ВРЕМЕННО: оставляем как есть, архитектуру Select разберём отдельно */}
-          <select value={pageSize} onChange={(e) => handlePageSizeChange(Number(e.target.value))}>
-            {pageSizeOptions.map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            ))}
-          </select>
+          <div className={s.pageSizeControl}>
+            <Select
+              className={s.pageSizeSelect}
+              options={pageSizeSelectOptions}
+              value={String(pageSize)}
+              onChange={(value) => handlePageSizeChange(Number(value))}
+            />
+          </div>
 
           <span className={s.label}>on page</span>
         </div>
