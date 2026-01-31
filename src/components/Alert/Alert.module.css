@@ -1,0 +1,76 @@
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 387px;
+  padding: 12px 24px;
+  border-radius: 2px;
+
+  color: var(--color-light-100);
+}
+
+.content {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+/* Ошибка */
+.error {
+  border: 1px solid var(--color-danger-500);
+  background-color: var(--color-danger-900);
+}
+
+/* Успех */
+.success {
+  border: 1px solid var(--color-success-500);
+  background-color: var(--color-success-900);
+}
+
+.closeButton {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.message,
+.title {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+.title {
+  font-weight: 700;
+}
+
+.toastEnter {
+  animation: fade-in 0.2s ease-out;
+}
+
+.toastExit {
+  animation: fade-out 0.2s ease-in forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
