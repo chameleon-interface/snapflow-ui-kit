@@ -1,0 +1,297 @@
+.wrapper {
+  position: relative;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 255px;
+}
+
+.label span {
+  color: var(--color-light-900);
+}
+
+.inputWrapper {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.trigger {
+  all: unset;
+
+  width: 100%;
+  padding: 6px 12px;
+  border: 1px solid var(--color-dark-100);
+  border-radius: 2px;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+  color: var(--color-light-100);
+
+  background: var(--color-dark-500);
+}
+
+.icon {
+  pointer-events: none;
+  position: absolute;
+  right: 12px;
+  color: var(--color-light-100);
+}
+
+.icon.placeholder {
+  color: var(--color-light-900);
+}
+
+.clearButton {
+  all: unset;
+
+  cursor: pointer;
+
+  position: absolute;
+  right: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 4px;
+  border-radius: 2px;
+
+  pointer-events: none;
+  opacity: 0;
+
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.clearButton:hover {
+  background-color: var(--color-dark-300);
+}
+
+.clearButton:focus-visible {
+  outline: 2px solid var(--color-accent-700);
+  outline-offset: 2px;
+
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.inputWrapper:hover .clearButton {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.clearIcon {
+  pointer-events: none;
+  width: 16px;
+  height: 16px;
+  color: var(--color-light-100);
+}
+
+.trigger:disabled {
+  border-color: var(--color-dark-100);
+  color: var(--color-dark-100);
+}
+
+.disabledLabel span {
+  color: var(--color-dark-100);
+}
+
+.trigger:focus-visible:not(:disabled) {
+  outline: 2px solid var(--color-accent-700);
+}
+
+.inputWrapper:has(.trigger:disabled) .icon,
+.inputWrapper:has(.trigger:disabled) .trigger::placeholder {
+  color: var(--color-dark-100);
+}
+
+.inputWrapper:has(.trigger:disabled) .icon,
+.inputWrapper:has(.trigger:disabled) .trigger {
+  cursor: not-allowed;
+}
+
+.inputWrapper:has(.trigger:focus-visible) .icon {
+  color: var(--color-light-100);
+}
+
+.error {
+  color: var(--color-danger-500);
+}
+
+.trigger.error {
+  border-color: var(--color-danger-500);
+}
+
+.inputWrapper:has(.trigger.error) .icon,
+.inputWrapper:has(.trigger.error) .trigger::placeholder {
+  color: var(--color-danger-500);
+}
+
+.inputWrapper:has(.trigger:hover:not(:disabled, .error)) .icon,
+.inputWrapper:has(.trigger:hover:not(:disabled, .error)) {
+  color: var(--color-light-100);
+}
+
+.calendar {
+  pointer-events: none;
+
+  position: absolute;
+  z-index: 1000;
+  top: calc(100% + 8px);
+  left: 0;
+  transform: translateY(-8px);
+
+  padding: 16px 24px;
+  border: 1px solid var(--color-dark-100);
+  border-radius: 2px;
+
+  opacity: 0;
+  background: var(--color-dark-500);
+
+  transition: all 0.2s ease;
+}
+
+.calendar.open {
+  pointer-events: auto;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.monthsCaption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navButtonPrevious,
+.navButtonNext {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  position: absolute;
+  background-color: var(--color-dark-100);
+}
+
+.navButtonPrevious {
+  left: 24px;
+}
+
+.navButtonNext {
+  right: 24px;
+}
+
+.navIcon {
+  width: 20px;
+  height: 20px;
+  fill: var(--color-light-100);
+}
+
+.monthGrid {
+  table-layout: fixed;
+  border-spacing: 0 10px;
+  width: 100%;
+}
+
+.dropdowns {
+  width: 150px;
+}
+
+.weekday {
+  width: 36px;
+  padding: 6px;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+  color: var(--color-light-900);
+  text-align: center;
+}
+
+.day {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  text-align: center;
+}
+
+.dayButton {
+  all: unset;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+  text-align: center;
+}
+
+.dayButton:hover {
+  border-radius: 50%;
+  background-color: var(--color-accent-700);
+}
+
+.day .dayButton {
+  color: var(--color-light-100);
+}
+
+.dayOutside .dayButton {
+  color: var(--color-light-900);
+}
+
+.dayToday .dayButton {
+  font-weight: 700;
+  color: var(--color-accent-500);
+}
+
+.daySelected .dayButton:hover,
+.dayRangeStart .dayButton:hover,
+.dayRangeEnd .dayButton:hover,
+.dayRangeMiddle .dayButton:hover {
+  border-radius: inherit;
+  background-color: inherit;
+}
+
+.monthGrid tr .day:nth-child(6) .dayButton,
+.monthGrid tr .day:nth-child(7) .dayButton {
+  color: var(--color-danger-300);
+}
+
+.dayRangeStart {
+  border-radius: 50% 0 0 50%;
+}
+
+.dayRangeStart.dayRangeEnd {
+  border-radius: 50%;
+}
+
+.dayRangeEnd {
+  border-radius: 0 50% 50% 0;
+}
+
+.dayRangeStart,
+.dayRangeEnd,
+.dayRangeMiddle,
+.daySelected {
+  background-color: var(--color-accent-900);
+}
+
+.daySelected:not(.dayRangeStart, .dayRangeEnd, .dayRangeMiddle) {
+  border-radius: 50%;
+}
