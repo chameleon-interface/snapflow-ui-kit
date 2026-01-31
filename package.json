@@ -40,8 +40,10 @@
   },
   "dependencies": {
     "clsx": "2.1.1",
+    "date-fns": "4.1.0",
     "react-hot-toast": "2.6.0",
     "focus-trap-react": "11.0.6",
+    "react-day-picker": "9.13.0",
     "simplebar": "6.3.3",
     "simplebar-react": "3.3.2"
   },
