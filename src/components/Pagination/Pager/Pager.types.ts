@@ -1,4 +1,4 @@
-export type PaginationComponentsProps = {
+export type PagerProps = {
   page: number
   totalPages: number
   siblings?: number

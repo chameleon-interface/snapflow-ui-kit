@@ -1,29 +1,20 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { ArrowLeftIcon, ArrowRightIcon } from '@/icons'
-import s from './PaginationComponents.module.css'
-import { PaginationComponentsProps } from './PaginationComponents.types'
+import s from './Pager.module.css'
+import { PagerProps } from './Pager.types'
 
-export const PaginationComponents = ({
-  page,
-  totalPages,
-  siblings = 1,
-  onPageChange,
-}: PaginationComponentsProps) => {
+export const Pager = ({ page, totalPages, siblings = 1, onPageChange }: PagerProps) => {
   const isFirstPage = page === 1
   const isLastPage = page === totalPages
 
-  const prevPage = () => {
-    if (!isFirstPage) {
-      onPageChange(page - 1)
-    }
-  }
+  const prevPage = useCallback(() => {
+    onPageChange(page - 1)
+  }, [page, onPageChange])
 
-  const nextPage = () => {
-    if (!isLastPage) {
-      onPageChange(page + 1)
-    }
-  }
+  const nextPage = useCallback(() => {
+    onPageChange(page + 1)
+  }, [page, onPageChange])
 
   const pages = useMemo(() => {
     const result: (number | 'dots-start' | 'dots-end')[] = []
@@ -75,7 +66,7 @@ export const PaginationComponents = ({
           </button>
         ) : (
           <span key={item} className={s.dots}>
-            …
+            ...
           </span>
         ),
       )}

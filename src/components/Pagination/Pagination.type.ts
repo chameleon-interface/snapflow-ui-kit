@@ -1,18 +1,18 @@
-export interface PaginationProps {
-  /** Total number of items */
-  totalItems: number
+export type PaginationProps = {
+  /** Total number of pages */
+  totalPages: number
 
   /** Current page (controlled) */
   page: number
 
-  /** Number of items per page (controlled) */
-  pageSize: number
-
   /** Callback for page change */
   onPageChange: (page: number) => void
 
+  /** Number of items per page (controlled) */
+  pageSize?: number
+
   /** Callback for pageSize change */
-  onPageSizeChange: (size: number) => void
+  onPageSizeChange?: (size: number) => void
 
   /** Number of pages to show on each side of the current page */
   siblings?: number
