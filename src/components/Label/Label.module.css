@@ -1,0 +1,22 @@
+.label {
+  margin-bottom: 4px;
+}
+
+.required {
+  margin-left: 4px;
+  color: var(--color-danger-500);
+}
+
+.srOnly {
+  position: absolute;
+
+  overflow: hidden;
+
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+
+  white-space: nowrap;
+}

@@ -9,6 +9,7 @@ import {
   ArrowLeftIcon,
   ArrowRightIcon,
   ArrowUpIcon,
+  BellIcon,
   BlockIcon,
   BookMarkIcon,
   CalendarIcon,
@@ -65,6 +66,7 @@ type IconEntry = {
 
 const icons: IconEntry[] = [
   { name: 'BookMarkIcon', Component: BookMarkIcon, hasVariants: true },
+  { name: 'BellIcon', Component: BellIcon, hasVariants: true },
   { name: 'CalendarIcon', Component: CalendarIcon, hasVariants: true },
   { name: 'EyeIcon', Component: EyeIcon, hasVariants: true },
   { name: 'EyeOffIcon', Component: EyeOffIcon, hasVariants: true },
