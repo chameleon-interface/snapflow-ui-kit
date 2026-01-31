@@ -1,8 +1,9 @@
 {
   "name": "snapflow-ui-kit",
   "private": false,
-  "version": "0.0.5",
+  "version": "1.0.0",
   "type": "module",
+  "packageManager": "pnpm@10.28.2",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -39,6 +40,10 @@
   },
   "dependencies": {
     "clsx": "2.1.1",
+    "date-fns": "4.1.0",
+    "react-hot-toast": "2.6.0",
+    "focus-trap-react": "11.0.6",
+    "react-day-picker": "9.13.0",
     "simplebar": "6.3.3",
     "simplebar-react": "3.3.2"
   },

@@ -1,0 +1,104 @@
+.pagination {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* =========================
+   ARROWS
+========================= */
+.arrow {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 4px;
+  border: none;
+  border-radius: 2px;
+
+  color: var(--color-light-100);
+
+  background: transparent;
+}
+
+/* убираем дефолтный outline */
+.arrow:focus {
+  outline: none;
+}
+
+/* disabled arrow */
+.arrow:disabled {
+  cursor: not-allowed;
+  color: var(--color-dark-100);
+}
+
+/* hover — только если доступна */
+.arrow:hover:not(:disabled) {
+  color: var(--color-light-100);
+  background: var(--color-dark-500);
+}
+
+/* =========================
+   PAGE BUTTON
+========================= */
+.page {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  border: none;
+  border-radius: 2px;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-light-100);
+
+  background: transparent;
+}
+
+/* убираем дефолтный outline */
+.page:focus {
+  outline: none;
+}
+
+/* hover — только если не active */
+.page:hover:not(.active) {
+  color: var(--color-light-100);
+  background: var(--color-dark-500);
+}
+
+/* =========================
+   FOCUS (page + arrow)
+========================= */
+:where(.page, .arrow):focus-visible:not(.active, :disabled) {
+  border-radius: 2px;
+  background: var(--color-dark-500);
+  outline: 2px solid var(--color-accent-500);
+  outline-offset: -1px;
+}
+
+/* =========================
+   ACTIVE PAGE
+========================= */
+.active {
+  cursor: default;
+  color: var(--color-dark-900);
+  background: var(--color-light-100);
+}
+
+/* =========================
+   DOTS
+========================= */
+.dots {
+  cursor: default;
+  padding: 0 4px;
+  color: var(--color-light-100);
+}
