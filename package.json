@@ -15,8 +15,13 @@
   ],
   "exports": {
     ".": {
+      "react-server": "./dist/index.server.js",
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./client": {
+      "import": "./dist/index.client.js",
+      "types": "./dist/index.client.d.ts"
     },
     "./icons": {
       "import": "./dist/icons.js",

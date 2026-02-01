@@ -1,3 +1,5 @@
+'use client'
+
 import { useMemo } from 'react'
 import { Select } from '@/components'
 import s from './PageSizeSelect.module.css'

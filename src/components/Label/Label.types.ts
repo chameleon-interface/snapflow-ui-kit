@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react'
-import { TypographyVariant } from '@/components'
+import { TypographyVariant } from '../Typography'
 
 export type LabelProps = {
   text: string

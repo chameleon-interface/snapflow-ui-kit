@@ -15,6 +15,8 @@ export default defineConfig({
       // Multiple entry points to enable separate icon bundle
       entry: {
         index: resolve(__dirname, 'src/index.ts'),
+        'index.client': resolve(__dirname, 'src/index.client.ts'),
+        'index.server': resolve(__dirname, 'src/index.server.ts'),
         icons: resolve(__dirname, 'src/icons/index.ts'),
       },
       // the proper extensions will be added
@@ -29,6 +31,7 @@ export default defineConfig({
         ...Object.keys(peerDependencies ?? {}),
       ],
       output: {
+        banner: (chunk) => (chunk.name === 'index.client' ? "'use client';\n" : ''),
         assetFileNames: (assetInfo) =>
           assetInfo.name?.endsWith('.css') ? 'index.css' : 'assets/[name]-[hash][extname]',
       },
