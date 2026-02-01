@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outlined' | 'text'
 
@@ -7,14 +7,7 @@ type CommonProps = {
   icon?: ReactNode
 }
 
-type AsButtonProps = {
-  asLink?: false
+export type ButtonProps<T extends ElementType = 'button'> = {
+  as?: T
 } & CommonProps &
-  ComponentPropsWithoutRef<'button'>
-
-type AsLinkProps = {
-  asLink: true
-} & CommonProps &
-  ComponentPropsWithoutRef<'a'>
-
-export type ButtonProps = AsButtonProps | AsLinkProps
+  Omit<ComponentPropsWithoutRef<T>, 'as'>

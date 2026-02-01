@@ -1,30 +1,19 @@
+import { ElementType } from 'react'
+
 import { clsx } from 'clsx'
 
 import s from './Button.module.css'
 import { ButtonProps } from './Button.types'
 
-type AsButtonProps = ButtonProps & { asLink?: false }
-type AsLinkProps = ButtonProps & { asLink: true }
-
-export const Button = (props: ButtonProps) => {
-  const { className, variant = 'primary', asLink, icon, ...rest } = props
+export const Button = <T extends ElementType = 'button'>(props: ButtonProps<T>) => {
+  const { as: Component = 'button', className, variant = 'primary', icon, ...rest } = props
   const classes = clsx(s.button, s[variant], className)
+  const { children, ...componentProps } = rest
 
-  if (asLink) {
-    const { children, ...linkProps } = rest as AsLinkProps
-    return (
-      <a className={classes} {...linkProps}>
-        {icon && <span className={s.icon}>{icon}</span>}
-        {children}
-      </a>
-    )
-  }
-
-  const { children, ...buttonProps } = rest as AsButtonProps
   return (
-    <button className={classes} {...buttonProps}>
+    <Component className={classes} {...componentProps}>
       {icon && <span className={s.icon}>{icon}</span>}
       {children}
-    </button>
+    </Component>
   )
 }
