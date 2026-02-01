@@ -59,7 +59,8 @@ import { Select, DatePicker } from 'snapflow-ui-kit/client'
 
 Примечания:
 
-- Серверный entry не содержит client-only экспортов и глобальных CSS сайд-эффектов.
+- Основной entry (`snapflow-ui-kit`) не экспортирует client-only компоненты.
+- Серверный entry не содержит глобальных CSS сайд-эффектов.
 - Клиентский entry включает глобальные стили и client-only компоненты.
 
 ### Какие компоненты серверные/клиентские
