@@ -10,15 +10,15 @@ const meta = {
     docs: {
       description: {
         component:
-          'A polymorphic button component that can render as a `<button>` or `<a>` element. Supports multiple visual variants for different use cases.',
+          'A polymorphic button component that can render as a `<button>` or any other element/component. Supports multiple visual variants for different use cases.',
       },
     },
   },
   argTypes: {
-    asLink: {
-      control: { type: 'boolean' },
-      description: 'Renders the button as an anchor element',
-      table: { defaultValue: { summary: 'false' }, type: {} },
+    as: {
+      control: false,
+      description: 'HTML element or React component to render as (e.g., "a", Link)',
+      table: { type: {} },
     },
     variant: {
       control: { type: 'radio' },
@@ -92,7 +92,7 @@ export const Text: Story = {
 /** Button rendered as an anchor element. Use for navigation that should look like a button. */
 export const AsLink: Story = {
   args: {
-    asLink: true,
+    as: 'a',
     children: 'Link that looks like a button',
     href: 'https://google.com',
     rel: 'noopener noreferrer',
@@ -150,7 +150,7 @@ export const DisabledWithIcon: Story = {
 /** Link button with an icon. */
 export const AsLinkWithIcon: Story = {
   args: {
-    asLink: true,
+    as: 'a',
     children: 'Search Results',
     href: '#',
     icon: <SearchIcon />,

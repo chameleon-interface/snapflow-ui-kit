@@ -24,3 +24,8 @@ dist-ssr
 *.sln
 *.sw?
 _tmp_*
+
+CLAUDE.md
+.claude
+.serena
+.ai
