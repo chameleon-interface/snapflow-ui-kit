@@ -1,3 +1,5 @@
+'use client'
+
 import { toast } from 'react-hot-toast'
 import { Alert } from './Alert'
 import s from './Alert.module.css'

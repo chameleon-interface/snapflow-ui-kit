@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { Typography } from '@/components'
+import { Typography } from '../Typography'
 import s from './Label.module.css'
 import { LabelProps } from './Label.types'
 

@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useMemo } from 'react'
 import { DateRange } from 'react-day-picker'
 import { parseDateValue } from '../utils/parseDateValue'

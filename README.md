@@ -43,3 +43,45 @@ src/components/{ComponentName}/
 - Storybook 10
 - CSS Modules
 - ESLint + Prettier + Stylelint
+
+## Импорт серверных и клиентских компонентов (Next.js App Router)
+
+Используйте основной entry для Server Components. Клиентский entry используйте только внутри Client Components.
+
+```tsx
+// Server Component
+import { Typography } from 'snapflow-ui-kit'
+
+// Client Component
+;('use client')
+import { Select, DatePicker } from 'snapflow-ui-kit/client'
+```
+
+Примечания:
+
+- Серверный entry не содержит client-only экспортов и глобальных CSS сайд-эффектов.
+- Клиентский entry включает глобальные стили и client-only компоненты.
+
+### Какие компоненты серверные/клиентские
+
+Серверные (можно импортировать из `snapflow-ui-kit`):
+
+- Alert (без toast функций)
+- Button
+- Card
+- Checkbox
+- Label
+- Radio
+- Tab
+- Typography
+
+Клиентские (импортируйте из `snapflow-ui-kit/client`):
+
+- Modal
+- Input
+- Textarea
+- Select
+- DatePicker
+- Pagination (включая Pager и PageSizeSelect)
+- toastSuccess / toastError (Alert)
+- SimpleBar (экспортируется как `SimpleBar`)

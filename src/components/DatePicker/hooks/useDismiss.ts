@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, type RefObject } from 'react'
 
 type UseDismissParams<T extends HTMLElement = HTMLElement> = {

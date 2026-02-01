@@ -1,3 +1,5 @@
+'use client'
+
 import { Typography } from '@/components/Typography'
 import { CalendarIcon, CloseIcon } from '@/icons'
 import clsx from 'clsx'
