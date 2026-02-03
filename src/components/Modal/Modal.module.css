@@ -29,10 +29,10 @@
 .header {
   display: flex;
   gap: 12px;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
 
-  padding: 16px;
+  padding: 12px 24px 11px;
   border-bottom: 1px solid var(--color-dark-100);
 }
 
@@ -78,7 +78,7 @@
 
 .body {
   overflow: auto;
-  padding: 16px;
+  padding: 24px;
 }
 
 @keyframes modal-fade-in {
