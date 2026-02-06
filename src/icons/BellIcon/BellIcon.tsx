@@ -1,11 +1,10 @@
-import { useId, type SVGProps } from 'react'
+import { type SVGProps } from 'react'
 
 type Props = {
   type?: 'stroke' | 'filled'
 }
 
 export const BellIcon = ({ type = 'stroke', ...rest }: SVGProps<SVGSVGElement> & Props) => {
-  const clipId = useId()
   const isFilled = type === 'filled'
 
   const pathD = isFilled
@@ -21,14 +20,9 @@ export const BellIcon = ({ type = 'stroke', ...rest }: SVGProps<SVGSVGElement> &
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >
-      <g clipPath={`url(#${clipId})`}>
+      <g>
         <path fillRule="evenodd" clipRule="evenodd" d={pathD} fill="currentColor" />
       </g>
-      <defs>
-        <clipPath id={clipId}>
-          <rect width="18" height="20" fill="white" />
-        </clipPath>
-      </defs>
     </svg>
   )
 }

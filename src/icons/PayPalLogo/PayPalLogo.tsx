@@ -1,8 +1,6 @@
-import { useId, type SVGProps } from 'react'
+import { type SVGProps } from 'react'
 
 export const PayPalLogo = (props: SVGProps<SVGSVGElement>) => {
-  const id = useId()
-
   return (
     <svg
       width="24"
@@ -12,7 +10,7 @@ export const PayPalLogo = (props: SVGProps<SVGSVGElement>) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g clipPath={`url(#${id})`}>
+      <g>
         <path
           d="M1.47363 0.5H22.5264C23.0763 0.500027 23.4998 0.930995 23.5 1.43555V14.5645C23.4998 15.069 23.0763 15.5 22.5264 15.5H1.47363C0.923711 15.5 0.500196 15.069 0.5 14.5645V1.43555C0.500196 0.930995 0.923712 0.500027 1.47363 0.5Z"
           fill="white"
@@ -79,11 +77,6 @@ export const PayPalLogo = (props: SVGProps<SVGSVGElement>) => {
           fill="#298FC2"
         />
       </g>
-      <defs>
-        <clipPath id={id}>
-          <rect width="24" height="16" fill="white" />
-        </clipPath>
-      </defs>
     </svg>
   )
 }

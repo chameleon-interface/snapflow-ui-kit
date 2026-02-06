@@ -1,12 +1,10 @@
-import { useId, type SVGProps } from 'react'
+import { type SVGProps } from 'react'
 
 type Props = {
   type?: 'stroke' | 'filled'
 }
 
 export const CalendarIcon = ({ type = 'stroke', ...rest }: SVGProps<SVGSVGElement> & Props) => {
-  const id = useId()
-
   return (
     <svg
       width="24"
@@ -16,7 +14,7 @@ export const CalendarIcon = ({ type = 'stroke', ...rest }: SVGProps<SVGSVGElemen
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >
-      <g clipPath={`url(#${id})`}>
+      <g>
         {type === 'stroke' ? (
           <>
             <path
@@ -39,11 +37,6 @@ export const CalendarIcon = ({ type = 'stroke', ...rest }: SVGProps<SVGSVGElemen
           />
         )}
       </g>
-      <defs>
-        <clipPath id={id}>
-          <rect width="24" height="24" fill="white" />
-        </clipPath>
-      </defs>
     </svg>
   )
 }
