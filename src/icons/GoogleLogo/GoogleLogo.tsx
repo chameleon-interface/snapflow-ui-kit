@@ -1,8 +1,6 @@
-import { useId, type SVGProps } from 'react'
+import { type SVGProps } from 'react'
 
 export const GoogleLogo = (props: SVGProps<SVGSVGElement>) => {
-  const id = useId()
-
   return (
     <svg
       width="24"
@@ -12,7 +10,7 @@ export const GoogleLogo = (props: SVGProps<SVGSVGElement>) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g clipPath={`url(#${id})`}>
+      <g>
         <path
           d="M5.2662 9.76453C6.19879 6.93863 8.85445 4.90909 12 4.90909C13.6909 4.90909 15.2182 5.50909 16.4182 6.49091L19.9091 3C17.7818 1.14545 15.0545 0 12 0C7.27007 0 3.19775 2.6983 1.23999 6.65002L5.2662 9.76453Z"
           fill="#EA4335"
@@ -30,11 +28,6 @@ export const GoogleLogo = (props: SVGProps<SVGSVGElement>) => {
           fill="#FBBC05"
         />
       </g>
-      <defs>
-        <clipPath id={id}>
-          <rect width="24" height="24" fill="white" />
-        </clipPath>
-      </defs>
     </svg>
   )
 }

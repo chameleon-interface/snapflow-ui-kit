@@ -1,12 +1,10 @@
-import { useId, type SVGProps } from 'react'
+import { type SVGProps } from 'react'
 
 type Props = {
   type?: 'stroke' | 'filled'
 }
 
 export const PinIcon = ({ type = 'stroke', ...rest }: SVGProps<SVGSVGElement> & Props) => {
-  const strokeId = useId()
-  const filledId = useId()
   return type === 'stroke' ? (
     <svg
       width="24"
@@ -16,7 +14,7 @@ export const PinIcon = ({ type = 'stroke', ...rest }: SVGProps<SVGSVGElement> & 
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >
-      <g clipPath={`url(#${strokeId})`}>
+      <g>
         <path
           d="M12 2C9.89206 1.99989 7.86926 2.83176 6.37124 4.31479C4.87323 5.79782 4.02108 7.81216 4 9.92C4 15.4 11.05 21.5 11.35 21.76C11.5311 21.9149 11.7616 22.0001 12 22.0001C12.2384 22.0001 12.4689 21.9149 12.65 21.76C13 21.5 20 15.4 20 9.92C19.9789 7.81216 19.1268 5.79782 17.6288 4.31479C16.1307 2.83176 14.1079 1.99989 12 2ZM12 19.65C10.33 18.06 6 13.65 6 9.92C6 8.3287 6.63214 6.80258 7.75736 5.67736C8.88258 4.55214 10.4087 3.92 12 3.92C13.5913 3.92 15.1174 4.55214 16.2426 5.67736C17.3679 6.80258 18 8.3287 18 9.92C18 13.62 13.67 18.06 12 19.65Z"
           fill="currentColor"
@@ -26,11 +24,6 @@ export const PinIcon = ({ type = 'stroke', ...rest }: SVGProps<SVGSVGElement> & 
           fill="currentColor"
         />
       </g>
-      <defs>
-        <clipPath id={strokeId}>
-          <rect width="24" height="24" fill="white" />
-        </clipPath>
-      </defs>
     </svg>
   ) : (
     <svg
@@ -41,7 +34,7 @@ export const PinIcon = ({ type = 'stroke', ...rest }: SVGProps<SVGSVGElement> & 
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >
-      <g clipPath={`url(#${filledId})`}>
+      <g>
         <path
           d="M12 11C12.8284 11 13.5 10.3284 13.5 9.5C13.5 8.67157 12.8284 8 12 8C11.1716 8 10.5 8.67157 10.5 9.5C10.5 10.3284 11.1716 11 12 11Z"
           fill="currentColor"
@@ -51,11 +44,6 @@ export const PinIcon = ({ type = 'stroke', ...rest }: SVGProps<SVGSVGElement> & 
           fill="currentColor"
         />
       </g>
-      <defs>
-        <clipPath id={filledId}>
-          <rect width="24" height="24" fill="white" />
-        </clipPath>
-      </defs>
     </svg>
   )
 }

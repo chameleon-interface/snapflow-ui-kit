@@ -1,8 +1,6 @@
-import { useId, type SVGProps } from 'react'
+import { type SVGProps } from 'react'
 
 export const MoreHozitontalIcon = (props: SVGProps<SVGSVGElement>) => {
-  const id = useId()
-
   return (
     <svg
       width="24"
@@ -12,7 +10,7 @@ export const MoreHozitontalIcon = (props: SVGProps<SVGSVGElement>) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g clipPath={`url(#${id})`}>
+      <g>
         <path
           d="M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z"
           fill="currentColor"
@@ -26,11 +24,6 @@ export const MoreHozitontalIcon = (props: SVGProps<SVGSVGElement>) => {
           fill="currentColor"
         />
       </g>
-      <defs>
-        <clipPath id={id}>
-          <rect width="24" height="24" fill="white" />
-        </clipPath>
-      </defs>
     </svg>
   )
 }

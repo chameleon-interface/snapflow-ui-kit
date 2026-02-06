@@ -1,8 +1,6 @@
-import { useId, type SVGProps } from 'react'
+import { type SVGProps } from 'react'
 
 export const StripeLogo = (props: SVGProps<SVGSVGElement>) => {
-  const id = useId()
-
   return (
     <svg
       width="24"
@@ -12,7 +10,7 @@ export const StripeLogo = (props: SVGProps<SVGSVGElement>) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g clipPath={`url(#${id})`}>
+      <g>
         <path
           d="M1.91309 0.5H22.0869C22.8774 0.5 23.4999 1.12435 23.5 1.87207V14.1279C23.4998 14.8756 22.8774 15.5 22.0869 15.5H1.91309C1.12259 15.5 0.50015 14.8756 0.5 14.1279V1.87207C0.50015 1.12435 1.12259 0.5 1.91309 0.5Z"
           fill="white"
@@ -25,11 +23,6 @@ export const StripeLogo = (props: SVGProps<SVGSVGElement>) => {
           fill="#6461FC"
         />
       </g>
-      <defs>
-        <clipPath id={id}>
-          <rect width="24" height="16" fill="white" />
-        </clipPath>
-      </defs>
     </svg>
   )
 }
