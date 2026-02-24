@@ -2,7 +2,7 @@
 
 import { clsx } from 'clsx'
 import { useCallback, useEffect, useState } from 'react'
-import { ArrowLeftIcon, ArrowRightIcon } from 'snapflow-ui-kit/icons'
+import { ArrowLeftIcon, ArrowRightIcon } from '@/icons'
 import styles from './Carousel.module.css'
 import { CarouselProps } from './Carousel.types'
 
