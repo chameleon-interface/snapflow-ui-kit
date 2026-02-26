@@ -145,6 +145,25 @@ export const DisabledWithValue: Story = {
   },
 }
 
+/** Disabled via fieldset inheritance. */
+export const DisabledInFieldset: Story = {
+  render: () => {
+    const [value, setValue] = useState('banana')
+
+    return (
+      <fieldset disabled style={{ border: 'none', margin: 0, padding: 0, width: 300 }}>
+        <Select
+          label="Favorite fruit"
+          options={sampleOptions}
+          placeholder="Choose a fruit"
+          value={value}
+          onChange={setValue}
+        />
+      </fieldset>
+    )
+  },
+}
+
 const ControlledExample = () => {
   const [value, setValue] = useState('')
 

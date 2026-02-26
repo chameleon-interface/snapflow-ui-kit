@@ -57,6 +57,21 @@ export const Disabled: Story = {
   },
 }
 
+/** Disabled via fieldset inheritance */
+export const DisabledInFieldset: Story = {
+  render: (args) => (
+    <fieldset disabled style={{ border: 'none', margin: 0, padding: 0, width: 300 }}>
+      <Input {...args} />
+    </fieldset>
+  ),
+  args: {
+    label: 'Email',
+    value: 'fieldset@example.com',
+    placeholder: 'Enter email',
+    onChange: () => {},
+  },
+}
+
 /** Start icon */
 export const WithStartIcon: Story = {
   args: {
