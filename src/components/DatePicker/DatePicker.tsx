@@ -9,7 +9,6 @@ import { DateRange, DayPicker, type DayPickerProps } from 'react-day-picker'
 import styles from './DatePicker.module.css'
 import { DatePickerProps } from './DatePicker.types'
 import { useDismiss } from './hooks/useDismiss'
-import { useDatePickerState } from './hooks/useDatePickerState'
 import { getDayPickerProps } from './utils/getDayPickerProps'
 import { handleDateSelect } from './utils/handleDateSelect'
 import { parseDateValue } from './utils/parseDateValue'
@@ -27,7 +26,7 @@ export const DatePicker = ({
 }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
-  const { month, setMonth } = useDatePickerState(value, mode)
+  const [month, setMonth] = useState(new Date())
 
   const parsedDate = useMemo(() => parseDateValue(value, mode), [value, mode])
 
