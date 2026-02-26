@@ -15,6 +15,10 @@
   color: var(--color-dark-100);
 }
 
+.wrapper:has(.input:disabled) .label {
+  color: var(--color-dark-100);
+}
+
 .inputContainer {
   position: relative;
 
@@ -40,19 +44,15 @@
   color: var(--color-light-900);
 }
 
-.inputContainer:has(:focus-visible) .input {
-  color: var(--color-light-100);
-}
-
-.inputContainer:has(:focus-visible) {
-  border-color: var(--color-light-100);
-}
-
 .inputContainer.error {
   border-color: var(--color-danger-500);
 }
 
 .inputContainer.disabled {
+  border: 1px solid var(--color-dark-100);
+}
+
+.inputContainer:has(.input:disabled) {
   border: 1px solid var(--color-dark-100);
 }
 
@@ -67,6 +67,19 @@
 
 .inputContainer.withEndIcon .input {
   padding-right: 40px;
+}
+
+.inputContainer:has(.input:disabled) .input {
+  cursor: not-allowed;
+  color: var(--color-dark-100);
+}
+
+.inputContainer:has(.input:focus-visible:not(:disabled)) .input {
+  color: var(--color-light-100);
+}
+
+.inputContainer:has(.input:focus-visible:not(:disabled)) {
+  border-color: var(--color-light-100);
 }
 
 .startIcon,
@@ -90,6 +103,10 @@
   color: var(--color-dark-100);
 }
 
+.inputContainer:has(.input:disabled) .startIcon {
+  color: var(--color-dark-100);
+}
+
 .endIcon {
   cursor: pointer;
 
@@ -110,6 +127,11 @@
 
 .inputContainer:focus-within .endIcon {
   color: var(--color-light-100);
+}
+
+.inputContainer:has(.input:disabled) .endIcon {
+  cursor: not-allowed;
+  color: var(--color-dark-100);
 }
 
 .errorMessage {
