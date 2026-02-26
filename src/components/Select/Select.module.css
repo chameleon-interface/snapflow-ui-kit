@@ -11,6 +11,10 @@
   color: var(--color-light-900);
 }
 
+.container:has(.trigger:disabled) .label {
+  color: var(--color-dark-100);
+}
+
 .select {
   position: relative;
   width: 100%;
@@ -55,7 +59,7 @@
   color: var(--color-dark-100);
 }
 
-.trigger:focus-visible {
+.trigger:focus-visible:not(:disabled) {
   padding: 7px 11px;
   border: 2px solid var(--color-accent-500);
 }
@@ -92,6 +96,10 @@
 }
 
 .trigger:disabled .arrow {
+  color: var(--color-dark-100);
+}
+
+.trigger:disabled .placeholder {
   color: var(--color-dark-100);
 }
 

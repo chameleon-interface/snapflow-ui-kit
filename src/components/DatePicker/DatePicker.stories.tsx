@@ -492,7 +492,7 @@ export const AllVariants = {
           display: 'flex',
           flexDirection: 'column',
           gap: '32px',
-          maxWidth: '400px',
+          width: '800px',
         }}
       >
         <div>

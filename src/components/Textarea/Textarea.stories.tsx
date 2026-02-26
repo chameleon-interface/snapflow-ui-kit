@@ -42,3 +42,16 @@ export const Disabled: Story = {
     disabled: true,
   },
 }
+
+export const DisabledInFieldset: Story = {
+  render: (args) => (
+    <fieldset disabled style={{ border: 'none', margin: 0, padding: 0, width: 320 }}>
+      <Textarea {...args} />
+    </fieldset>
+  ),
+  args: {
+    label: 'Textarea',
+    placeholder: 'Textarea',
+    value: 'Disabled by fieldset',
+  },
+}
