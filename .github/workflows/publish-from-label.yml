@@ -1,0 +1,92 @@
+name: Publish to NPM (PR check)
+
+on:
+  pull_request_target:
+    types: [labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  publish:
+    if: startsWith(github.event.label.name, 'bump-') && (github.event.sender.login == 'chameleon-interface' || github.event.sender.login == 'AnatolyPautovDev')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Guard (only same-repo PRs to main)
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "${{ github.event.pull_request.base.ref }}" == "main" ]] || exit 0
+          [[ "${{ github.event.pull_request.head.repo.full_name }}" == "${{ github.repository }}" ]] || exit 0
+
+      - name: Get bump type
+        id: bump
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "type=${{ github.event.label.name }}" | sed 's/^type=bump-//' >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Bump package version
+        run: pnpm version ${{ steps.bump.outputs.type }} --no-git-tag-version
+
+      - name: Commit and push version bump (as bot)
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet; then exit 0; fi
+          version="$(node -p "require('./package.json').version")"
+          git config user.name "chameleon-interface"
+          git config user.email "chameleon-interface@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(release): bump version to v$version"
+          git remote set-url origin "https://x-access-token:${BOT_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build lib
+        run: pnpm run build
+
+      - name: Publish to npm
+        uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NPM_PUBLISH_TOKEN }}
+          access: public
+
+      - name: Notify consumer repo
+        env:
+          GH_TOKEN: ${{ secrets.CONSUMER_REPO_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(node -p "require('./package.json').version")"
+          curl -fsSL -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            https://api.github.com/repos/chameleon-interface/snapflow-frontend/dispatches \
+            -d "$(jq -nc --arg v "$version" '{event_type:"ui-kit-released", client_payload:{version:$v}}')"
+
+      - name: Remove bump label
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.BOT_TOKEN }}
+        run: |
+          pr='${{ github.event.pull_request.number }}'
+          gh pr edit "$pr" --remove-label "${{ github.event.label.name }}" --repo "${GITHUB_REPOSITORY}"

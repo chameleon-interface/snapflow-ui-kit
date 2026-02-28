@@ -1,0 +1,38 @@
+name: Version command
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  label:
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/version ')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Parse bump type
+        id: parse
+        shell: bash
+        run: |
+          set -euo pipefail
+          comment='${{ github.event.comment.body }}'
+          bump="${comment#"/version "}"
+          bump="$(echo "$bump" | tr -d '\r' | xargs)"
+          case "$bump" in
+            patch|minor|major|prerelease|prepatch|preminor|premajor) ;;
+            *)
+              echo "Unsupported bump type: '$bump'"
+              exit 1
+              ;;
+          esac
+          echo "bump=$bump" >> "$GITHUB_OUTPUT"
+
+      - name: Add label to PR
+        env:
+          GH_TOKEN: ${{ secrets.BOT_TOKEN }}
+        run: |
+          set -euo pipefail
+          pr='${{ github.event.issue.number }}'
+          gh pr edit "$pr" --add-label "bump-${{ steps.parse.outputs.bump }}" --repo "${GITHUB_REPOSITORY}"
