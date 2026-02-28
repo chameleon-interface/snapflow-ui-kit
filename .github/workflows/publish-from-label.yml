@@ -20,12 +20,11 @@ jobs:
           [[ "${{ github.event.pull_request.base.ref }}" == "main" ]] || exit 0
           [[ "${{ github.event.pull_request.head.repo.full_name }}" == "${{ github.repository }}" ]] || exit 0
 
-      - name: Get bump type
+      - name: Extract bump type
         id: bump
         shell: bash
         run: |
-          set -euo pipefail
-          echo "type=${{ github.event.label.name }}" | sed 's/^type=bump-//' >> "$GITHUB_OUTPUT"
+          echo "type=${GITHUB_EVENT_LABEL_NAME#bump-}" >> "$GITHUB_OUTPUT"
 
       - uses: actions/checkout@v4
         with:
@@ -83,14 +82,6 @@ jobs:
             https://api.github.com/repos/chameleon-interface/snapflow-frontend/dispatches \
             -d "$(jq -nc --arg v "$version" '{event_type:"ui-kit-released", client_payload:{version:$v}}')"
 
-      - name: Remove bump label
-        if: always()
-        env:
-          GH_TOKEN: ${{ secrets.BOT_TOKEN }}
-        run: |
-          pr='${{ github.event.pull_request.number }}'
-          gh pr edit "$pr" --remove-label "${{ github.event.label.name }}" --repo "${GITHUB_REPOSITORY}"
-
       - name: Merge PR
         env:
           GH_TOKEN: ${{ secrets.BOT_TOKEN }}
@@ -100,3 +91,11 @@ jobs:
             --squash \
             --delete-branch \
             --admin
+
+      - name: Remove bump label
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.BOT_TOKEN }}
+        run: |
+          pr='${{ github.event.pull_request.number }}'
+          gh pr edit "$pr" --remove-label "${{ github.event.label.name }}" --repo "${GITHUB_REPOSITORY}"
