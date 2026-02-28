@@ -24,7 +24,10 @@ jobs:
         id: bump
         shell: bash
         run: |
-          echo "type=${GITHUB_EVENT_LABEL_NAME#bump-}" >> "$GITHUB_OUTPUT"
+          set -euo pipefail
+          label='${{ github.event.label.name }}'
+          type="${label#bump-}"
+          echo "type=$type" >> "$GITHUB_OUTPUT"
 
       - uses: actions/checkout@v4
         with:
