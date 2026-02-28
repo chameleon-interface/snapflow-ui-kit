@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { clsx } from 'clsx'
 
@@ -9,32 +9,64 @@ import 'simplebar-react/dist/simplebar.min.css'
 
 import { ArrowDownIcon } from '@/icons'
 
+import { SelectDropdownContent } from './SelectDropdownContent'
 import s from './Select.module.css'
-import { SelectProps } from './'
+import { SelectProps } from './Select.types'
+import { useDebouncedValue } from './useDebouncedValue'
 
 export const Select = (props: SelectProps) => {
-  const { className, disabled = false, label, onChange, options, placeholder, value } = props
+  const {
+    className,
+    disabled = false,
+    label,
+    noOptionsText = 'No options found',
+    onChange,
+    options,
+    placeholder,
+    searchPlaceholder = 'Search...',
+    searchable = false,
+    value,
+  } = props
 
   const [isOpen, setIsOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
   const selectRef = useRef<HTMLDivElement>(null)
+  const searchInputRef = useRef<HTMLInputElement>(null)
+  const debouncedSearchQuery = useDebouncedValue(searchQuery, 180)
 
   const selectedOption = options.find((option) => option.value === value)
+  const normalizedSearchQuery = debouncedSearchQuery.trim().toLowerCase()
+  const filteredOptions = normalizedSearchQuery
+    ? options.filter((option) => option.label.toLowerCase().includes(normalizedSearchQuery))
+    : options
+
+  const closeDropdown = useCallback(() => {
+    setIsOpen(false)
+    setSearchQuery('')
+  }, [])
 
   const handleToggle = () => {
-    if (!disabled) {
-      setIsOpen(!isOpen)
+    if (disabled) {
+      return
+    }
+
+    if (isOpen) {
+      closeDropdown()
+    } else {
+      setSearchQuery('')
+      setIsOpen(true)
     }
   }
 
   const handleSelect = (optionValue: string) => {
     onChange?.(optionValue)
-    setIsOpen(false)
+    closeDropdown()
   }
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
+        closeDropdown()
       }
     }
 
@@ -45,7 +77,13 @@ export const Select = (props: SelectProps) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [isOpen])
+  }, [closeDropdown, isOpen])
+
+  useEffect(() => {
+    if (isOpen && searchable) {
+      searchInputRef.current?.focus()
+    }
+  }, [isOpen, searchable])
 
   return (
     <div className={clsx(s.container, className)}>
@@ -71,19 +109,17 @@ export const Select = (props: SelectProps) => {
 
         {isOpen && (
           <SimpleBar className={s.dropdown} role="listbox" style={{ maxHeight: 191 }}>
-            {options.map((option) => (
-              <button
-                key={option.value}
-                className={clsx(s.option, option.value === value && s.selected)}
-                onClick={() => handleSelect(option.value)}
-                type="button"
-                role="option"
-                aria-selected={option.value === value}
-              >
-                {option.icon && <span className={s.optionIcon}>{option.icon}</span>}
-                {option.label}
-              </button>
-            ))}
+            <SelectDropdownContent
+              filteredOptions={filteredOptions}
+              noOptionsText={noOptionsText}
+              onSearchChange={setSearchQuery}
+              onSelect={handleSelect}
+              searchInputRef={searchInputRef}
+              searchPlaceholder={searchPlaceholder}
+              searchQuery={searchQuery}
+              searchable={searchable}
+              value={value}
+            />
           </SimpleBar>
         )}
       </div>

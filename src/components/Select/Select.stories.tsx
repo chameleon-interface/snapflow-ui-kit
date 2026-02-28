@@ -46,6 +46,11 @@ const meta = {
       description: 'Disables the select component',
       table: { defaultValue: { summary: 'false' } },
     },
+    searchable: {
+      control: { type: 'boolean' },
+      description: 'Shows search input to filter options by label',
+      table: { defaultValue: { summary: 'false' } },
+    },
     onChange: {
       action: 'changed',
       description: 'Callback fired when an option is selected',
@@ -221,6 +226,40 @@ const ManyOptionsExample = () => {
 /** Select with many options demonstrating scrolling. */
 export const ManyOptions = {
   render: () => <ManyOptionsExample />,
+}
+
+/** Select with search enabled. */
+export const Searchable = {
+  render: () => {
+    const [value, setValue] = useState('')
+
+    return (
+      <Select
+        label="Select a country"
+        options={[
+          { label: 'United States', value: 'us' },
+          { label: 'United Kingdom', value: 'uk' },
+          { label: 'Canada', value: 'ca' },
+          { label: 'Australia', value: 'au' },
+          { label: 'Germany', value: 'de' },
+          { label: 'France', value: 'fr' },
+          { label: 'Italy', value: 'it' },
+          { label: 'Spain', value: 'es' },
+          { label: 'Japan', value: 'jp' },
+          { label: 'China', value: 'cn' },
+          { label: 'India', value: 'in' },
+          { label: 'Brazil', value: 'br' },
+          { label: 'Mexico', value: 'mx' },
+          { label: 'Russia', value: 'ru' },
+          { label: 'South Korea', value: 'kr' },
+        ]}
+        placeholder="Find a country"
+        searchable
+        value={value}
+        onChange={setValue}
+      />
+    )
+  },
 }
 
 /** Select with icons in options. */
