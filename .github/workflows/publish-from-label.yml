@@ -90,3 +90,13 @@ jobs:
         run: |
           pr='${{ github.event.pull_request.number }}'
           gh pr edit "$pr" --remove-label "${{ github.event.label.name }}" --repo "${GITHUB_REPOSITORY}"
+
+      - name: Merge PR
+        env:
+          GH_TOKEN: ${{ secrets.BOT_TOKEN }}
+        run: |
+          gh pr merge ${{ github.event.pull_request.number }} \
+            --repo "${GITHUB_REPOSITORY}" \
+            --squash \
+            --delete-branch \
+            --admin
