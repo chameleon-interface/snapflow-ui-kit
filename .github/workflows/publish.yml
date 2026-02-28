@@ -122,3 +122,18 @@ jobs:
         with:
           token: ${{ secrets.NPM_PUBLISH_TOKEN }}
           access: 'public'
+
+      - name: Notify consumer repo
+        if: steps.guard.outputs.can_proceed == 'true' && steps.commit_bump.outputs.committed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.CONSUMER_REPO_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(node -p "require('./package.json').version")"
+
+          curl -fsSL -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            https://api.github.com/repos/chameleon-interface/snapflow-frontend/dispatches \
+            -d "$(jq -nc --arg v "$version" '{event_type:"ui-kit-released", client_payload:{version:$v}}')"
