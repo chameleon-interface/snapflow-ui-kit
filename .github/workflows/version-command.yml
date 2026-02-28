@@ -29,6 +29,19 @@ jobs:
           esac
           echo "bump=$bump" >> "$GITHUB_OUTPUT"
 
+      - name: Ensure label exists
+        env:
+          GH_TOKEN: ${{ secrets.BOT_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          LABEL="bump-${{ steps.parse.outputs.bump }}"
+          gh label create "$LABEL" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --color "0E8A16" \
+            --description "Trigger bump workflow" \
+            --force
+
       - name: Add label to PR
         env:
           GH_TOKEN: ${{ secrets.BOT_TOKEN }}
