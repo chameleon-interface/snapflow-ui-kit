@@ -36,12 +36,11 @@ jobs:
         run: |
           set -euo pipefail
           LABEL="bump-${{ steps.parse.outputs.bump }}"
-          if ! gh label view "$LABEL" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
-            gh label create "$LABEL" \
-              --repo "${GITHUB_REPOSITORY}" \
-              --color "0E8A16" \
-              --description "Trigger bump workflow"
-          fi
+          gh label create "$LABEL" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --color "0E8A16" \
+            --description "Trigger bump workflow" \
+            --force
 
       - name: Add label to PR
         env:
