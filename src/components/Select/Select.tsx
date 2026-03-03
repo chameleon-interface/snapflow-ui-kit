@@ -17,33 +17,51 @@ import { useDebouncedValue } from './useDebouncedValue'
 export const Select = (props: SelectProps) => {
   const {
     className,
+    defaultSearchValue = '',
     disabled = false,
+    filterOptions,
+    isLoading = false,
     label,
+    loadingText = 'Loading...',
     noOptionsText = 'No options found',
     onChange,
+    onSearchChange,
     options,
     placeholder,
+    searchDebounceMs = 180,
+    searchMode = 'local',
     searchPlaceholder = 'Search...',
+    searchValue,
     searchable = false,
     value,
   } = props
 
   const [isOpen, setIsOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQueryState, setSearchQueryState] = useState(searchValue ?? defaultSearchValue)
   const selectRef = useRef<HTMLDivElement>(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
-  const debouncedSearchQuery = useDebouncedValue(searchQuery, 180)
+  const isFirstSearchChangeRef = useRef(true)
+  const isSearchControlled = searchValue !== undefined
+  const searchQuery = isSearchControlled ? searchValue : searchQueryState
+  const debouncedDisplayedSearchQuery = useDebouncedValue(searchQuery, searchDebounceMs)
+  const debouncedSearchQuery = useDebouncedValue(searchQueryState, searchDebounceMs)
+  const shouldFilterOptions = filterOptions ?? searchMode === 'local'
 
   const selectedOption = options.find((option) => option.value === value)
-  const normalizedSearchQuery = debouncedSearchQuery.trim().toLowerCase()
-  const filteredOptions = normalizedSearchQuery
-    ? options.filter((option) => option.label.toLowerCase().includes(normalizedSearchQuery))
-    : options
+  const normalizedSearchQuery = debouncedDisplayedSearchQuery.trim().toLowerCase()
+  const filteredOptions =
+    shouldFilterOptions && normalizedSearchQuery
+      ? options.filter((option) => option.label.toLowerCase().includes(normalizedSearchQuery))
+      : options
+
+  const resetSearchQuery = useCallback(() => {
+    setSearchQueryState('')
+  }, [])
 
   const closeDropdown = useCallback(() => {
     setIsOpen(false)
-    setSearchQuery('')
-  }, [])
+    resetSearchQuery()
+  }, [resetSearchQuery])
 
   const handleToggle = () => {
     if (disabled) {
@@ -53,7 +71,7 @@ export const Select = (props: SelectProps) => {
     if (isOpen) {
       closeDropdown()
     } else {
-      setSearchQuery('')
+      resetSearchQuery()
       setIsOpen(true)
     }
   }
@@ -78,6 +96,20 @@ export const Select = (props: SelectProps) => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [closeDropdown, isOpen])
+
+  useEffect(() => {
+    if (!searchable || !onSearchChange) {
+      return
+    }
+
+    if (isFirstSearchChangeRef.current) {
+      isFirstSearchChangeRef.current = false
+
+      return
+    }
+
+    onSearchChange(debouncedSearchQuery)
+  }, [debouncedSearchQuery, onSearchChange, searchable])
 
   useEffect(() => {
     if (isOpen && searchable) {
@@ -111,8 +143,10 @@ export const Select = (props: SelectProps) => {
           <SimpleBar className={s.dropdown} role="listbox" style={{ maxHeight: 191 }}>
             <SelectDropdownContent
               filteredOptions={filteredOptions}
+              isLoading={isLoading}
+              loadingText={loadingText}
               noOptionsText={noOptionsText}
-              onSearchChange={setSearchQuery}
+              onSearchChange={setSearchQueryState}
               onSelect={handleSelect}
               searchInputRef={searchInputRef}
               searchPlaceholder={searchPlaceholder}
