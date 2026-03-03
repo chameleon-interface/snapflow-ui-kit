@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
@@ -13,6 +13,7 @@ import {
 } from '@/icons'
 
 import { Select } from './'
+import type { SelectOption } from './Select.types'
 
 const meta = {
   parameters: {
@@ -51,6 +52,22 @@ const meta = {
       description: 'Shows search input to filter options by label',
       table: { defaultValue: { summary: 'false' } },
     },
+    searchMode: {
+      control: { type: 'radio' },
+      options: ['local', 'remote'],
+      description: 'Search behavior mode',
+      table: { defaultValue: { summary: 'local' } },
+    },
+    searchDebounceMs: {
+      control: { type: 'number' },
+      description: 'Debounce delay for search query updates',
+      table: { defaultValue: { summary: '180' } },
+    },
+    isLoading: {
+      control: { type: 'boolean' },
+      description: 'Shows loading text in dropdown while options are loading',
+      table: { defaultValue: { summary: 'false' } },
+    },
     onChange: {
       action: 'changed',
       description: 'Callback fired when an option is selected',
@@ -71,6 +88,38 @@ const sampleOptions = [
   { label: 'Cherry', value: 'cherry' },
   { label: 'Date', value: 'date' },
   { label: 'Elderberry', value: 'elderberry' },
+]
+
+const remoteCityOptionsSource: SelectOption[] = [
+  { label: 'Amsterdam', value: 'amsterdam' },
+  { label: 'Athens', value: 'athens' },
+  { label: 'Bangkok', value: 'bangkok' },
+  { label: 'Barcelona', value: 'barcelona' },
+  { label: 'Berlin', value: 'berlin' },
+  { label: 'Boston', value: 'boston' },
+  { label: 'Buenos Aires', value: 'buenos-aires' },
+  { label: 'Chicago', value: 'chicago' },
+  { label: 'Copenhagen', value: 'copenhagen' },
+  { label: 'Dubai', value: 'dubai' },
+  { label: 'Helsinki', value: 'helsinki' },
+  { label: 'Istanbul', value: 'istanbul' },
+  { label: 'Lisbon', value: 'lisbon' },
+  { label: 'London', value: 'london' },
+  { label: 'Madrid', value: 'madrid' },
+  { label: 'Milan', value: 'milan' },
+  { label: 'New York', value: 'new-york' },
+  { label: 'Paris', value: 'paris' },
+  { label: 'Prague', value: 'prague' },
+  { label: 'Rome', value: 'rome' },
+  { label: 'San Francisco', value: 'san-francisco' },
+  { label: 'Singapore', value: 'singapore' },
+  { label: 'Stockholm', value: 'stockholm' },
+  { label: 'Sydney', value: 'sydney' },
+  { label: 'Tokyo', value: 'tokyo' },
+  { label: 'Toronto', value: 'toronto' },
+  { label: 'Vienna', value: 'vienna' },
+  { label: 'Warsaw', value: 'warsaw' },
+  { label: 'Zurich', value: 'zurich' },
 ]
 
 const DefaultExample = () => {
@@ -255,6 +304,61 @@ export const Searchable = {
         ]}
         placeholder="Find a country"
         searchable
+        value={value}
+        onChange={setValue}
+      />
+    )
+  },
+}
+
+/** Select with remote search mode and async option loading simulation. */
+export const RemoteSearch = {
+  render: () => {
+    const [value, setValue] = useState('')
+    const [query, setQuery] = useState('')
+    const [options, setOptions] = useState<SelectOption[]>(remoteCityOptionsSource.slice(0, 8))
+    const [isLoading, setIsLoading] = useState(false)
+
+    useEffect(() => {
+      let cancelled = false
+      const normalizedQuery = query.trim().toLowerCase()
+
+      setIsLoading(true)
+
+      const timeoutId = setTimeout(() => {
+        if (cancelled) {
+          return
+        }
+
+        const nextOptions = normalizedQuery
+          ? remoteCityOptionsSource
+              .filter((option) => option.label.toLowerCase().includes(normalizedQuery))
+              .slice(0, 8)
+          : remoteCityOptionsSource.slice(0, 8)
+
+        setOptions(nextOptions)
+        setIsLoading(false)
+      }, 450)
+
+      return () => {
+        cancelled = true
+        clearTimeout(timeoutId)
+      }
+    }, [query])
+
+    return (
+      <Select
+        label="Select a city"
+        options={options}
+        placeholder="Search cities"
+        searchable
+        searchMode="remote"
+        searchDebounceMs={200}
+        filterOptions={false}
+        loadingText="Loading cities..."
+        noOptionsText="No cities found"
+        isLoading={isLoading}
+        onSearchChange={setQuery}
         value={value}
         onChange={setValue}
       />

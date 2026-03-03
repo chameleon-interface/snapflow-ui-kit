@@ -7,6 +7,8 @@ import s from './Select.module.css'
 
 type SelectDropdownContentProps = {
   filteredOptions: SelectOption[]
+  isLoading: boolean
+  loadingText: string
   noOptionsText: string
   onSearchChange: (value: string) => void
   onSelect: (optionValue: string) => void
@@ -19,6 +21,8 @@ type SelectDropdownContentProps = {
 
 export const SelectDropdownContent = ({
   filteredOptions,
+  isLoading,
+  loadingText,
   noOptionsText,
   onSearchChange,
   onSelect,
@@ -43,6 +47,8 @@ export const SelectDropdownContent = ({
         </div>
       )}
 
+      {isLoading && <p className={s.noOptions}>{loadingText}</p>}
+
       {filteredOptions.length ? (
         filteredOptions.map((option) => (
           <button
@@ -57,9 +63,9 @@ export const SelectDropdownContent = ({
             {option.label}
           </button>
         ))
-      ) : (
+      ) : !isLoading ? (
         <p className={s.noOptions}>{noOptionsText}</p>
-      )}
+      ) : null}
     </>
   )
 }
