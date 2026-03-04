@@ -8,7 +8,7 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   min-height: 200px;
-  border-radius: 12px;
+  border-radius: 2px;
 
   background-color: var(--color-dark-500);
 }
@@ -47,12 +47,9 @@
   width: 100%;
   height: auto;
 
-  vertical-align: middle;
-
   object-fit: cover;
 }
 
-/* Стрелки — полупрозрачный тёмный фон, белые иконки */
 .arrow {
   cursor: pointer;
 
@@ -73,10 +70,7 @@
 
   color: var(--color-light-100);
 
-  background-color: var(
-    --carousel-arrow-bg,
-    color-mix(in srgb, var(--color-dark-900) 70%, transparent)
-  );
+  background-color: color-mix(in srgb, var(--color-dark-100) 30%, transparent);
 
   transition:
     background-color 0.2s,
@@ -84,10 +78,7 @@
 }
 
 .arrow:hover {
-  background-color: var(
-    --carousel-arrow-bg-hover,
-    color-mix(in srgb, var(--color-dark-900) 85%, transparent)
-  );
+  background-color: color-mix(in srgb, var(--color-dark-100) 85%, transparent);
 }
 
 .arrow:focus-visible {
@@ -103,7 +94,6 @@
   right: 12px;
 }
 
-/* Точки пагинации */
 .dots {
   position: absolute;
   z-index: 2;
@@ -124,7 +114,7 @@
   border: none;
   border-radius: 50%;
 
-  background-color: var(--carousel-dot-inactive, var(--color-dark-100));
+  background-color: var(--color-light-100);
 
   transition:
     background-color 0.2s,
@@ -132,7 +122,7 @@
 }
 
 .dot:hover {
-  background-color: var(--carousel-dot-inactive-hover, var(--color-dark-300));
+  background-color: var(--color-light-300);
 }
 
 .dot:focus-visible {
@@ -141,9 +131,9 @@
 }
 
 .dotActive {
-  background-color: var(--carousel-dot-active, var(--color-accent-500));
+  background-color: var(--color-accent-500);
 }
 
 .dotActive:hover {
-  background-color: var(--carousel-dot-active, var(--color-accent-500));
+  background-color: var(--color-accent-500);
 }
