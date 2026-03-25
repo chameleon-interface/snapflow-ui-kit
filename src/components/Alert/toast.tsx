@@ -22,9 +22,9 @@ export const toastSuccess = (message: string) => {
 /**
  * Show an error toast rendered with the shared `Alert` component.
  * @param message - Text to display in the toast body.
- * @param title - Optional heading shown above the message. Defaults to `"Error!"`.
+ * @param title - Optional heading shown above the message.`.
  */
-export const toastError = (message: string, title = 'Error!') => {
+export const toastError = (message: string, title?: string) => {
   toast.custom((t) => (
     <Alert
       variant="error"
