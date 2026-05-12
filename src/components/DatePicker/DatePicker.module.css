@@ -47,6 +47,7 @@
 .clearButton {
   all: unset;
 
+  pointer-events: none;
   cursor: pointer;
 
   position: absolute;
@@ -59,7 +60,6 @@
   padding: 4px;
   border-radius: 2px;
 
-  pointer-events: none;
   opacity: 0;
 
   transition:
@@ -72,11 +72,10 @@
 }
 
 .clearButton:focus-visible {
-  outline: 2px solid var(--color-accent-700);
-  outline-offset: 2px;
-
   pointer-events: auto;
   opacity: 1;
+  outline: 2px solid var(--color-accent-700);
+  outline-offset: 2px;
 }
 
 .inputWrapper:hover .clearButton {
@@ -100,8 +99,9 @@
   color: var(--color-dark-100);
 }
 
-.trigger:focus-visible:not(:disabled) {
-  outline: 2px solid var(--color-accent-700);
+.trigger:focus-visible:not(:disabled, .error) {
+  border-color: var(--color-light-100);
+  outline: none;
 }
 
 .inputWrapper:has(.trigger:disabled) .icon,
@@ -171,13 +171,18 @@
 .navButtonPrevious,
 .navButtonNext {
   all: unset;
+
   cursor: pointer;
+
+  position: absolute;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   padding: 8px;
   border-radius: 50%;
-  position: absolute;
+
   background-color: var(--color-dark-100);
 }
 
