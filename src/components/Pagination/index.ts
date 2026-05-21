@@ -1,1 +1,6 @@
 export * from './Pagination'
+export * from './Pagination.type'
+export * from './Pager'
+export * from './Pager/Pager.types'
+export * from './PageSizeSelect'
+export * from './PageSizeSelect/PageSizeSelect.types'

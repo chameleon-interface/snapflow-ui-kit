@@ -3,7 +3,7 @@ import { PaginationProps } from './Pagination.type'
 import { Pager } from './Pager'
 import { PageSizeSelect } from './PageSizeSelect'
 
-const Pagination = ({
+export const Pagination = ({
   page,
   pageSize = 10,
   totalPages,
